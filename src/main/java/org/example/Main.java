@@ -1,7 +1,11 @@
 package org.example;
+import vista.VentanaBiblioteca;
+import vista.VentanaLogin;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public static void main(String[] args)
+    {
+        //VentanaLogin a = new VentanaLogin();
+        VentanaBiblioteca b = new VentanaBiblioteca();
     }
 }
