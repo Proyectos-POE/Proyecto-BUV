@@ -73,7 +73,7 @@ public class DaoProfesor {
         String sql_usu;
         String sql_pro;
 
-        sql_usu = "UPDATE usuario" + " SET id_usuario =' " + pro.getId() + " ', nombre = '" + pro.getNombre() + "', direccion = '" + pro.getDireccion() + "', telefono = '" + pro.getTelefono() +"' , email = '" + pro.getEmail() +"' WHERE id_usuario ='" + pro.getId() +"'";
+        sql_usu = "UPDATE usuario" + " SET id_usuario = '" + pro.getId() + "', contrasena = '" + pro.getContrasena() + "', nombre = '" + pro.getNombre() + "', direccion = '"  + pro.getDireccion() + "', telefono = '" + pro.getTelefono() +"' , email = '" + pro.getEmail() +"' WHERE id_usuario ='" + pro.getId() +"'";
 
         sql_pro = "UPDATE profesor" + " SET id_usuario = '" + pro.getId() + "', dependencia = '" + pro.getDependencia() + "', titulo = '" + pro.getTitulo()+ "' WHERE id_usuario ='" + pro.getId() +"'";
         try{
