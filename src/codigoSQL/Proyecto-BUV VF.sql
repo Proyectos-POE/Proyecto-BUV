@@ -183,10 +183,10 @@ CREATE TABLE empleado
 DROP TABLE IF EXISTS prestamo cascade;
 CREATE TABLE prestamo
 (
-    num_prestamo VARCHAR(10) NOT NULL PRIMARY KEY,
+    num_prestamo INTEGER NOT NULL PRIMARY KEY,
     id_usuario VARCHAR(10) NOT NULL,
     id_empleado VARCHAR(15) NOT NULL,
-    fecha VARCHAR(10) NOT NULL,
+    fecha DATE(10) NOT NULL,
 
     CONSTRAINT id_usuario_prestamo_fk FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario),
     CONSTRAINT id_empleado_prestamo_fk FOREIGN KEY(id_empleado) REFERENCES empleado(id_empleado)

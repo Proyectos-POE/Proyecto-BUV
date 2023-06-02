@@ -24,9 +24,8 @@ public class DaoEmpleado
                 emp.getId() + "', '" + emp.getNombre() +"', '" +  emp.getCargo() +"')";
         try{
             Connection conn= fachada.openConnection();
-            Statement sentenciaUsu = conn.createStatement();
-            Statement sentenciaEst = conn.createStatement();
-            int numFilas1 = sentenciaUsu.executeUpdate(sql_emp);
+            Statement sentenciaEmp = conn.createStatement();
+            int numFilas1 = sentenciaEmp.executeUpdate(sql_emp);
             conn.close();
             return numFilas1;
         }
@@ -38,7 +37,7 @@ public class DaoEmpleado
     public Empleado consultarEmpleado(String identificacion){
         Empleado emp = new Empleado();
         String sql_select;
-        sql_select="SELECT id_empleado, nombre FROM  Empleado WHERE id_empleado='" + identificacion +  "'";
+        sql_select="SELECT id_empleado, nombre, cargo FROM  Empleado WHERE id_empleado='" + identificacion +  "'";
         try{
 
             System.out.println("consultando en la bd");
@@ -65,9 +64,8 @@ public class DaoEmpleado
 
         try{
             Connection conn= fachada.openConnection();
-            Statement sentenciaUsu = conn.createStatement();
-            Statement sentenciaEst = conn.createStatement();
-            sentenciaUsu.executeUpdate(sql_emp);
+            Statement sentenciaEmp = conn.createStatement();
+            sentenciaEmp.executeUpdate(sql_emp);
             conn.close();
             return true;
         }
