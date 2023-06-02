@@ -26,8 +26,7 @@ public class DaoProfesor {
                 pro.getId() + "', '" + pro.getContrasena() +"', '" +  pro.getNombre() +  "', '" + pro.getDireccion() + "', '"  +
                 pro.getTelefono() + "', '"  + pro.getEmail() + "')";
 
-        sql_pro="INSERT INTO profesor(id_usuario, carrera, universidad) VALUES ('" +
-                pro.getId() + "', '" + pro.getDependencia() + "', '" + pro.getTitulo() + "')";
+        sql_pro="INSERT INTO profesor(carrera, universidad) VALUES ('" + pro.getDependencia() + "', '" + pro.getTitulo() + "')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();
@@ -74,7 +73,7 @@ public class DaoProfesor {
     public ArrayList<Profesor> listarProfesores(){
         ArrayList<Profesor> arrayPro = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT * FROM  estudiante NATURAL JOIN usuario";
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM  estudiante NATURAL JOIN usuario";
         try{
 
             System.out.println("consultando en la bd");
@@ -106,13 +105,13 @@ public class DaoProfesor {
 
         sql_usu = "UPDATE usuario" + " SET id_usuario = '" + pro.getId() + "', contrasena = '" + pro.getContrasena() + "', nombre = '" + pro.getNombre() + "', direccion = '"  + pro.getDireccion() + "', telefono = '" + pro.getTelefono() +"' , email = '" + pro.getEmail() +"' WHERE id_usuario ='" + pro.getId() +"'";
 
-        sql_pro = "UPDATE profesor" + " SET id_usuario = '" + pro.getId() + "', dependencia = '" + pro.getDependencia() + "', titulo = '" + pro.getTitulo()+ "' WHERE id_usuario ='" + pro.getId() +"'";
+        sql_pro = "UPDATE profesor" + " SET dependencia = '" + pro.getDependencia() + "', titulo = '" + pro.getTitulo()+ "' WHERE id_usuario ='" + pro.getId() +"'";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();
-            Statement sentenciaEst = conn.createStatement();
+            Statement sentenciaPro = conn.createStatement();
             sentenciaUsu.executeUpdate(sql_usu);
-            sentenciaEst.executeUpdate(sql_pro);
+            sentenciaPro.executeUpdate(sql_pro);
             conn.close();
             return true;
         }

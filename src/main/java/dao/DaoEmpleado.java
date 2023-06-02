@@ -62,7 +62,7 @@ public class DaoEmpleado
     public ArrayList<Empleado> listarEmpleado(){
         ArrayList<Empleado> arrayEmp = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT * FROM  empleado";
+        sql_select="SELECT d_empleado, nombre, cargo FROM  empleado";
         try{
 
             System.out.println("consultando en la bd");
