@@ -57,7 +57,6 @@ public class DaoPrestamo
         catch(Exception e){ System.out.println(e); }
         return null;
     }
-
     public boolean modificarPrestamo(Prestamo pres){
         String sql_pres;
 

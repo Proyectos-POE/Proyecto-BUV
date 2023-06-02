@@ -37,7 +37,7 @@ public class DaoEmpleado
     public Empleado consultarEmpleado(String identificacion){
         Empleado emp = new Empleado();
         String sql_select;
-        sql_select="SELECT id_empleado, nombre, cargo FROM  Empleado WHERE id_empleado='" + identificacion +  "'";
+        sql_select="SELECT id_empleado, nombre, cargo FROM  empleado WHERE id_empleado='" + identificacion +  "'";
         try{
 
             System.out.println("consultando en la bd");
