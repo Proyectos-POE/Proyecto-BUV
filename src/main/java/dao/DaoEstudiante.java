@@ -20,8 +20,7 @@ public class DaoEstudiante {
                 est.getId() + "', '" + est.getContrasena() +"', '" +  est.getNombre() +  "', '" + est.getDireccion() + "', '"  +
                 est.getTelefono() + "', '"  + est.getEmail() + "')";
 
-        sql_est="INSERT INTO estudiante(id_usuario, carrera, universidad) VALUES ('" +
-                est.getId() + "', '" + est.getCarrera() + "', '" + est.getUniversidad() + "')";
+        sql_est="INSERT INTO estudiante(carrera, universidad) VALUES ('" + est.getCarrera() + "', '" + est.getUniversidad() + "')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();

@@ -160,11 +160,11 @@ CREATE TABLE autor_libro
 DROP TABLE IF EXISTS solicitud cascade;
 CREATE TABLE solicitud
 (
-    num_solicitud VARCHAR(10) NOT NULL PRIMARY KEY,
+    num_solicitud INTEGER NOT NULL PRIMARY KEY,
     id_usuario VARCHAR(10) NOT NULL,
     isbn VARCHAR(15) NOT NULL,
     titulo VARCHAR(50) NOT NULL,
-    descripcion VARCHAR(50) ,
+    descripcion VARCHAR(50),
 
     CONSTRAINT id_usuario_solicitud_fk FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario),
     CONSTRAINT isbn_solicitud_fk FOREIGN KEY(isbn) REFERENCES libro(isbn)

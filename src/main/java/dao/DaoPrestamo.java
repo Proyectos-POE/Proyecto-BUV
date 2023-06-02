@@ -59,32 +59,6 @@ public class DaoPrestamo
         return null;
     }
 
-    public ArrayList<Prestamo> listarPrestamos(){
-        ArrayList<Prestamo> arrayPres = new ArrayList<>();
-        String sql_select;
-        sql_select="SELECT * FROM  Prestamo";
-        try{
-
-            System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
-            ResultSet tabla = sentencia.executeQuery(sql_select);
-
-            do{
-                Prestamo pres = new Prestamo();
-                pres.setNumPrestamo(tabla.getInt(1));
-                pres.setIdUsuario(tabla.getString(2));
-                pres.setIdEmpleado(tabla.getString(3));
-                pres.setFecha(tabla.getDate(4));
-                arrayPres.add(pres);
-            }while (tabla.next());
-
-            return arrayPres;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return null;
-    }
-
     public boolean modificarPrestamo(Prestamo pres){
         String sql_pres;
 
