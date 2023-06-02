@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DaoPrestamo
 {
@@ -37,7 +38,7 @@ public class DaoPrestamo
     public Prestamo consultarPrestamo(String numero){
         Prestamo pres = new Prestamo();
         String sql_select;
-        sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha FROM  Prestamo WHERE num_prestamo='" + numero +  "'";
+        sql_select="SELECT * FROM  Prestamo WHERE num_prestamo='" + numero +  "'";
         try{
 
             System.out.println("consultando en la bd");
@@ -57,6 +58,7 @@ public class DaoPrestamo
         catch(Exception e){ System.out.println(e); }
         return null;
     }
+
     public boolean modificarPrestamo(Prestamo pres){
         String sql_pres;
 
