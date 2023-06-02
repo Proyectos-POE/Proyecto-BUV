@@ -4,11 +4,11 @@ DROP TABLE IF EXISTS usuario cascade;
 CREATE TABLE usuario
 (
     id_usuario VARCHAR(10) NOT NULL PRIMARY KEY,
+    contrasena VARCHAR(30) NOT NULL,
     nombre VARCHAR(40) NOT NULL,
     direccion VARCHAR(30) NOT NULL,
     telefono VARCHAR(10) NOT NULL,
-    email VARCHAR(40) NOT NULL,
-    contrasena VARCHAR(30) NOT NULL
+    email VARCHAR(40) NOT NULL
 );
 
 --==============================|estudiante|==============================--
@@ -186,7 +186,7 @@ CREATE TABLE prestamo
     num_prestamo INTEGER NOT NULL PRIMARY KEY,
     id_usuario VARCHAR(10) NOT NULL,
     id_empleado VARCHAR(15) NOT NULL,
-    fecha DATE(10) NOT NULL,
+    fecha DATE NOT NULL,
 
     CONSTRAINT id_usuario_prestamo_fk FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario),
     CONSTRAINT id_empleado_prestamo_fk FOREIGN KEY(id_empleado) REFERENCES empleado(id_empleado)
@@ -196,10 +196,10 @@ CREATE TABLE prestamo
 DROP TABLE IF EXISTS prestamo_libro cascade;
 CREATE TABLE prestamo_libro
 (
-    num_prestamo VARCHAR(10) NOT NULL,
+    num_prestamo INTEGER NOT NULL,
     isbn VARCHAR(15) NOT NULL,
     num_ejemplar INTEGER NOT NULL,
-    fecha_devolucion VARCHAR(10) NOT NULL,
+    fecha_devolucion DATE NOT NULL,
 
     CONSTRAINT numero_prestamo_libro_fk FOREIGN KEY(num_prestamo) REFERENCES prestamo(num_prestamo),
     CONSTRAINT isbn_prestamo_libro_fk FOREIGN KEY(isbn, num_ejemplar) REFERENCES ejemplar(isbn, num_ejemplar),
@@ -215,7 +215,7 @@ CREATE TABLE multa
 
     isbn VARCHAR(15) NOT NULL,
     num_ejemplar INTEGER NOT NULL,
-    fecha_multa VARCHAR(10) NOT NULL,
+    fecha_multa DATE NOT NULL,
     valor INTEGER NOT NULL,
     descripcion VARCHAR(50),
 

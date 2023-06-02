@@ -2,11 +2,13 @@ package dao;
 
 import modelo.Empleado;
 import modelo.Estudiante;
+import modelo.Prestamo;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DaoEmpleado
 {
@@ -51,6 +53,31 @@ public class DaoEmpleado
             }
 
             return emp;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public ArrayList<Empleado> listarEmpleado(){
+        ArrayList<Empleado> arrayEmp = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT * FROM  empleado";
+        try{
+
+            System.out.println("consultando en la bd");
+            Statement sentencia = this.conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            do{
+                Empleado emp = new Empleado();
+                emp.setId(tabla.getString(1));
+                emp.setNombre(tabla.getString(2));
+                emp.setCargo(tabla.getString(3));
+                arrayEmp.add(emp);
+            }while (tabla.next());
+
+            return arrayEmp;
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
