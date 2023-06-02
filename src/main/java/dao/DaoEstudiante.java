@@ -1,5 +1,8 @@
 package dao;
 import java.sql.*;
+import java.util.ArrayList;
+
+import modelo.Empleado;
 import modelo.Estudiante;
 public class DaoEstudiante {
     FachadaBd fachada;
@@ -56,6 +59,36 @@ public class DaoEstudiante {
             }
 
             return est;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public ArrayList<Estudiante> listarEstudiantes(){
+        ArrayList<Estudiante> arrayEst = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT * FROM  estudiante NATURAL JOIN usuario";
+        try{
+
+            System.out.println("consultando en la bd");
+            Statement sentencia = this.conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            do{
+                Estudiante est = new Estudiante();
+                est.setId(tabla.getString(1));
+                est.setContrasena(tabla.getString(2));
+                est.setNombre(tabla.getString(3));
+                est.setDireccion(tabla.getString(4));
+                est.setTelefono(tabla.getString(5));
+                est.setEmail(tabla.getString(6));
+                est.setCarrera(tabla.getString(7));
+                est.setUniversidad(tabla.getString(8));
+                arrayEst.add(est);
+            }while (tabla.next());
+
+            return arrayEst;
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }

@@ -1,12 +1,14 @@
 package dao;
 
 import modelo.Estudiante;
+import modelo.Prestamo;
 import modelo.Profesor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DaoProfesor {
     FachadaBd fachada;
@@ -69,6 +71,35 @@ public class DaoProfesor {
         return null;
     }
 
+    public ArrayList<Profesor> listarProfesores(){
+        ArrayList<Profesor> arrayPro = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT * FROM  estudiante NATURAL JOIN usuario";
+        try{
+
+            System.out.println("consultando en la bd");
+            Statement sentencia = this.conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            do{
+                Profesor pro = new Profesor();
+                pro.setId(tabla.getString(1));
+                pro.setContrasena(tabla.getString(2));
+                pro.setNombre(tabla.getString(3));
+                pro.setDireccion(tabla.getString(4));
+                pro.setTelefono(tabla.getString(5));
+                pro.setEmail(tabla.getString(6));
+                pro.setDependencia(tabla.getString(7));
+                pro.setTitulo(tabla.getString(8));
+                arrayPro.add(pro);
+            }while (tabla.next());
+
+            return arrayPro;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
     public boolean modificarProfesor(Profesor pro){
         String sql_usu;
         String sql_pro;
