@@ -67,7 +67,7 @@ public class DaoEstudiante {
     public ArrayList<Estudiante> listarEstudiantes(){
         ArrayList<Estudiante> arrayEst = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT * FROM  estudiante NATURAL JOIN usuario";
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, carrera, universidad FROM  estudiante NATURAL JOIN usuario";
         try{
 
             System.out.println("consultando en la bd");
@@ -100,7 +100,7 @@ public class DaoEstudiante {
 
         sql_usu = "UPDATE usuario" + " SET id_usuario = '" + est.getId() + "', contrasena = '" + est.getContrasena() + "', nombre = '" + est.getNombre() + "', direccion = '"  + est.getDireccion() + "', telefono = '" + est.getTelefono() +"' , email = '" + est.getEmail() +"' WHERE id_usuario ='" + est.getId() +"'";
 
-        sql_est = "UPDATE estudiante" + " SET id_usuario = '" + est.getId() + "', carrera = '" + est.getCarrera() + "', universidad = '" + est.getUniversidad() + "'WHERE id_usuario ='" + est.getId() +"'";
+        sql_est = "UPDATE estudiante" + " SET carrera = '" + est.getCarrera() + "', universidad = '" + est.getUniversidad() + "'WHERE id_usuario ='" + est.getId() +"'";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();

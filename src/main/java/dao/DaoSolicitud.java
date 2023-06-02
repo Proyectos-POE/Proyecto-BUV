@@ -21,7 +21,7 @@ public class DaoSolicitud {
     public int insertSolicitud(Solicitud soli){
         String sql_soli;
 
-        sql_soli = "INSERT INTO prestamo(num_solicitud, id_usuario, isbn, titulo, descripcion) VALUES ('" +
+        sql_soli = "INSERT INTO solicitud(num_solicitud, id_usuario, isbn, titulo, descripcion) VALUES ('" +
                 soli.getNumero() + "', '" + soli.getIdUsuario() +"', '" + soli.getIsbnLibro() +"', '" + soli.getTitulo() +"', '" + soli.getDescripcion() +"')";
         try{
             Connection conn= fachada.openConnection();
@@ -38,7 +38,7 @@ public class DaoSolicitud {
     public Solicitud consultarSolicitud(int numero){
         Solicitud soli = new Solicitud();
         String sql_select;
-        sql_select="SELECT * FROM  solicitud WHERE num_solicitud='" + numero +  "'";
+        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM  solicitud WHERE num_solicitud='" + numero +  "'";
         try{
 
             System.out.println("consultando en la bd");
@@ -63,7 +63,7 @@ public class DaoSolicitud {
     public ArrayList<Solicitud> listarSolicitud(){
         ArrayList<Solicitud> arraySoli = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT * FROM  solicitud";
+        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM  solicitud";
         try{
 
             System.out.println("consultando en la bd");
