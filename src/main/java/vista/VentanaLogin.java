@@ -272,6 +272,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         btnLogin.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Iniciar Sesion");
+        btnLogin.setActionCommand("Login");
         btnLogin.setBorderPainted(false);
         btnLogin.setFocusPainted(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -968,6 +969,34 @@ public class VentanaLogin extends javax.swing.JFrame {
         return formulario;
     }
 
+    public ArrayList<String> getFormularioProfesor()
+    {
+        ArrayList<String> formulario;
+        formulario = new ArrayList<String>();
+
+        formulario.add(txtCedulaRegistroD.getText());
+        formulario.add(txtUsuarioRegistroD.getText());
+        formulario.add(txtCorreoRegistroD.getText());
+        formulario.add(txtClaveRegistroD.getText());
+        formulario.add(txtDireccionRegistroD.getText());
+        formulario.add(txtTelefonoRegistroD.getText());
+        formulario.add(txtTituloRegistroD.getText());
+        formulario.add(txtDependenciaRegistroD.getText());
+
+        return formulario;
+    }
+
+    public ArrayList<String> getFormularioLogin()
+    {
+        ArrayList<String> formulario;
+        formulario = new ArrayList<String>();
+
+        formulario.add(txtCorreoLogin.getText());
+        formulario.add(txtClaveLogin.getText());
+
+        return formulario;
+    }
+
     public void mostrarMensaje(String auxMensaje)
     {
         JOptionPane.showMessageDialog(this, auxMensaje);
@@ -983,6 +1012,15 @@ public class VentanaLogin extends javax.swing.JFrame {
         btnRegistroA.addActionListener(listenControles);
     }
 
+    public void addBtnRegistrarseDListener(ActionListener listenControles)
+    {
+        btnRegistroD.addActionListener(listenControles);
+    }
+
+    public void addBtnLoginListener(ActionListener listenControles)
+    {
+        btnLogin.addActionListener(listenControles);
+    }
 
     // Variables declaration - do not modify
     private javax.swing.JButton btnDocente;

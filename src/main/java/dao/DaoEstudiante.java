@@ -36,10 +36,10 @@ public class DaoEstudiante {
         return -1;
     }
 
-    public Estudiante consultarEstudiante(String identificacion){
+    public Estudiante consultarEstudianteId(String identificacion){
         Estudiante est = new Estudiante();
         String sql_select;
-        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, carrera, universidad FROM  usuario NATURAL JOIN estudiante WHERE id_usuario='" + identificacion +  "'";
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, carrera, universidad FROM Usuario NATURAL JOIN Estudiante WHERE id_usuario='" + identificacion +  "'";
         try{
 
             System.out.println("consultando en la bd");
@@ -48,6 +48,37 @@ public class DaoEstudiante {
 
             while(tabla.next()){
 
+                est.setId(tabla.getString(1));
+                est.setContrasena(tabla.getString(2));
+                est.setNombre(tabla.getString(3));
+                est.setDireccion(tabla.getString(4));
+                est.setTelefono(tabla.getString(5));
+                est.setEmail(tabla.getString(6));
+                est.setCarrera(tabla.getString(7));
+                est.setUniversidad(tabla.getString(8));
+            }
+
+            return est;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public Estudiante consultarEstudianteEmail(String email, String contrasena){
+        Estudiante est = new Estudiante();
+        String sql_select;
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, carrera, universidad FROM Usuario NATURAL JOIN Estudiante WHERE email ='" + email +  "' AND contrasena = '" + contrasena +  "'";
+        System.out.println(sql_select);
+        try
+        {
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next())
+            {
                 est.setId(tabla.getString(1));
                 est.setContrasena(tabla.getString(2));
                 est.setNombre(tabla.getString(3));

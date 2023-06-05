@@ -4,7 +4,7 @@ public class Profesor extends Usuario
 {
     private String dependencia;
     private String titulo;
-    public Profesor(String auxIdentificacion,String auxNombre, String auxDireccion, String auxTelefono, String auxEmail, String auxDependencia, String auxTitulo)
+    public Profesor(String auxIdentificacion, String auxNombre,String auxEmail, String auxContrasena, String auxDireccion, String auxTelefono, String auxTitulo, String auxDependencia)
     {
         this.identificacion = auxIdentificacion;
         this.nombre = auxNombre;
@@ -13,6 +13,7 @@ public class Profesor extends Usuario
         this.email = auxEmail;
         this.dependencia = auxDependencia;
         this.titulo = auxTitulo;
+        this.contrasena = auxContrasena;
     }
 
     public Profesor(){

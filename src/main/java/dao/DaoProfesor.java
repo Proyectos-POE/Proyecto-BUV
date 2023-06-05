@@ -14,7 +14,7 @@ public class DaoProfesor {
     FachadaBd fachada;
     Connection conn;
 
-    DaoProfesor(){
+    public DaoProfesor(){
         fachada = new FachadaBd();
     }
 
@@ -26,7 +26,7 @@ public class DaoProfesor {
                 pro.getId() + "', '" + pro.getContrasena() +"', '" +  pro.getNombre() +  "', '" + pro.getDireccion() + "', '"  +
                 pro.getTelefono() + "', '"  + pro.getEmail() + "')";
 
-        sql_pro="INSERT INTO profesor(id_usuario, carrera, universidad) VALUES ('" + pro.getId() + "', '" + pro.getDependencia() + "', '" + pro.getTitulo() + "')";
+        sql_pro="INSERT INTO profesor(id_usuario, dependencia, titulo) VALUES ('" + pro.getId() + "', '" + pro.getDependencia() + "', '" + pro.getTitulo() + "')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();
@@ -41,10 +41,10 @@ public class DaoProfesor {
         return -1;
     }
 
-    public Profesor consultarProfesor(String identificacion){
+    public Profesor consultarProfesorId(String identificacion){
         Profesor pro = new Profesor();
         String sql_select;
-        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM  usuario NATURAL JOIN profesor WHERE id_usuario='" + identificacion +  "'";
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM Usuario NATURAL JOIN Profesor WHERE id_usuario='" + identificacion +  "'";
         try{
 
             System.out.println("consultando en la bd");
@@ -53,6 +53,39 @@ public class DaoProfesor {
 
             while(tabla.next()){
 
+                pro.setId(tabla.getString(1));
+                pro.setContrasena(tabla.getString(2));
+                pro.setNombre(tabla.getString(3));
+                pro.setDireccion(tabla.getString(4));
+                pro.setTelefono(tabla.getString(5));
+                pro.setEmail(tabla.getString(6));
+                pro.setDependencia(tabla.getString(7));
+                pro.setTitulo(tabla.getString(8));
+            }
+
+            return pro;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public Profesor consultarProfesorEmail(String email, String contrasena)
+    {
+        Profesor pro = new Profesor();
+        String sql_select;
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM Usuario NATURAL JOIN Profesor WHERE email ='" + email +  "' AND contrasena = '" + contrasena +  "'";
+        System.out.println(sql_select);
+        try
+        {
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next())
+            {
+                System.out.println(tabla.getString(1));
                 pro.setId(tabla.getString(1));
                 pro.setContrasena(tabla.getString(2));
                 pro.setNombre(tabla.getString(3));
