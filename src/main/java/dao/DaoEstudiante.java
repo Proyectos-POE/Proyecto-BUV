@@ -8,19 +8,20 @@ public class DaoEstudiante {
     FachadaBd fachada;
     Connection conn;
 
-    DaoEstudiante(){
+    public DaoEstudiante()
+    {
         fachada = new FachadaBd();
     }
 
-    public int insertEstudiante(Estudiante est){
+    public int insertEstudiante(Estudiante est)
+    {
         String sql_usu;
         String sql_est;
 
-        sql_usu = "INSERT INTO usuario(id_usuario, contrasena, nombre, direccion, telefono, email) VALUES ('" +
-                est.getId() + "', '" + est.getContrasena() +"', '" +  est.getNombre() +  "', '" + est.getDireccion() + "', '"  +
+        sql_usu = "INSERT INTO usuario(id_usuario, contrasena, nombre, direccion, telefono, email) VALUES ('" + est.getId() + "', '" + est.getContrasena() +"', '" +  est.getNombre() +  "', '" + est.getDireccion() + "', '"  +
                 est.getTelefono() + "', '"  + est.getEmail() + "')";
 
-        sql_est="INSERT INTO estudiante(carrera, universidad) VALUES ('" + est.getCarrera() + "', '" + est.getUniversidad() + "')";
+        sql_est="INSERT INTO estudiante(id_usuario, carrera, universidad) VALUES ('" + est.getId() + "', '" + est.getCarrera() + "', '" + est.getUniversidad() + "')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();
@@ -101,7 +102,8 @@ public class DaoEstudiante {
         sql_usu = "UPDATE usuario" + " SET id_usuario = '" + est.getId() + "', contrasena = '" + est.getContrasena() + "', nombre = '" + est.getNombre() + "', direccion = '"  + est.getDireccion() + "', telefono = '" + est.getTelefono() +"' , email = '" + est.getEmail() +"' WHERE id_usuario ='" + est.getId() +"'";
 
         sql_est = "UPDATE estudiante" + " SET carrera = '" + est.getCarrera() + "', universidad = '" + est.getUniversidad() + "'WHERE id_usuario ='" + est.getId() +"'";
-        try{
+        try
+        {
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();
             Statement sentenciaEst = conn.createStatement();

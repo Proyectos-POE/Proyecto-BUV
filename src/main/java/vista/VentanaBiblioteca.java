@@ -553,7 +553,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txaDescripcionSolicitudU.setText("");
     }
 
-
     // Variables declaration - do not modify
     private javax.swing.JButton btnEnviarSolicitudU;
     private javax.swing.JButton btnLibrosUsuario;
