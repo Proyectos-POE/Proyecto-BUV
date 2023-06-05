@@ -26,7 +26,7 @@ public class DaoProfesor {
                 pro.getId() + "', '" + pro.getContrasena() +"', '" +  pro.getNombre() +  "', '" + pro.getDireccion() + "', '"  +
                 pro.getTelefono() + "', '"  + pro.getEmail() + "')";
 
-        sql_pro="INSERT INTO profesor(carrera, universidad) VALUES ('" + pro.getDependencia() + "', '" + pro.getTitulo() + "')";
+        sql_pro="INSERT INTO profesor(id_usuario, carrera, universidad) VALUES ('" + pro.getId() + "', '" + pro.getDependencia() + "', '" + pro.getTitulo() + "')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaUsu = conn.createStatement();
