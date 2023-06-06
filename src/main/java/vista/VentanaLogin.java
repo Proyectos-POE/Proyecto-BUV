@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -25,6 +26,14 @@ public class VentanaLogin extends javax.swing.JFrame {
         initComponents();
         this.pagLogin();
         this.addBotonesPrincipalListener(new CambiarPaginaListener());
+
+        UIManager.put("OptionPane.messageFont", new java.awt.Font("Montserrat", 0, 12));
+    }
+
+    public void pantallaCompleta()
+    {
+        this.setVisible(true);
+        this.setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH);
     }
 
     /**
@@ -253,7 +262,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         jpCentroLogin.add(lblIconoClave, gridBagConstraints);
 
         lblUsuario.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        lblUsuario.setText("Usuario");
+        lblUsuario.setText("Correo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -1021,6 +1030,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     {
         btnLogin.addActionListener(listenControles);
     }
+
 
     // Variables declaration - do not modify
     private javax.swing.JButton btnDocente;

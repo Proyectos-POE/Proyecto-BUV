@@ -2,6 +2,7 @@ package controlador;
 
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
+import modelo.Empleado;
 import modelo.Estudiante;
 import modelo.Profesor;
 import vista.VentanaBiblioteca;
@@ -10,12 +11,14 @@ import vista.VentanaLogin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class ControladorLogin
 {
     private final VentanaLogin ventanaLogin;
     private final DaoEstudiante daoEstudiante;
     private final DaoProfesor daoProfesor;
+    private final String admin = "admin";
 
     public ControladorLogin(VentanaLogin auxA, DaoEstudiante auxB, DaoProfesor auxC)
     {
@@ -30,12 +33,54 @@ public class ControladorLogin
         LoginListener loginListener = new LoginListener();
         ventanaLogin.addBtnLoginListener(loginListener);
 
-        ventanaLogin.setVisible(true);
+        ventanaLogin.pantallaCompleta();
     }
 
-    private boolean comprobarRegistroEstudiante()
+    private boolean comprobarRegistroEstudiante(ArrayList<String> formulario)
     {
-        return true;
+        boolean camposValidos = true;
+        if(!comprobarCedula(formulario.get(0)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una cedula valida");
+            camposValidos = false;
+        }
+        else if(formulario.get(1).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un nombre valido");
+            camposValidos = false;
+        }
+        else if(!comprobarCorreo(formulario.get(2)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un correo valido");
+            camposValidos = false;
+        }
+        else if(formulario.get(3).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un clave valida");
+            camposValidos = false;
+        }
+        else if(formulario.get(4).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            camposValidos = false;
+        }
+        else if(comprobarTelefono(formulario.get(5)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            camposValidos = false;
+        }
+        else if(comprobarTelefono(formulario.get(6)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una carrera valida");
+            camposValidos = false;
+        }
+        else if(comprobarTelefono(formulario.get(7)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una universidad valida");
+            camposValidos = false;
+        }
+
+        return camposValidos;
     }
 
     private void agregarEstudiante()
@@ -51,11 +96,12 @@ public class ControladorLogin
         String auxCarrera;
         String auxUniversidad;
 
-        if(comprobarRegistroEstudiante())
+        ArrayList<String> formularioRegistroE = ventanaLogin.getFormularioEstudiante();
+
+        if(comprobarRegistroEstudiante(formularioRegistroE))
         {
             try
             {
-                ArrayList<String> formularioRegistroE = ventanaLogin.getFormularioEstudiante();
                 auxCedula = formularioRegistroE.get(0);
                 auxNombre = formularioRegistroE.get(1);
                 auxCorreo = formularioRegistroE.get(2);
@@ -77,17 +123,59 @@ public class ControladorLogin
                 }
                 ventanaLogin.limpiarRegistroA();
             }
-            catch (NumberFormatException e)
+            catch (Exception e)
             {
-
+                ventanaLogin.mostrarMensajeError("Ha ocurrido un error. Comuniquese con atencion al cliente");
             }
         }
 
     }
 
-    private boolean comprobarRegistroProfesor()
+    private boolean comprobarRegistroProfesor(ArrayList<String> formulario)
     {
-        return true;
+        boolean camposValidos = true;
+        if(!comprobarCedula(formulario.get(0)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una cedula valida");
+            camposValidos = false;
+        }
+        else if(formulario.get(1).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un nombre valido");
+            camposValidos = false;
+        }
+        else if(!comprobarCorreo(formulario.get(2)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un correo valido");
+            camposValidos = false;
+        }
+        else if(formulario.get(3).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un clave valida");
+            camposValidos = false;
+        }
+        else if(formulario.get(4).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            camposValidos = false;
+        }
+        else if(comprobarTelefono(formulario.get(5)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            camposValidos = false;
+        }
+        else if(comprobarTelefono(formulario.get(6)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un titulo valido");
+            camposValidos = false;
+        }
+        else if(comprobarTelefono(formulario.get(7)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una dependencia valida");
+            camposValidos = false;
+        }
+
+        return camposValidos;
     }
 
     private void agregarProfesor()
@@ -103,11 +191,12 @@ public class ControladorLogin
         String auxTitulo;
         String auxDependencia;
 
-        if(comprobarRegistroProfesor())
+        ArrayList<String> formularioRegistroP = ventanaLogin.getFormularioProfesor();
+
+        if(comprobarRegistroProfesor(formularioRegistroP))
         {
             try
             {
-                ArrayList<String> formularioRegistroP = ventanaLogin.getFormularioProfesor();
                 auxCedula = formularioRegistroP.get(0);
                 auxNombre = formularioRegistroP.get(1);
                 auxCorreo = formularioRegistroP.get(2);
@@ -129,9 +218,9 @@ public class ControladorLogin
                 }
                 ventanaLogin.limpiarRegistroD();
             }
-            catch (NumberFormatException e)
+            catch (Exception e)
             {
-
+                ventanaLogin.mostrarMensajeError("Ha ocurrido un error. Comuniquese con atencion al cliente");
             }
         }
 
@@ -139,9 +228,9 @@ public class ControladorLogin
 
     private void login()
     {
-        Profesor auxProfesor;
-        Estudiante auxEstudiante;
-        //Administrador auxAdministrador;
+        Profesor auxProfesor = null;
+        Estudiante auxEstudiante = null;
+        Empleado auxEmpleado = null;
 
         String auxCorreo;
         String auxContrasena;
@@ -151,8 +240,12 @@ public class ControladorLogin
         auxCorreo = formularioLogin.get(0);
         auxContrasena = formularioLogin.get(1);
 
-        auxProfesor = daoProfesor.consultarProfesorEmail(auxCorreo, auxContrasena);
-        auxEstudiante = daoEstudiante.consultarEstudianteEmail(auxCorreo, auxContrasena);
+        if(!auxCorreo.equals(admin) && !auxContrasena.equals(admin))
+        {
+            auxProfesor = daoProfesor.consultarProfesorEmail(auxCorreo, auxContrasena);
+            auxEstudiante = daoEstudiante.consultarEstudianteEmail(auxCorreo, auxContrasena);
+            //auxEmpleado = daoEmpleado.consultarEmpleadoEmail(auxCorreo, auxContrasena);
+        }
 
         if(auxProfesor != null)
         {
@@ -164,10 +257,16 @@ public class ControladorLogin
             ventanaLogin.dispose();
             ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEstudiante);
         }
-        /*else if(daoAdministrador.consultarProfesorEmail(auxCorreo, auxContrasena) != null)
+        /*else if(auxEmpleado != null)
         {
             ventanaLogin.dispose();
+            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEmpleado);
         }*/
+        else if(auxCorreo.equals(admin) && auxContrasena.equals(admin))
+        {
+            ventanaLogin.dispose();
+            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), null);
+        }
         else
         {
             ventanaLogin.mostrarMensajeError("Correo o contaseña incorrectas");
@@ -188,6 +287,61 @@ public class ControladorLogin
                 agregarProfesor();
             }
         }
+    }
+
+    private boolean comprobarCorreo(String email)
+    {
+        String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        return Pattern.compile(regexPattern).matcher(email).matches();
+    }
+
+    private boolean comprobarTelefono(String telefono)
+    {
+        String regexPattern = "\\d+";
+        return Pattern.compile(regexPattern).matcher(telefono).matches() && telefono.length() == 10;
+    }
+
+    private boolean comprobarCedula(String cedula)
+    {
+        String regexPattern = "\\d+";
+        return Pattern.compile(regexPattern).matcher(cedula).matches();
+    }
+
+    private boolean comprobarRegistro(ArrayList<String> formulario)
+    {
+        boolean camposValidos = true;
+        if(!comprobarCedula(formulario.get(0)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una cedula valida");
+            camposValidos = false;
+        }
+        else if(formulario.get(1).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un nombre valido");
+            camposValidos = false;
+        }
+        else if(!comprobarCorreo(formulario.get(2)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un correo valido");
+            camposValidos = false;
+        }
+        else if(formulario.get(3).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese un clave valida");
+            camposValidos = false;
+        }
+        else if(formulario.get(4).equals(""))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            camposValidos = false;
+        }
+        else if(comprobarTelefono(formulario.get(5)))
+        {
+            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            camposValidos = false;
+        }
+
+        return camposValidos;
     }
 
     class LoginListener implements ActionListener
