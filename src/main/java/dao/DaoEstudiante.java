@@ -77,8 +77,11 @@ public class DaoEstudiante {
             Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
+            boolean valido = false;
+
             while(tabla.next())
             {
+                valido = true;
                 est.setId(tabla.getString(1));
                 est.setContrasena(tabla.getString(2));
                 est.setNombre(tabla.getString(3));
@@ -89,7 +92,15 @@ public class DaoEstudiante {
                 est.setUniversidad(tabla.getString(8));
             }
 
-            return est;
+            if(valido)
+            {
+                System.out.println("aaaaaa");
+                return est;
+            }
+            else
+            {
+                return null;
+            }
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }

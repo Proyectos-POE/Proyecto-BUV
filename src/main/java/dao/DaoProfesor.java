@@ -83,9 +83,12 @@ public class DaoProfesor {
             Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
+            boolean valido = false;
+
             while(tabla.next())
             {
-                System.out.println(tabla.getString(1));
+                valido = true;
+
                 pro.setId(tabla.getString(1));
                 pro.setContrasena(tabla.getString(2));
                 pro.setNombre(tabla.getString(3));
@@ -96,7 +99,14 @@ public class DaoProfesor {
                 pro.setTitulo(tabla.getString(8));
             }
 
-            return pro;
+            if(valido)
+            {
+                return pro;
+            }
+            else
+            {
+                return null;
+            }
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
