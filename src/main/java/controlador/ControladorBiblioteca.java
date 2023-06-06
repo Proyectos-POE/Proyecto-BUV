@@ -18,13 +18,17 @@ public class ControladorBiblioteca
         this.ventanaBiblioteca = auxA;
         this.usuario = auxB;
 
-        if(usuario instanceof Profesor)
+        if(usuario instanceof Profesor || usuario instanceof Estudiante)
         {
-            ventanaBiblioteca.setVisible(true);
+            ventanaBiblioteca.menuUsuario();
+            ventanaBiblioteca.pagLibroUsuario();
+            ventanaBiblioteca.pantallaCompleta();
         }
-        else if(usuario instanceof Estudiante)
+        else if(usuario == null)
         {
-            ventanaBiblioteca.dispose();
+            ventanaBiblioteca.menuAdmin();
+            ventanaBiblioteca.pagAreaAdmin();
+            ventanaBiblioteca.pantallaCompleta();
         }
 
     }
