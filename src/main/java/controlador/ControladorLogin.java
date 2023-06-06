@@ -66,15 +66,15 @@ public class ControladorLogin
         }
         else if(comprobarTelefono(formulario.get(5)))
         {
-            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            ventanaLogin.mostrarMensajeError("Ingrese una telefono valido");
             camposValidos = false;
         }
-        else if(comprobarTelefono(formulario.get(6)))
+        else if(formulario.get(6).equals(""))
         {
             ventanaLogin.mostrarMensajeError("Ingrese una carrera valida");
             camposValidos = false;
         }
-        else if(comprobarTelefono(formulario.get(7)))
+        else if(formulario.get(7).equals(""))
         {
             ventanaLogin.mostrarMensajeError("Ingrese una universidad valida");
             camposValidos = false;
@@ -161,15 +161,15 @@ public class ControladorLogin
         }
         else if(comprobarTelefono(formulario.get(5)))
         {
-            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
+            ventanaLogin.mostrarMensajeError("Ingrese un telefono valido");
             camposValidos = false;
         }
-        else if(comprobarTelefono(formulario.get(6)))
+        else if(formulario.get(6).equals(""))
         {
             ventanaLogin.mostrarMensajeError("Ingrese un titulo valido");
             camposValidos = false;
         }
-        else if(comprobarTelefono(formulario.get(7)))
+        else if(formulario.get(7).equals(""))
         {
             ventanaLogin.mostrarMensajeError("Ingrese una dependencia valida");
             camposValidos = false;
@@ -247,6 +247,9 @@ public class ControladorLogin
             //auxEmpleado = daoEmpleado.consultarEmpleadoEmail(auxCorreo, auxContrasena);
         }
 
+        System.out.println(auxEstudiante);
+        System.out.println(auxProfesor);
+
         if(auxProfesor != null)
         {
             ventanaLogin.dispose();
@@ -305,43 +308,6 @@ public class ControladorLogin
     {
         String regexPattern = "\\d+";
         return Pattern.compile(regexPattern).matcher(cedula).matches();
-    }
-
-    private boolean comprobarRegistro(ArrayList<String> formulario)
-    {
-        boolean camposValidos = true;
-        if(!comprobarCedula(formulario.get(0)))
-        {
-            ventanaLogin.mostrarMensajeError("Ingrese una cedula valida");
-            camposValidos = false;
-        }
-        else if(formulario.get(1).equals(""))
-        {
-            ventanaLogin.mostrarMensajeError("Ingrese un nombre valido");
-            camposValidos = false;
-        }
-        else if(!comprobarCorreo(formulario.get(2)))
-        {
-            ventanaLogin.mostrarMensajeError("Ingrese un correo valido");
-            camposValidos = false;
-        }
-        else if(formulario.get(3).equals(""))
-        {
-            ventanaLogin.mostrarMensajeError("Ingrese un clave valida");
-            camposValidos = false;
-        }
-        else if(formulario.get(4).equals(""))
-        {
-            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
-            camposValidos = false;
-        }
-        else if(comprobarTelefono(formulario.get(5)))
-        {
-            ventanaLogin.mostrarMensajeError("Ingrese una direccion valida");
-            camposValidos = false;
-        }
-
-        return camposValidos;
     }
 
     class LoginListener implements ActionListener

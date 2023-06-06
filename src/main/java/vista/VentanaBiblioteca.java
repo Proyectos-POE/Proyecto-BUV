@@ -32,6 +32,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         this.addTablaAreaAListener(new TablaAreaAListener());
         this.addTablaEmpleadoAListener(new TablaEmpleadoAListener());
 
+        this.addTablaLibroUListener(new TablaLibroUListener());
+        this.addTablaMultaUListener(new TablaMultaUListener());
+
+        this.menuAdmin();
+        this.pagAreaAdmin();
+        this.setVisible(true);
+
         UIManager.put("OptionPane.messageFont", new java.awt.Font("Montserrat", 0, 12));
     }
 
@@ -55,6 +62,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         lblIcono = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         btnUsuario = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
         jpMenu = new javax.swing.JPanel();
         jpMenuUsuario = new javax.swing.JPanel();
         btnLibrosUsuario = new javax.swing.JButton();
@@ -74,29 +82,29 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnUsuariosAdmin = new javax.swing.JButton();
         jpContenido = new javax.swing.JPanel();
         jpLibroUsuario = new javax.swing.JPanel();
-        jpSuperiorLibroU = new javax.swing.JPanel();
+        jpFormularioLibroU = new javax.swing.JPanel();
         lblTituloLibroU = new javax.swing.JLabel();
-        jpInferiorLibroU = new javax.swing.JPanel();
-        jpIzquierdaLibroU = new javax.swing.JPanel();
-        jpDerechaLibroU = new javax.swing.JPanel();
+        lblIsbnLibroU = new javax.swing.JLabel();
+        txtIsbnLibroU = new javax.swing.JTextField();
+        btnDescargaLibroU = new javax.swing.JButton();
+        jpTablaLibroU = new javax.swing.JPanel();
         jpsTablaLibroU = new javax.swing.JScrollPane();
         jtTablaLibroU = new javax.swing.JTable();
         jpPrestamoUsuario = new javax.swing.JPanel();
-        jpSuperiorPrestamoU = new javax.swing.JPanel();
+        jpFormularioPrestamoU = new javax.swing.JPanel();
         lblTituloPrestamoU = new javax.swing.JLabel();
-        jpInferiorPrestamoU = new javax.swing.JPanel();
-        jpIzquierdaPrestamoU = new javax.swing.JPanel();
-        jpDerechaPrestamoU = new javax.swing.JPanel();
+        jpTablaPrestamoU = new javax.swing.JPanel();
         jpsTablaPrestamoU = new javax.swing.JScrollPane();
         jtTablaPrestamoU = new javax.swing.JTable();
         jpMultaUsuario = new javax.swing.JPanel();
+        jpFormularioMultaU = new javax.swing.JPanel();
+        lblMultasTitulo = new javax.swing.JLabel();
+        lblNumeroMultaU = new javax.swing.JLabel();
+        txtNumeroMultaU = new javax.swing.JTextField();
+        btnPagarMultaU = new javax.swing.JButton();
+        jpTablaMultaU = new javax.swing.JPanel();
         jpsTablaMultaU = new javax.swing.JScrollPane();
         jtTablaMultaU = new javax.swing.JTable();
-        jpSuperiorMultaU = new javax.swing.JPanel();
-        lblMultasTitulo = new javax.swing.JLabel();
-        jpInferiorMultaU = new javax.swing.JPanel();
-        jpIzquierdaMultaU = new javax.swing.JPanel();
-        jpDerechaMultaU = new javax.swing.JPanel();
         jpSolicitudUsuario = new javax.swing.JPanel();
         jpFormularioSolicitudU = new javax.swing.JPanel();
         lblIsbnSolicitudU = new javax.swing.JLabel();
@@ -108,11 +116,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txaDescripcionSolicitudU = new javax.swing.JTextArea();
         btnEnviarSolicitudU = new javax.swing.JButton();
         lblTituloSolicitudesU = new javax.swing.JLabel();
+        jpTablaSolicitudU = new javax.swing.JPanel();
         jpsTablaSolicitudU = new javax.swing.JScrollPane();
         jtTablaSolicitudU = new javax.swing.JTable();
-        jpIzquierdaSolicitudU = new javax.swing.JPanel();
-        jpDerechaSolicitudUsuario = new javax.swing.JPanel();
-        jpInferiorSolicitudU = new javax.swing.JPanel();
         jpAreaAdmin = new javax.swing.JPanel();
         jpFormularioAreaA = new javax.swing.JPanel();
         lblNombreAreaA = new javax.swing.JLabel();
@@ -221,23 +227,82 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpTablaEmpleadoA1 = new javax.swing.JPanel();
         jspTablaUsuarioA = new javax.swing.JScrollPane();
         jtTablaUsuarioA = new javax.swing.JTable();
+        jpPerfilUsuarioE = new javax.swing.JPanel();
+        lblTituloUsuarioPE = new javax.swing.JLabel();
+        lblCedulaEstudianteP = new javax.swing.JLabel();
+        txtCedulaEstudianteP = new javax.swing.JTextField();
+        lblTelefonoEstudianteP = new javax.swing.JLabel();
+        txtTelefonoEstudianteP = new javax.swing.JTextField();
+        lblNombreEstudianteP = new javax.swing.JLabel();
+        txtNombreEstudianteP = new javax.swing.JTextField();
+        lblCarreraEstudianteP = new javax.swing.JLabel();
+        txtCarreraEstudianteP = new javax.swing.JTextField();
+        lblDireccionEstudianteP = new javax.swing.JLabel();
+        txtDireccionEstudianteP = new javax.swing.JTextField();
+        lblClaveEstudianteP = new javax.swing.JLabel();
+        txtClaveEstudianteP = new javax.swing.JTextField();
+        lblUniversidadEstudianteP = new javax.swing.JLabel();
+        txtUniversidadEstudianteP = new javax.swing.JTextField();
+        lblCorreoEstudianteP = new javax.swing.JLabel();
+        txtCorreoEstudianteP = new javax.swing.JTextField();
+        btnModificarPerfilE = new javax.swing.JButton();
+        jpPerfilUsuarioP = new javax.swing.JPanel();
+        lblTituloUsuarioPP = new javax.swing.JLabel();
+        lblCedulaProfesorP = new javax.swing.JLabel();
+        txtCedulaProfesorP = new javax.swing.JTextField();
+        lblTelefonoProfesorP = new javax.swing.JLabel();
+        txtTelefonoProfesorP = new javax.swing.JTextField();
+        lblNombreProfesorP = new javax.swing.JLabel();
+        txtNombreProfesorP = new javax.swing.JTextField();
+        lblTituloProfesorP = new javax.swing.JLabel();
+        txtTituloProfesorP = new javax.swing.JTextField();
+        lblDireccionProfesorP = new javax.swing.JLabel();
+        txtDireccionProfesorP = new javax.swing.JTextField();
+        lblClaveProfesorP = new javax.swing.JLabel();
+        txtClaveProfesorP = new javax.swing.JTextField();
+        lblDependenciaProfesorP = new javax.swing.JLabel();
+        txtDependenciaProfesorP = new javax.swing.JTextField();
+        lblCorreoProfesorP = new javax.swing.JLabel();
+        txtCorreoProfesorP = new javax.swing.JTextField();
+        btnModificarPerfilP = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jpEncabezado.setBackground(new java.awt.Color(225, 232, 239));
-        jpEncabezado.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 40, 10));
+        jpEncabezado.setLayout(new java.awt.GridBagLayout());
 
         lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logoUnivalleS.png"))); // NOI18N
-        jpEncabezado.add(lblIcono);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(20, 40, 20, 40);
+        jpEncabezado.add(lblIcono, gridBagConstraints);
 
         lblTitulo.setFont(new java.awt.Font("Montserrat", 0, 24)); // NOI18N
         lblTitulo.setText("BIBLIOTECA UNIVERSITARIA");
-        jpEncabezado.add(lblTitulo);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jpEncabezado.add(lblTitulo, gridBagConstraints);
 
-        btnUsuario.setBackground(new java.awt.Color(235, 238, 243));
-        btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/usuario.png"))); // NOI18N
+        btnUsuario.setBackground(new java.awt.Color(255, 0, 0));
+        btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/usuarioB.png"))); // NOI18N
+        btnUsuario.setActionCommand("usuario");
+        btnUsuario.setBorderPainted(false);
         btnUsuario.setFocusPainted(false);
-        jpEncabezado.add(btnUsuario);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpEncabezado.add(btnUsuario, gridBagConstraints);
+
+        btnCerrarSesion.setBackground(new java.awt.Color(255, 0, 0));
+        btnCerrarSesion.setForeground(new java.awt.Color(255, 0, 51));
+        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerrarSesion.png"))); // NOI18N
+        btnCerrarSesion.setActionCommand("cerrarSesion");
+        btnCerrarSesion.setBorderPainted(false);
+        btnCerrarSesion.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 20, 20);
+        jpEncabezado.add(btnCerrarSesion, gridBagConstraints);
 
         getContentPane().add(jpEncabezado, java.awt.BorderLayout.PAGE_START);
 
@@ -254,7 +319,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 10;
-        gridBagConstraints.insets = new java.awt.Insets(100, 10, 0, 10);
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
         jpMenuUsuario.add(btnLibrosUsuario, gridBagConstraints);
 
         btnPrestamosUsuario.setBackground(new java.awt.Color(225, 232, 239));
@@ -267,7 +333,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 10;
-        gridBagConstraints.insets = new java.awt.Insets(100, 10, 0, 10);
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
         jpMenuUsuario.add(btnPrestamosUsuario, gridBagConstraints);
 
         btnMultasUsuario.setBackground(new java.awt.Color(225, 232, 239));
@@ -280,7 +347,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 10;
-        gridBagConstraints.insets = new java.awt.Insets(100, 10, 100, 10);
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
         jpMenuUsuario.add(btnMultasUsuario, gridBagConstraints);
 
         btnSolicitudUsuario.setBackground(new java.awt.Color(225, 232, 239));
@@ -293,7 +361,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 10;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 100, 10);
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
         jpMenuUsuario.add(btnSolicitudUsuario, gridBagConstraints);
 
         jpMenu.add(jpMenuUsuario, "jpMenuUsuario");
@@ -449,24 +518,49 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpContenido.setLayout(new java.awt.CardLayout());
 
         jpLibroUsuario.setOpaque(false);
-        jpLibroUsuario.setLayout(new java.awt.BorderLayout(10, 10));
+        jpLibroUsuario.setLayout(new java.awt.BorderLayout());
 
-        jpSuperiorLibroU.setOpaque(false);
+        jpFormularioLibroU.setOpaque(false);
+        jpFormularioLibroU.setLayout(new java.awt.GridBagLayout());
 
         lblTituloLibroU.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
         lblTituloLibroU.setText("LIBROS");
-        jpSuperiorLibroU.add(lblTituloLibroU);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 10, 0);
+        jpFormularioLibroU.add(lblTituloLibroU, gridBagConstraints);
 
-        jpLibroUsuario.add(jpSuperiorLibroU, java.awt.BorderLayout.PAGE_START);
+        lblIsbnLibroU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblIsbnLibroU.setText("ISBN");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 5, 0);
+        jpFormularioLibroU.add(lblIsbnLibroU, gridBagConstraints);
 
-        jpInferiorLibroU.setOpaque(false);
-        jpLibroUsuario.add(jpInferiorLibroU, java.awt.BorderLayout.PAGE_END);
+        txtIsbnLibroU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
+        jpFormularioLibroU.add(txtIsbnLibroU, gridBagConstraints);
 
-        jpIzquierdaLibroU.setOpaque(false);
-        jpLibroUsuario.add(jpIzquierdaLibroU, java.awt.BorderLayout.WEST);
+        btnDescargaLibroU.setBackground(new java.awt.Color(255, 0, 51));
+        btnDescargaLibroU.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnDescargaLibroU.setForeground(new java.awt.Color(255, 255, 255));
+        btnDescargaLibroU.setText("DESCARGAR");
+        btnDescargaLibroU.setBorderPainted(false);
+        btnDescargaLibroU.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        jpFormularioLibroU.add(btnDescargaLibroU, gridBagConstraints);
 
-        jpDerechaLibroU.setOpaque(false);
-        jpLibroUsuario.add(jpDerechaLibroU, java.awt.BorderLayout.EAST);
+        jpLibroUsuario.add(jpFormularioLibroU, java.awt.BorderLayout.PAGE_START);
+
+        jpTablaLibroU.setOpaque(false);
+        jpTablaLibroU.setLayout(new java.awt.GridBagLayout());
 
         jtTablaLibroU.getTableHeader().setFont(new java.awt.Font("Montserrat",0, 12));
         jtTablaLibroU.setDefaultEditor(Object.class, null);
@@ -494,29 +588,33 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaLibroU.getTableHeader().setReorderingAllowed(false);
         jpsTablaLibroU.setViewportView(jtTablaLibroU);
 
-        jpLibroUsuario.add(jpsTablaLibroU, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpTablaLibroU.add(jpsTablaLibroU, gridBagConstraints);
+
+        jpLibroUsuario.add(jpTablaLibroU, java.awt.BorderLayout.CENTER);
 
         jpContenido.add(jpLibroUsuario, "libroUsuario");
 
         jpPrestamoUsuario.setOpaque(false);
-        jpPrestamoUsuario.setLayout(new java.awt.BorderLayout(10, 10));
+        jpPrestamoUsuario.setLayout(new java.awt.BorderLayout());
 
-        jpSuperiorPrestamoU.setOpaque(false);
+        jpFormularioPrestamoU.setOpaque(false);
+        jpFormularioPrestamoU.setLayout(new java.awt.GridBagLayout());
 
         lblTituloPrestamoU.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
         lblTituloPrestamoU.setText("PRESTAMOS");
-        jpSuperiorPrestamoU.add(lblTituloPrestamoU);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jpFormularioPrestamoU.add(lblTituloPrestamoU, gridBagConstraints);
 
-        jpPrestamoUsuario.add(jpSuperiorPrestamoU, java.awt.BorderLayout.PAGE_START);
+        jpPrestamoUsuario.add(jpFormularioPrestamoU, java.awt.BorderLayout.PAGE_START);
 
-        jpInferiorPrestamoU.setOpaque(false);
-        jpPrestamoUsuario.add(jpInferiorPrestamoU, java.awt.BorderLayout.PAGE_END);
-
-        jpIzquierdaPrestamoU.setOpaque(false);
-        jpPrestamoUsuario.add(jpIzquierdaPrestamoU, java.awt.BorderLayout.WEST);
-
-        jpDerechaPrestamoU.setOpaque(false);
-        jpPrestamoUsuario.add(jpDerechaPrestamoU, java.awt.BorderLayout.EAST);
+        jpTablaPrestamoU.setOpaque(false);
+        jpTablaPrestamoU.setLayout(new java.awt.GridBagLayout());
 
         jtTablaPrestamoU.getTableHeader().setFont(new java.awt.Font("Montserrat", 0, 12));
         jtTablaPrestamoU.setDefaultEditor(Object.class, null);
@@ -545,12 +643,62 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaPrestamoU.getTableHeader().setReorderingAllowed(false);
         jpsTablaPrestamoU.setViewportView(jtTablaPrestamoU);
 
-        jpPrestamoUsuario.add(jpsTablaPrestamoU, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpTablaPrestamoU.add(jpsTablaPrestamoU, gridBagConstraints);
+
+        jpPrestamoUsuario.add(jpTablaPrestamoU, java.awt.BorderLayout.CENTER);
 
         jpContenido.add(jpPrestamoUsuario, "prestamoUsuario");
 
         jpMultaUsuario.setOpaque(false);
-        jpMultaUsuario.setLayout(new java.awt.BorderLayout(10, 10));
+        jpMultaUsuario.setLayout(new java.awt.BorderLayout());
+
+        jpFormularioMultaU.setOpaque(false);
+        jpFormularioMultaU.setLayout(new java.awt.GridBagLayout());
+
+        lblMultasTitulo.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
+        lblMultasTitulo.setText("MULTAS");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 10, 0);
+        jpFormularioMultaU.add(lblMultasTitulo, gridBagConstraints);
+
+        lblNumeroMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNumeroMultaU.setText("# MULTA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 5, 0);
+        jpFormularioMultaU.add(lblNumeroMultaU, gridBagConstraints);
+
+        txtNumeroMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
+        jpFormularioMultaU.add(txtNumeroMultaU, gridBagConstraints);
+
+        btnPagarMultaU.setBackground(new java.awt.Color(255, 0, 0));
+        btnPagarMultaU.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnPagarMultaU.setForeground(new java.awt.Color(255, 255, 255));
+        btnPagarMultaU.setText("PAGAR");
+        btnPagarMultaU.setBorderPainted(false);
+        btnPagarMultaU.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 50;
+        jpFormularioMultaU.add(btnPagarMultaU, gridBagConstraints);
+
+        jpMultaUsuario.add(jpFormularioMultaU, java.awt.BorderLayout.PAGE_START);
+
+        jpTablaMultaU.setOpaque(false);
+        jpTablaMultaU.setLayout(new java.awt.GridBagLayout());
 
         jtTablaMultaU.getTableHeader().setFont(new java.awt.Font("Montserrat", 0, 12));
         jtTablaMultaU.setDefaultEditor(Object.class, null);
@@ -580,29 +728,19 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaMultaU.getTableHeader().setReorderingAllowed(false);
         jpsTablaMultaU.setViewportView(jtTablaMultaU);
 
-        jpMultaUsuario.add(jpsTablaMultaU, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpTablaMultaU.add(jpsTablaMultaU, gridBagConstraints);
 
-        jpSuperiorMultaU.setOpaque(false);
-
-        lblMultasTitulo.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
-        lblMultasTitulo.setText("MULTAS");
-        jpSuperiorMultaU.add(lblMultasTitulo);
-
-        jpMultaUsuario.add(jpSuperiorMultaU, java.awt.BorderLayout.PAGE_START);
-
-        jpInferiorMultaU.setOpaque(false);
-        jpMultaUsuario.add(jpInferiorMultaU, java.awt.BorderLayout.SOUTH);
-
-        jpIzquierdaMultaU.setOpaque(false);
-        jpMultaUsuario.add(jpIzquierdaMultaU, java.awt.BorderLayout.LINE_END);
-
-        jpDerechaMultaU.setOpaque(false);
-        jpMultaUsuario.add(jpDerechaMultaU, java.awt.BorderLayout.LINE_START);
+        jpMultaUsuario.add(jpTablaMultaU, java.awt.BorderLayout.CENTER);
 
         jpContenido.add(jpMultaUsuario, "multaUsuario");
 
         jpSolicitudUsuario.setOpaque(false);
-        jpSolicitudUsuario.setLayout(new java.awt.BorderLayout(10, 10));
+        jpSolicitudUsuario.setLayout(new java.awt.BorderLayout());
 
         jpFormularioSolicitudU.setOpaque(false);
         jpFormularioSolicitudU.setLayout(new java.awt.GridBagLayout());
@@ -645,7 +783,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
         jpFormularioSolicitudU.add(lblDescripcionSolicitudU, gridBagConstraints);
 
         txaDescripcionSolicitudU.setColumns(20);
@@ -657,7 +795,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 200;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 20, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 20, 10);
         jpFormularioSolicitudU.add(jpsDescripcionSolicitudU, gridBagConstraints);
 
         btnEnviarSolicitudU.setBackground(new java.awt.Color(255, 0, 0));
@@ -671,8 +809,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
         jpFormularioSolicitudU.add(btnEnviarSolicitudU, gridBagConstraints);
 
         lblTituloSolicitudesU.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
@@ -685,6 +821,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioSolicitudU.add(lblTituloSolicitudesU, gridBagConstraints);
 
         jpSolicitudUsuario.add(jpFormularioSolicitudU, java.awt.BorderLayout.NORTH);
+
+        jpTablaSolicitudU.setOpaque(false);
+        jpTablaSolicitudU.setLayout(new java.awt.GridBagLayout());
 
         jpsTablaSolicitudU.setOpaque(false);
 
@@ -716,16 +855,14 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaSolicitudU.getTableHeader().setReorderingAllowed(false);
         jpsTablaSolicitudU.setViewportView(jtTablaSolicitudU);
 
-        jpSolicitudUsuario.add(jpsTablaSolicitudU, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 0);
+        jpTablaSolicitudU.add(jpsTablaSolicitudU, gridBagConstraints);
 
-        jpIzquierdaSolicitudU.setOpaque(false);
-        jpSolicitudUsuario.add(jpIzquierdaSolicitudU, java.awt.BorderLayout.WEST);
-
-        jpDerechaSolicitudUsuario.setOpaque(false);
-        jpSolicitudUsuario.add(jpDerechaSolicitudUsuario, java.awt.BorderLayout.EAST);
-
-        jpInferiorSolicitudU.setOpaque(false);
-        jpSolicitudUsuario.add(jpInferiorSolicitudU, java.awt.BorderLayout.SOUTH);
+        jpSolicitudUsuario.add(jpTablaSolicitudU, java.awt.BorderLayout.CENTER);
 
         jpContenido.add(jpSolicitudUsuario, "solicitudUsuario");
 
@@ -1635,13 +1772,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaEmpleadoA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null}
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null}
                 },
                 new String [] {
-                        "CEDULA", "NOMBRE", "EMAIL", "DIRECCION", "TELEFONO", "CARGO"
+                        "CEDULA", "NOMBRE", "EMAIL", "CLAVE", "DIRECCION", "TELEFONO", "CARGO"
                 }
         ));
         jtTablaEmpleadoA.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -1710,6 +1847,372 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpUsuarioAdmin.add(jpTablaEmpleadoA1, java.awt.BorderLayout.CENTER);
 
         jpContenido.add(jpUsuarioAdmin, "jpUsuarioAdmin");
+
+        jpPerfilUsuarioE.setOpaque(false);
+        jpPerfilUsuarioE.setLayout(new java.awt.GridBagLayout());
+
+        lblTituloUsuarioPE.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
+        lblTituloUsuarioPE.setText("USUARIO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jpPerfilUsuarioE.add(lblTituloUsuarioPE, gridBagConstraints);
+
+        lblCedulaEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblCedulaEstudianteP.setText("CEDULA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblCedulaEstudianteP, gridBagConstraints);
+
+        txtCedulaEstudianteP.setEditable(false);
+        txtCedulaEstudianteP.setColumns(5);
+        txtCedulaEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioE.add(txtCedulaEstudianteP, gridBagConstraints);
+
+        lblTelefonoEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblTelefonoEstudianteP.setText("TELEFONO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblTelefonoEstudianteP, gridBagConstraints);
+
+        txtTelefonoEstudianteP.setColumns(5);
+        txtTelefonoEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioE.add(txtTelefonoEstudianteP, gridBagConstraints);
+
+        lblNombreEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNombreEstudianteP.setText("NOMBRE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblNombreEstudianteP, gridBagConstraints);
+
+        txtNombreEstudianteP.setColumns(5);
+        txtNombreEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioE.add(txtNombreEstudianteP, gridBagConstraints);
+
+        lblCarreraEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblCarreraEstudianteP.setText("CARRERA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblCarreraEstudianteP, gridBagConstraints);
+
+        txtCarreraEstudianteP.setColumns(5);
+        txtCarreraEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        jpPerfilUsuarioE.add(txtCarreraEstudianteP, gridBagConstraints);
+
+        lblDireccionEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblDireccionEstudianteP.setText("DIRECCION");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblDireccionEstudianteP, gridBagConstraints);
+
+        txtDireccionEstudianteP.setColumns(5);
+        txtDireccionEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioE.add(txtDireccionEstudianteP, gridBagConstraints);
+
+        lblClaveEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblClaveEstudianteP.setText("CLAVE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblClaveEstudianteP, gridBagConstraints);
+
+        txtClaveEstudianteP.setColumns(5);
+        txtClaveEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioE.add(txtClaveEstudianteP, gridBagConstraints);
+
+        lblUniversidadEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblUniversidadEstudianteP.setText("UNIVERSIDAD");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblUniversidadEstudianteP, gridBagConstraints);
+
+        txtUniversidadEstudianteP.setColumns(5);
+        txtUniversidadEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        jpPerfilUsuarioE.add(txtUniversidadEstudianteP, gridBagConstraints);
+
+        lblCorreoEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblCorreoEstudianteP.setText("CORREO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioE.add(lblCorreoEstudianteP, gridBagConstraints);
+
+        txtCorreoEstudianteP.setColumns(5);
+        txtCorreoEstudianteP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioE.add(txtCorreoEstudianteP, gridBagConstraints);
+
+        btnModificarPerfilE.setBackground(new java.awt.Color(255, 0, 0));
+        btnModificarPerfilE.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnModificarPerfilE.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificarPerfilE.setText("MODIFICAR");
+        btnModificarPerfilE.setBorderPainted(false);
+        btnModificarPerfilE.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jpPerfilUsuarioE.add(btnModificarPerfilE, gridBagConstraints);
+
+        jpContenido.add(jpPerfilUsuarioE, "perfilEstudiante");
+
+        jpPerfilUsuarioP.setOpaque(false);
+        jpPerfilUsuarioP.setLayout(new java.awt.GridBagLayout());
+
+        lblTituloUsuarioPP.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
+        lblTituloUsuarioPP.setText("USUARIO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jpPerfilUsuarioP.add(lblTituloUsuarioPP, gridBagConstraints);
+
+        lblCedulaProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblCedulaProfesorP.setText("CEDULA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblCedulaProfesorP, gridBagConstraints);
+
+        txtCedulaProfesorP.setEditable(false);
+        txtCedulaProfesorP.setColumns(5);
+        txtCedulaProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioP.add(txtCedulaProfesorP, gridBagConstraints);
+
+        lblTelefonoProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblTelefonoProfesorP.setText("TELEFONO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblTelefonoProfesorP, gridBagConstraints);
+
+        txtTelefonoProfesorP.setColumns(5);
+        txtTelefonoProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioP.add(txtTelefonoProfesorP, gridBagConstraints);
+
+        lblNombreProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNombreProfesorP.setText("NOMBRE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblNombreProfesorP, gridBagConstraints);
+
+        txtNombreProfesorP.setColumns(5);
+        txtNombreProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioP.add(txtNombreProfesorP, gridBagConstraints);
+
+        lblTituloProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblTituloProfesorP.setText("TITULO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblTituloProfesorP, gridBagConstraints);
+
+        txtTituloProfesorP.setColumns(5);
+        txtTituloProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        jpPerfilUsuarioP.add(txtTituloProfesorP, gridBagConstraints);
+
+        lblDireccionProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblDireccionProfesorP.setText("DIRECCION");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblDireccionProfesorP, gridBagConstraints);
+
+        txtDireccionProfesorP.setColumns(5);
+        txtDireccionProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioP.add(txtDireccionProfesorP, gridBagConstraints);
+
+        lblClaveProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblClaveProfesorP.setText("CLAVE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblClaveProfesorP, gridBagConstraints);
+
+        txtClaveProfesorP.setColumns(5);
+        txtClaveProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioP.add(txtClaveProfesorP, gridBagConstraints);
+
+        lblDependenciaProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblDependenciaProfesorP.setText("DEPENDENCIA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblDependenciaProfesorP, gridBagConstraints);
+
+        txtDependenciaProfesorP.setColumns(5);
+        txtDependenciaProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        jpPerfilUsuarioP.add(txtDependenciaProfesorP, gridBagConstraints);
+
+        lblCorreoProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblCorreoProfesorP.setText("CORREO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpPerfilUsuarioP.add(lblCorreoProfesorP, gridBagConstraints);
+
+        txtCorreoProfesorP.setColumns(5);
+        txtCorreoProfesorP.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
+        jpPerfilUsuarioP.add(txtCorreoProfesorP, gridBagConstraints);
+
+        btnModificarPerfilP.setBackground(new java.awt.Color(255, 0, 0));
+        btnModificarPerfilP.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnModificarPerfilP.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificarPerfilP.setText("MODIFICAR");
+        btnModificarPerfilP.setBorderPainted(false);
+        btnModificarPerfilP.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jpPerfilUsuarioP.add(btnModificarPerfilP, gridBagConstraints);
+
+        jpContenido.add(jpPerfilUsuarioP, "perfilProfesor");
 
         getContentPane().add(jpContenido, java.awt.BorderLayout.CENTER);
 
@@ -1851,6 +2354,17 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         a.show(jpContenido, "libroUsuario");
     }
 
+    public void pagPerfilEstudiante()
+    {
+        CardLayout a = (CardLayout)jpContenido.getLayout();
+        a.show(jpContenido, "perfilEstudiante");
+    }
+
+    public void pagPerfilProfesor()
+    {
+        CardLayout a = (CardLayout)jpContenido.getLayout();
+        a.show(jpContenido, "perfilProfesor");
+    }
 
     class CambiarPaginaUListener implements ActionListener
     {
@@ -1946,6 +2460,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnUsuariosAdmin.addActionListener(listenControles);
     }
 
+    public void addBotonesEncabezadoListener(ActionListener listenControles)
+    {
+        btnUsuario.addActionListener(listenControles);
+        btnCerrarSesion.addActionListener(listenControles);
+    }
+
     public void limpiarSolicitudUsuario()
     {
         txtIsbnSolicitudU.setText("");
@@ -1985,6 +2505,16 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtDireccionEmpleadoA.setText("");
         txtTelefonoEmpleadoA.setText("");
         txtCargoEmpleadoA.setText("");
+    }
+
+    public void limpiarLibroUsuario()
+    {
+        txtIsbnLibroU.setText("");
+    }
+
+    public void limpiarMultaUsuario()
+    {
+        txtNumeroMultaU.setText("");
     }
 
     class TablaAutorAListener extends MouseAdapter
@@ -2075,9 +2605,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             int fila = tabla.getSelectedRow();
             if(fila == -1)
             {
-                txtCedulaEmpleadoA.setText("0");
+                txtCedulaEmpleadoA.setEditable(true);
+                btnAgregarEmpleadoA.setEnabled(true);
+
+                txtCedulaEmpleadoA.setText("");
                 txtNombreEmpleadoA.setText("");
-                txtCargoEmpleadoA.setText("");
+                txtCorreoEmpleadoA.setText("");
                 txtClaveEmpleadoA.setText("");
                 txtDireccionEmpleadoA.setText("");
                 txtTelefonoEmpleadoA.setText("");
@@ -2086,16 +2619,58 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             else
             {
                 limpiarEmpleadoAdmin();
-                txtNombreEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
-                txtNombreAreaA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
-                txtCargoEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 2)));
+                txtCedulaEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+                txtNombreEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
+                txtCorreoEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 2)));
                 txtClaveEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 3)));
                 txtDireccionEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 4)));
-                txtTelefonoEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 4)));
-                txtCargoEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 4)));
+                txtTelefonoEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 5)));
+                txtCargoEmpleadoA.setText(String.valueOf(tabla.getValueAt(fila , 6)));
+
+                txtCedulaEmpleadoA.setEditable(false);
+                btnAgregarEmpleadoA.setEnabled(false);
             }
         }
     }
+
+    class TablaLibroUListener extends MouseAdapter
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            JTable tabla = (JTable)e.getSource();
+            int fila = tabla.getSelectedRow();
+            if(fila == -1)
+            {
+                txtIsbnLibroU.setText("");
+            }
+            else
+            {
+                limpiarLibroUsuario();
+                txtIsbnLibroU.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+            }
+        }
+    }
+
+    class TablaMultaUListener extends MouseAdapter
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            JTable tabla = (JTable)e.getSource();
+            int fila = tabla.getSelectedRow();
+            if(fila == -1)
+            {
+                txtNumeroMultaU.setText("");
+            }
+            else
+            {
+                limpiarMultaUsuario();
+                txtNumeroMultaU.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+            }
+        }
+    }
+
 
     public void addTablaAreaAListener(MouseAdapter listenControles)
     {
@@ -2117,6 +2692,96 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaEmpleadoA.addMouseListener(listenControles);
     }
 
+    public void addTablaLibroUListener(MouseAdapter listenControles)
+    {
+        jtTablaLibroU.addMouseListener(listenControles);
+    }
+
+    public void addTablaMultaUListener(MouseAdapter listenControles)
+    {
+        jtTablaMultaU.addMouseListener(listenControles);
+    }
+
+    public void setCedulaEstudianteP(String txt)
+    {
+        txtCedulaEstudianteP.setText(txt);
+    }
+
+    public void setNombreEstudianteP(String txt)
+    {
+        txtNombreEstudianteP.setText(txt);
+    }
+
+    public void setCorreoEstudianteP(String txt)
+    {
+        txtCorreoEstudianteP.setText(txt);
+    }
+
+    public void setClaveEstudianteP(String txt)
+    {
+        txtClaveEstudianteP.setText(txt);
+    }
+
+    public void setDireccionEstudianteP(String txt)
+    {
+        txtDireccionEstudianteP.setText(txt);
+    }
+
+    public void setTelefonoEstudianteP(String txt)
+    {
+        txtTelefonoEstudianteP.setText(txt);
+    }
+
+    public void setCarreraEstudianteP(String txt)
+    {
+        txtCarreraEstudianteP.setText(txt);
+    }
+
+    public void setUniversidadEstudianteP(String txt)
+    {
+        txtUniversidadEstudianteP.setText(txt);
+    }
+
+    public void setCedulaProfesorP(String txt)
+    {
+        txtCedulaProfesorP.setText(txt);
+    }
+
+    public void setNombreProfesorP(String txt)
+    {
+        txtNombreProfesorP.setText(txt);
+    }
+
+    public void setCorreoProfesorP(String txt)
+    {
+        txtCorreoProfesorP.setText(txt);
+    }
+
+    public void setClaveProfesorP(String txt)
+    {
+        txtClaveProfesorP.setText(txt);
+    }
+
+    public void setDireccionProfesorP(String txt)
+    {
+        txtDireccionProfesorP.setText(txt);
+    }
+
+    public void setTelefonoProfesorP(String txt)
+    {
+        txtTelefonoProfesorP.setText(txt);
+    }
+
+    public void setTituloProfesorP(String txt)
+    {
+        txtTituloProfesorP.setText(txt);
+    }
+
+    public void setDependenciaProfesorP(String txt)
+    {
+        txtDependenciaProfesorP.setText(txt);
+    }
+
 
     // Variables declaration - do not modify
     private javax.swing.JButton btnAgregarAreaA;
@@ -2125,6 +2790,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarEmpleadoA;
     private javax.swing.JButton btnAreasAdmin;
     private javax.swing.JButton btnAutoresAdmin;
+    private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnDescargaLibroU;
     private javax.swing.JButton btnDescargasAdmin;
     private javax.swing.JButton btnEditorialesAdmin;
     private javax.swing.JButton btnEliminarAreaA;
@@ -2139,8 +2806,11 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JButton btnModificarAutorA;
     private javax.swing.JButton btnModificarEditorialA;
     private javax.swing.JButton btnModificarEmpleadoA;
+    private javax.swing.JButton btnModificarPerfilE;
+    private javax.swing.JButton btnModificarPerfilP;
     private javax.swing.JButton btnMultasAdmin;
     private javax.swing.JButton btnMultasUsuario;
+    private javax.swing.JButton btnPagarMultaU;
     private javax.swing.JButton btnPrestamosAdmin;
     private javax.swing.JButton btnPrestamosUsuario;
     private javax.swing.JButton btnRelacionarAreaA;
@@ -2152,10 +2822,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JPanel jpAreaAdmin;
     private javax.swing.JPanel jpAutorAdmin;
     private javax.swing.JPanel jpContenido;
-    private javax.swing.JPanel jpDerechaLibroU;
-    private javax.swing.JPanel jpDerechaMultaU;
-    private javax.swing.JPanel jpDerechaPrestamoU;
-    private javax.swing.JPanel jpDerechaSolicitudUsuario;
     private javax.swing.JPanel jpDescargaAdmin;
     private javax.swing.JPanel jpEditorialAdmin;
     private javax.swing.JPanel jpEmpleadoAdmin;
@@ -2165,41 +2831,39 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JPanel jpFormularioDescargaA;
     private javax.swing.JPanel jpFormularioEditorialA;
     private javax.swing.JPanel jpFormularioEmpleadoA;
+    private javax.swing.JPanel jpFormularioLibroU;
     private javax.swing.JPanel jpFormularioMultaA;
+    private javax.swing.JPanel jpFormularioMultaU;
     private javax.swing.JPanel jpFormularioPrestamoA;
+    private javax.swing.JPanel jpFormularioPrestamoU;
     private javax.swing.JPanel jpFormularioSolicitudA;
     private javax.swing.JPanel jpFormularioSolicitudU;
     private javax.swing.JPanel jpFormularioUsuarioA;
-    private javax.swing.JPanel jpInferiorLibroU;
-    private javax.swing.JPanel jpInferiorMultaU;
-    private javax.swing.JPanel jpInferiorPrestamoU;
-    private javax.swing.JPanel jpInferiorSolicitudU;
-    private javax.swing.JPanel jpIzquierdaLibroU;
-    private javax.swing.JPanel jpIzquierdaMultaU;
-    private javax.swing.JPanel jpIzquierdaPrestamoU;
-    private javax.swing.JPanel jpIzquierdaSolicitudU;
     private javax.swing.JPanel jpLibroUsuario;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JPanel jpMenuAdmin;
     private javax.swing.JPanel jpMenuUsuario;
     private javax.swing.JPanel jpMultaAdmin;
     private javax.swing.JPanel jpMultaUsuario;
+    private javax.swing.JPanel jpPerfilUsuarioE;
+    private javax.swing.JPanel jpPerfilUsuarioP;
     private javax.swing.JPanel jpPrestamoAdmin;
     private javax.swing.JPanel jpPrestamoUsuario;
     private javax.swing.JPanel jpSolicitudAdmin;
     private javax.swing.JPanel jpSolicitudUsuario;
-    private javax.swing.JPanel jpSuperiorLibroU;
-    private javax.swing.JPanel jpSuperiorMultaU;
-    private javax.swing.JPanel jpSuperiorPrestamoU;
     private javax.swing.JPanel jpTablaAreaA;
     private javax.swing.JPanel jpTablaAutorA;
     private javax.swing.JPanel jpTablaDescargaA;
     private javax.swing.JPanel jpTablaEditorialA;
     private javax.swing.JPanel jpTablaEmpleadoA;
     private javax.swing.JPanel jpTablaEmpleadoA1;
+    private javax.swing.JPanel jpTablaLibroU;
     private javax.swing.JPanel jpTablaMultaA;
+    private javax.swing.JPanel jpTablaMultaU;
     private javax.swing.JPanel jpTablaPrestamoA;
+    private javax.swing.JPanel jpTablaPrestamoU;
     private javax.swing.JPanel jpTablaSolicitudA;
+    private javax.swing.JPanel jpTablaSolicitudU;
     private javax.swing.JPanel jpUsuarioAdmin;
     private javax.swing.JScrollPane jpsDescripcionSolicitudU;
     private javax.swing.JScrollPane jpsTablaAreaA;
@@ -2232,15 +2896,26 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblApellido1AutorA;
     private javax.swing.JLabel lblApellido2AutorA;
     private javax.swing.JLabel lblCargoEmpleadoA;
+    private javax.swing.JLabel lblCarreraEstudianteP;
     private javax.swing.JLabel lblCedulaEmpleadoA;
+    private javax.swing.JLabel lblCedulaEstudianteP;
+    private javax.swing.JLabel lblCedulaProfesorP;
     private javax.swing.JLabel lblClaveEmpleadoA;
+    private javax.swing.JLabel lblClaveEstudianteP;
+    private javax.swing.JLabel lblClaveProfesorP;
     private javax.swing.JLabel lblCodigoArea1A;
     private javax.swing.JLabel lblCodigoArea2A;
     private javax.swing.JLabel lblCorreoEmpleadoA;
+    private javax.swing.JLabel lblCorreoEstudianteP;
+    private javax.swing.JLabel lblCorreoProfesorP;
+    private javax.swing.JLabel lblDependenciaProfesorP;
     private javax.swing.JLabel lblDescripcionAreaA;
     private javax.swing.JLabel lblDescripcionSolicitudU;
     private javax.swing.JLabel lblDireccionEmpleadoA;
+    private javax.swing.JLabel lblDireccionEstudianteP;
+    private javax.swing.JLabel lblDireccionProfesorP;
     private javax.swing.JLabel lblIcono;
+    private javax.swing.JLabel lblIsbnLibroU;
     private javax.swing.JLabel lblIsbnSolicitudU;
     private javax.swing.JLabel lblMultasTitulo;
     private javax.swing.JLabel lblNombre1AutorA;
@@ -2248,9 +2923,14 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreAreaA;
     private javax.swing.JLabel lblNombreEditorialA;
     private javax.swing.JLabel lblNombreEmpleadoA;
+    private javax.swing.JLabel lblNombreEstudianteP;
+    private javax.swing.JLabel lblNombreProfesorP;
+    private javax.swing.JLabel lblNumeroMultaU;
     private javax.swing.JLabel lblPaginaWebEditorialA;
     private javax.swing.JLabel lblPaisEditorialA;
     private javax.swing.JLabel lblTelefonoEmpleadoA;
+    private javax.swing.JLabel lblTelefonoEstudianteP;
+    private javax.swing.JLabel lblTelefonoProfesorP;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTituloAreaA;
     private javax.swing.JLabel lblTituloAutorA;
@@ -2261,33 +2941,55 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblTituloMultaA;
     private javax.swing.JLabel lblTituloPrestamoA;
     private javax.swing.JLabel lblTituloPrestamoU;
+    private javax.swing.JLabel lblTituloProfesorP;
     private javax.swing.JLabel lblTituloSolicitudA;
     private javax.swing.JLabel lblTituloSolicitudU;
     private javax.swing.JLabel lblTituloSolicitudesU;
     private javax.swing.JLabel lblTituloUsuarioA;
+    private javax.swing.JLabel lblTituloUsuarioPE;
+    private javax.swing.JLabel lblTituloUsuarioPP;
+    private javax.swing.JLabel lblUniversidadEstudianteP;
     private javax.swing.JTextArea txaDescripcionAreaA;
     private javax.swing.JTextArea txaDescripcionSolicitudU;
     private javax.swing.JTextField txtApellido1AutorA;
     private javax.swing.JTextField txtApellido2AutorA;
     private javax.swing.JTextField txtCargoEmpleadoA;
+    private javax.swing.JTextField txtCarreraEstudianteP;
     private javax.swing.JTextField txtCedulaEmpleadoA;
+    private javax.swing.JTextField txtCedulaEstudianteP;
+    private javax.swing.JTextField txtCedulaProfesorP;
     private javax.swing.JTextField txtClaveEmpleadoA;
+    private javax.swing.JTextField txtClaveEstudianteP;
+    private javax.swing.JTextField txtClaveProfesorP;
     private javax.swing.JTextField txtCodigoArea1A;
     private javax.swing.JTextField txtCodigoArea2A;
     private javax.swing.JTextField txtCorreoEmpleadoA;
+    private javax.swing.JTextField txtCorreoEstudianteP;
+    private javax.swing.JTextField txtCorreoProfesorP;
+    private javax.swing.JTextField txtDependenciaProfesorP;
     private javax.swing.JTextField txtDireccionEmpleadoA;
+    private javax.swing.JTextField txtDireccionEstudianteP;
+    private javax.swing.JTextField txtDireccionProfesorP;
     private javax.swing.JTextField txtIdAreaA;
     private javax.swing.JTextField txtIdAutorA;
     private javax.swing.JTextField txtIdEditorialA;
+    private javax.swing.JTextField txtIsbnLibroU;
     private javax.swing.JTextField txtIsbnSolicitudU;
     private javax.swing.JTextField txtNombre1AutorA;
     private javax.swing.JTextField txtNombre2AutorA;
     private javax.swing.JTextField txtNombreAreaA;
     private javax.swing.JTextField txtNombreEditorialA;
     private javax.swing.JTextField txtNombreEmpleadoA;
+    private javax.swing.JTextField txtNombreEstudianteP;
+    private javax.swing.JTextField txtNombreProfesorP;
+    private javax.swing.JTextField txtNumeroMultaU;
     private javax.swing.JTextField txtPaginaWebEditorialA;
     private javax.swing.JTextField txtPaisEditorialA;
     private javax.swing.JTextField txtTelefonoEmpleadoA;
+    private javax.swing.JTextField txtTelefonoEstudianteP;
+    private javax.swing.JTextField txtTelefonoProfesorP;
+    private javax.swing.JTextField txtTituloProfesorP;
     private javax.swing.JTextField txtTituloSolicitudU;
+    private javax.swing.JTextField txtUniversidadEstudianteP;
     // End of variables declaration
 }

@@ -8,6 +8,10 @@ import modelo.Usuario;
 import vista.VentanaBiblioteca;
 import vista.VentanaLogin;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 public class ControladorBiblioteca
 {
 
@@ -31,5 +35,65 @@ public class ControladorBiblioteca
             ventanaBiblioteca.pantallaCompleta();
         }
 
+        ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
+
+    }
+
+    private void cerrarSesion()
+    {
+        ventanaBiblioteca.dispose();
+        VentanaLogin a = new VentanaLogin();
+        DaoEstudiante b = new DaoEstudiante();
+        DaoProfesor d = new DaoProfesor();
+        ControladorLogin c = new ControladorLogin(a, b, d);
+    }
+
+    private void perfilEstudiante()
+    {
+        ventanaBiblioteca.setCedulaEstudianteP(usuario.getId());
+        ventanaBiblioteca.setNombreEstudianteP(usuario.getNombre());
+        ventanaBiblioteca.setCorreoEstudianteP(usuario.getEmail());
+        ventanaBiblioteca.setClaveEstudianteP(usuario.getContrasena());
+        ventanaBiblioteca.setDireccionEstudianteP(usuario.getDireccion());
+        ventanaBiblioteca.setTelefonoEstudianteP(usuario.getTelefono());
+        ventanaBiblioteca.setCarreraEstudianteP(((Estudiante) usuario).getCarrera());
+        ventanaBiblioteca.setUniversidadEstudianteP(((Estudiante) usuario).getUniversidad());
+    }
+
+    private void perfilProfesor()
+    {
+        ventanaBiblioteca.setCedulaProfesorP(usuario.getId());
+        ventanaBiblioteca.setNombreProfesorP(usuario.getNombre());
+        ventanaBiblioteca.setCorreoProfesorP(usuario.getEmail());
+        ventanaBiblioteca.setClaveProfesorP(usuario.getContrasena());
+        ventanaBiblioteca.setDireccionProfesorP(usuario.getDireccion());
+        ventanaBiblioteca.setTelefonoProfesorP(usuario.getTelefono());
+        ventanaBiblioteca.setTituloProfesorP(((Profesor) usuario).getTitulo());
+        ventanaBiblioteca.setDependenciaProfesorP(((Profesor) usuario).getDependencia());
+    }
+
+    class EncabezadoListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("cerrarSesion"))
+            {
+                cerrarSesion();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("usuario"))
+            {
+                if(usuario instanceof Profesor)
+                {
+                    ventanaBiblioteca.pagPerfilProfesor();
+                    perfilProfesor();
+                }
+                else if(usuario instanceof Estudiante)
+                {
+                    ventanaBiblioteca.pagPerfilEstudiante();
+                    perfilEstudiante();
+                }
+            }
+        }
     }
 }

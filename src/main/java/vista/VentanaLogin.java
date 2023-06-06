@@ -4,13 +4,14 @@
  */
 package vista;
 
-import java.awt.CardLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 /**
  *
@@ -28,6 +29,8 @@ public class VentanaLogin extends javax.swing.JFrame {
         this.addBotonesPrincipalListener(new CambiarPaginaListener());
 
         UIManager.put("OptionPane.messageFont", new java.awt.Font("Montserrat", 0, 12));
+        UIManager.put("Button.font", new java.awt.Font("Montserrat", 0, 12));
+        UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
     }
 
     public void pantallaCompleta()
@@ -218,6 +221,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         jpCentroLogin.setOpaque(false);
         jpCentroLogin.setLayout(new java.awt.GridBagLayout());
 
+        txtCorreoLogin.setColumns(5);
         txtCorreoLogin.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         txtCorreoLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,6 +236,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 10, 0);
         jpCentroLogin.add(txtCorreoLogin, gridBagConstraints);
 
+        txtClaveLogin.setColumns(5);
         txtClaveLogin.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         txtClaveLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -365,6 +370,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroA.add(lblUsuarioRegistroA, gridBagConstraints);
 
+        txtUsuarioRegistroA.setColumns(5);
         txtUsuarioRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         txtUsuarioRegistroA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,6 +392,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroA.add(lblCorreoRegistroA, gridBagConstraints);
 
+        txtCorreoRegistroA.setColumns(5);
         txtCorreoRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -402,6 +409,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroA.add(lblClaveRegistroA, gridBagConstraints);
 
+        txtClaveRegistroA.setColumns(5);
         txtClaveRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -419,6 +427,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroA.add(lblDireccionRegistroA, gridBagConstraints);
 
+        txtDireccionRegistroA.setColumns(5);
         txtDireccionRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -436,6 +445,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroA.add(lblTelefonoRegistroA, gridBagConstraints);
 
+        txtTelefonoRegistroA.setColumns(5);
         txtTelefonoRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -453,6 +463,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroA.add(lblCarreraRegistroA, gridBagConstraints);
 
+        txtCarreraRegistroA.setColumns(5);
         txtCarreraRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -470,6 +481,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroA.add(lblUniversidadRegistroA, gridBagConstraints);
 
+        txtUniversidadRegistroA.setColumns(5);
         txtUniversidadRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -510,6 +522,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroA.add(lblCedulaRegistroA, gridBagConstraints);
 
+        txtCedulaRegistroA.setColumns(5);
         txtCedulaRegistroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         txtCedulaRegistroA.setToolTipText("");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -606,6 +619,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroD.add(lblUsuarioRegistroD, gridBagConstraints);
 
+        txtUsuarioRegistroD.setColumns(5);
         txtUsuarioRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         txtUsuarioRegistroD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -627,6 +641,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroD.add(lblCorreoRegistroD, gridBagConstraints);
 
+        txtCorreoRegistroD.setColumns(5);
         txtCorreoRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -643,6 +658,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroD.add(lblClaveRegistroD, gridBagConstraints);
 
+        txtClaveRegistroD.setColumns(5);
         txtClaveRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -660,6 +676,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroD.add(lblDireccionRegistroD, gridBagConstraints);
 
+        txtDireccionRegistroD.setColumns(5);
         txtDireccionRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -677,6 +694,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroD.add(lblTelefonoRegistroD, gridBagConstraints);
 
+        txtTelefonoRegistroD.setColumns(5);
         txtTelefonoRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -694,6 +712,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroD.add(lblTituloRegistroD, gridBagConstraints);
 
+        txtTituloRegistroD.setColumns(5);
         txtTituloRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -711,6 +730,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jpCentroRegistroD.add(lblDependenciaRegistroD, gridBagConstraints);
 
+        txtDependenciaRegistroD.setColumns(5);
         txtDependenciaRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -751,6 +771,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jpCentroRegistroD.add(lblCedulaRegistroD, gridBagConstraints);
 
+        txtCedulaRegistroD.setColumns(5);
         txtCedulaRegistroD.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
