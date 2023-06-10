@@ -5,11 +5,20 @@
 package vista;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.UIManager;
 
 /**
  *
@@ -20,7 +29,15 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     /**
      * Creates new form VentanaBiblioteca
      */
-    public VentanaBiblioteca() {
+    public VentanaBiblioteca()
+    {
+
+        UIManager.put("OptionPane.messageFont", new java.awt.Font("Montserrat", 0, 12));
+        UIManager.put("TabbedPane.selected", new java.awt.Color(249, 250, 252));
+        UIManager.put("TabbedPane.unselectedForeground", new java.awt.Color(249, 250, 252));
+        UIManager.put("TabbedPane.selectedBackground", new java.awt.Color(249, 250, 252));
+        UIManager.put("TabbedPane.focus", new java.awt.Color(249, 250, 252));
+
         initComponents();
 
         this.addBotonesMenuUListener(new CambiarPaginaUListener());
@@ -31,6 +48,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         this.addTablaEditorialAListener(new TablaEditorialAListener());
         this.addTablaAreaAListener(new TablaAreaAListener());
         this.addTablaEmpleadoAListener(new TablaEmpleadoAListener());
+        this.addTablaLibroAListener(new TablaLibroAListener());
+        this.addTablaAutorLibroAListener(new TablaAutorLibroAListener());
+        this.addTablaEjemplarAListener(new TablaEjemplarAListener());
+        this.addTablaDigitalAListener(new TablaDigitalAListener());
 
         this.addTablaLibroUListener(new TablaLibroUListener());
         this.addTablaMultaUListener(new TablaMultaUListener());
@@ -38,7 +59,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         this.addTablaPrestamoEListener(new TablaPrestamoEListener());
         this.addTablaDevolucionEListener(new TablaDevolucionEListener());
 
-        UIManager.put("OptionPane.messageFont", new java.awt.Font("Montserrat", 0, 12));
+        this.menuEmpleado();
+        this.pagLibroAdmin();
+        this.setVisible(true);
     }
 
     public void pantallaCompleta()
@@ -313,6 +336,74 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpTablaSolicitudE = new javax.swing.JPanel();
         jspTablaSolicitudE = new javax.swing.JScrollPane();
         jtTablaSolicitudE = new javax.swing.JTable();
+        tabLibroAdmin = new javax.swing.JTabbedPane();
+        jpLibroAdmin = new javax.swing.JPanel();
+        jpFormularioLibroA = new javax.swing.JPanel();
+        lblTituloLibrosA = new javax.swing.JLabel();
+        lblIsbnLibroA = new javax.swing.JLabel();
+        txtIsbnLibroA = new javax.swing.JTextField();
+        btnAgregarLibroA = new javax.swing.JButton();
+        lblEditorialLibroA = new javax.swing.JLabel();
+        txtEditorialLibroA = new javax.swing.JTextField();
+        lblNumPaginasLibroA = new javax.swing.JLabel();
+        txtNumPaginasLibroA = new javax.swing.JTextField();
+        lblIdiomaLibroA = new javax.swing.JLabel();
+        txtIdiomaLibroA = new javax.swing.JTextField();
+        lblAnoPublicLibroA = new javax.swing.JLabel();
+        jyAnoPublicLibroA = new com.toedter.calendar.JYearChooser();
+        btnModificarLibroA = new javax.swing.JButton();
+        btnEliminarLibroA = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
+        jpTablaAutorLibroA = new javax.swing.JPanel();
+        jspTablaAutorLibroA = new javax.swing.JScrollPane();
+        jtTablaAutorLibroA = new javax.swing.JTable();
+        txtAutorLibroA = new javax.swing.JTextField();
+        lblAutorLibroA = new javax.swing.JLabel();
+        btnAgregarAutorLibroA = new javax.swing.JButton();
+        btnEliminarAutorLibroA = new javax.swing.JButton();
+        lblTituloLibroA = new javax.swing.JLabel();
+        txtTituloLibroA = new javax.swing.JTextField();
+        jpTablaLibroA = new javax.swing.JPanel();
+        jpsTablaLibroA = new javax.swing.JScrollPane();
+        jtTablaLibroA = new javax.swing.JTable();
+        jpEjemplarAdmin = new javax.swing.JPanel();
+        jpFormularioEjemplarA = new javax.swing.JPanel();
+        lblTituloEjemplarA = new javax.swing.JLabel();
+        lblIsbnEjemplarA = new javax.swing.JLabel();
+        txtIsbnEjemplarA = new javax.swing.JTextField();
+        btnAgregarEjemplarA = new javax.swing.JButton();
+        lblEstanteEjemplarA = new javax.swing.JLabel();
+        txtEstanteEjemplarA = new javax.swing.JTextField();
+        lblNomSalaEjemplarA = new javax.swing.JLabel();
+        txtNomSalaEjemplarA = new javax.swing.JTextField();
+        lblNumCajonEjemplarA = new javax.swing.JLabel();
+        txtNumCajonEjemplarA = new javax.swing.JTextField();
+        lblNumPasilloEjemplarA = new javax.swing.JLabel();
+        btnModificarEjemplarA = new javax.swing.JButton();
+        btnEliminarEjemplarA = new javax.swing.JButton();
+        txtNumPasilloEjemplarA = new javax.swing.JTextField();
+        txtNumEjemplarA = new javax.swing.JTextField();
+        jpTablaEjemplarA = new javax.swing.JPanel();
+        jpsTablaEjemplarA = new javax.swing.JScrollPane();
+        jtTablaEjemplarA = new javax.swing.JTable();
+        jpDigitalAdmin = new javax.swing.JPanel();
+        jpFormularioDigitalA = new javax.swing.JPanel();
+        lblTituloDigitalA = new javax.swing.JLabel();
+        lblIsbnDigitalA = new javax.swing.JLabel();
+        txtIsbnDigitalA = new javax.swing.JTextField();
+        btnAgregarDigitalA = new javax.swing.JButton();
+        lblUrlDigitalA = new javax.swing.JLabel();
+        txtUrlDigitalA = new javax.swing.JTextField();
+        lblBytesDigitalA = new javax.swing.JLabel();
+        txtBytesDigitalA = new javax.swing.JTextField();
+        lblFormatoDigitalA = new javax.swing.JLabel();
+        txtFormatoDigitalA = new javax.swing.JTextField();
+        btnModificarDigitalA = new javax.swing.JButton();
+        btnEliminarDigitalA = new javax.swing.JButton();
+        txtNumDigitalA = new javax.swing.JTextField();
+        jpTablaDigitalA = new javax.swing.JPanel();
+        jpsTablaDigitalA = new javax.swing.JScrollPane();
+        jtTablaDigitalA = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -421,7 +512,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnLibrosAdmin.setBackground(new java.awt.Color(225, 232, 239));
         btnLibrosAdmin.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnLibrosAdmin.setText("LIBROS");
-        btnLibrosAdmin.setActionCommand("libroUsuario");
+        btnLibrosAdmin.setActionCommand("libroAdmin");
         btnLibrosAdmin.setFocusPainted(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -596,7 +687,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnSolicitudesEmpleado.setFocusPainted(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.weighty = 1.0;
@@ -2737,6 +2828,669 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
         jpContenido.add(jpSolicitudEmpleado, "jpSolicitudEmpleado");
 
+        tabLibroAdmin.setBackground(new java.awt.Color(249, 250, 252));
+        tabLibroAdmin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabLibroAdmin.setFocusable(false);
+        tabLibroAdmin.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        tabLibroAdmin.setOpaque(true);
+
+        jpLibroAdmin.setBackground(new java.awt.Color(249, 250, 252));
+        jpLibroAdmin.setLayout(new java.awt.BorderLayout());
+
+        jpFormularioLibroA.setOpaque(false);
+        jpFormularioLibroA.setLayout(new java.awt.GridBagLayout());
+
+        lblTituloLibrosA.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
+        lblTituloLibrosA.setText("LIBROS");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 10, 0);
+        jpFormularioLibroA.add(lblTituloLibrosA, gridBagConstraints);
+
+        lblIsbnLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblIsbnLibroA.setText("ISBN");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 5, 0);
+        jpFormularioLibroA.add(lblIsbnLibroA, gridBagConstraints);
+
+        txtIsbnLibroA.setColumns(5);
+        txtIsbnLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioLibroA.add(txtIsbnLibroA, gridBagConstraints);
+
+        btnAgregarLibroA.setBackground(new java.awt.Color(255, 0, 51));
+        btnAgregarLibroA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnAgregarLibroA.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarLibroA.setText("AGREGAR");
+        btnAgregarLibroA.setBorderPainted(false);
+        btnAgregarLibroA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        jpFormularioLibroA.add(btnAgregarLibroA, gridBagConstraints);
+
+        lblEditorialLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblEditorialLibroA.setText("EDITORIAL");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioLibroA.add(lblEditorialLibroA, gridBagConstraints);
+
+        txtEditorialLibroA.setColumns(5);
+        txtEditorialLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioLibroA.add(txtEditorialLibroA, gridBagConstraints);
+
+        lblNumPaginasLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNumPaginasLibroA.setText("# PAGINAS");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioLibroA.add(lblNumPaginasLibroA, gridBagConstraints);
+
+        txtNumPaginasLibroA.setColumns(5);
+        txtNumPaginasLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioLibroA.add(txtNumPaginasLibroA, gridBagConstraints);
+
+        lblIdiomaLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblIdiomaLibroA.setText("IDIOMA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 5, 0);
+        jpFormularioLibroA.add(lblIdiomaLibroA, gridBagConstraints);
+
+        txtIdiomaLibroA.setColumns(5);
+        txtIdiomaLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioLibroA.add(txtIdiomaLibroA, gridBagConstraints);
+
+        lblAnoPublicLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblAnoPublicLibroA.setText("AÑO PUBLICACION");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioLibroA.add(lblAnoPublicLibroA, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 0);
+        jpFormularioLibroA.add(jyAnoPublicLibroA, gridBagConstraints);
+
+        btnModificarLibroA.setBackground(new java.awt.Color(255, 0, 51));
+        btnModificarLibroA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnModificarLibroA.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificarLibroA.setText("MODIFICAR");
+        btnModificarLibroA.setBorderPainted(false);
+        btnModificarLibroA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        jpFormularioLibroA.add(btnModificarLibroA, gridBagConstraints);
+
+        btnEliminarLibroA.setBackground(new java.awt.Color(255, 0, 51));
+        btnEliminarLibroA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnEliminarLibroA.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarLibroA.setText("ELIMINAR");
+        btnEliminarLibroA.setBorderPainted(false);
+        btnEliminarLibroA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        jpFormularioLibroA.add(btnEliminarLibroA, gridBagConstraints);
+
+        jSeparator2.setBackground(new java.awt.Color(204, 204, 204));
+        jSeparator2.setForeground(new java.awt.Color(204, 204, 204));
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jpFormularioLibroA.add(jSeparator2, gridBagConstraints);
+
+        jpTablaAutorLibroA.setLayout(new java.awt.GridBagLayout());
+
+        jspTablaAutorLibroA.setPreferredSize(new java.awt.Dimension(200, 160));
+
+        jtTablaAutorLibroA.getTableHeader().setFont(new java.awt.Font("Montserrat",0, 12));
+        jtTablaAutorLibroA.setDefaultEditor(Object.class, null);
+        jtTablaAutorLibroA.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null}
+                },
+                new String [] {
+                        "# AUTOR", "NOMBRE"
+                }
+        ));
+        jtTablaAutorLibroA.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtTablaAutorLibroA.getTableHeader().setResizingAllowed(false);
+        jtTablaAutorLibroA.getTableHeader().setReorderingAllowed(false);
+        jspTablaAutorLibroA.setViewportView(jtTablaAutorLibroA);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jpTablaAutorLibroA.add(jspTablaAutorLibroA, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpFormularioLibroA.add(jpTablaAutorLibroA, gridBagConstraints);
+
+        txtAutorLibroA.setColumns(5);
+        txtAutorLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtAutorLibroA.setToolTipText("");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 0);
+        jpFormularioLibroA.add(txtAutorLibroA, gridBagConstraints);
+
+        lblAutorLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblAutorLibroA.setText("AUTOR");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioLibroA.add(lblAutorLibroA, gridBagConstraints);
+
+        btnAgregarAutorLibroA.setBackground(new java.awt.Color(255, 0, 51));
+        btnAgregarAutorLibroA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnAgregarAutorLibroA.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarAutorLibroA.setText("AGREGAR");
+        btnAgregarAutorLibroA.setBorderPainted(false);
+        btnAgregarAutorLibroA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        jpFormularioLibroA.add(btnAgregarAutorLibroA, gridBagConstraints);
+
+        btnEliminarAutorLibroA.setBackground(new java.awt.Color(255, 0, 51));
+        btnEliminarAutorLibroA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnEliminarAutorLibroA.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarAutorLibroA.setText("ELIMINAR");
+        btnEliminarAutorLibroA.setBorderPainted(false);
+        btnEliminarAutorLibroA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
+        jpFormularioLibroA.add(btnEliminarAutorLibroA, gridBagConstraints);
+
+        lblTituloLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblTituloLibroA.setText("TITULO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioLibroA.add(lblTituloLibroA, gridBagConstraints);
+
+        txtTituloLibroA.setColumns(5);
+        txtTituloLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioLibroA.add(txtTituloLibroA, gridBagConstraints);
+
+        jpLibroAdmin.add(jpFormularioLibroA, java.awt.BorderLayout.PAGE_START);
+
+        jpTablaLibroA.setOpaque(false);
+        jpTablaLibroA.setLayout(new java.awt.GridBagLayout());
+
+        jtTablaLibroU.getTableHeader().setFont(new java.awt.Font("Montserrat",0, 12));
+        jtTablaLibroU.setDefaultEditor(Object.class, null);
+        jtTablaLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        jtTablaLibroA.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null, null}
+                },
+                new String [] {
+                        "ISBN", "TITULO", "AUTOR", "EDITORIAL", "PUBLICACION", "IDIOMA", "# PAGINAS", "EJEMPLARES", "DIGITAL"
+                }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtTablaLibroA.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtTablaLibroA.getTableHeader().setResizingAllowed(false);
+        jtTablaLibroA.getTableHeader().setReorderingAllowed(false);
+        jpsTablaLibroA.setViewportView(jtTablaLibroA);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpTablaLibroA.add(jpsTablaLibroA, gridBagConstraints);
+
+        jpLibroAdmin.add(jpTablaLibroA, java.awt.BorderLayout.CENTER);
+
+        tabLibroAdmin.addTab("LIBROS", jpLibroAdmin);
+
+        jpEjemplarAdmin.setBackground(new java.awt.Color(249, 250, 252));
+        jpEjemplarAdmin.setLayout(new java.awt.BorderLayout());
+
+        jpFormularioEjemplarA.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jpFormularioEjemplarA.setOpaque(false);
+        jpFormularioEjemplarA.setLayout(new java.awt.GridBagLayout());
+
+        lblTituloEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
+        lblTituloEjemplarA.setText("EJEMPLARES");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 10, 0);
+        jpFormularioEjemplarA.add(lblTituloEjemplarA, gridBagConstraints);
+
+        lblIsbnEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblIsbnEjemplarA.setText("ISBN");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 5, 0);
+        jpFormularioEjemplarA.add(lblIsbnEjemplarA, gridBagConstraints);
+
+        txtIsbnEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioEjemplarA.add(txtIsbnEjemplarA, gridBagConstraints);
+
+        btnAgregarEjemplarA.setBackground(new java.awt.Color(255, 0, 51));
+        btnAgregarEjemplarA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnAgregarEjemplarA.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarEjemplarA.setText("AGREGAR");
+        btnAgregarEjemplarA.setBorderPainted(false);
+        btnAgregarEjemplarA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        jpFormularioEjemplarA.add(btnAgregarEjemplarA, gridBagConstraints);
+
+        lblEstanteEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblEstanteEjemplarA.setText("ESTANTE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioEjemplarA.add(lblEstanteEjemplarA, gridBagConstraints);
+
+        txtEstanteEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioEjemplarA.add(txtEstanteEjemplarA, gridBagConstraints);
+
+        lblNomSalaEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNomSalaEjemplarA.setText("NOMBRE SALA");
+        lblNomSalaEjemplarA.setToolTipText("");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioEjemplarA.add(lblNomSalaEjemplarA, gridBagConstraints);
+
+        txtNomSalaEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioEjemplarA.add(txtNomSalaEjemplarA, gridBagConstraints);
+
+        lblNumCajonEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNumCajonEjemplarA.setText("# CAJON");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 5, 0);
+        jpFormularioEjemplarA.add(lblNumCajonEjemplarA, gridBagConstraints);
+
+        txtNumCajonEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioEjemplarA.add(txtNumCajonEjemplarA, gridBagConstraints);
+
+        lblNumPasilloEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNumPasilloEjemplarA.setText("# PASILLO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        jpFormularioEjemplarA.add(lblNumPasilloEjemplarA, gridBagConstraints);
+
+        btnModificarEjemplarA.setBackground(new java.awt.Color(255, 0, 51));
+        btnModificarEjemplarA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnModificarEjemplarA.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificarEjemplarA.setText("MODIFICAR");
+        btnModificarEjemplarA.setBorderPainted(false);
+        btnModificarEjemplarA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        jpFormularioEjemplarA.add(btnModificarEjemplarA, gridBagConstraints);
+
+        btnEliminarEjemplarA.setBackground(new java.awt.Color(255, 0, 51));
+        btnEliminarEjemplarA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnEliminarEjemplarA.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarEjemplarA.setText("ELIMINAR");
+        btnEliminarEjemplarA.setBorderPainted(false);
+        btnEliminarEjemplarA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        jpFormularioEjemplarA.add(btnEliminarEjemplarA, gridBagConstraints);
+
+        txtNumPasilloEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
+        jpFormularioEjemplarA.add(txtNumPasilloEjemplarA, gridBagConstraints);
+
+        txtNumEjemplarA.setVisible(false);
+        txtNumEjemplarA.setEditable(false);
+        txtNumEjemplarA.setText("0");
+        txtNumEjemplarA.setEnabled(false);
+        txtNumEjemplarA.setFocusable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jpFormularioEjemplarA.add(txtNumEjemplarA, gridBagConstraints);
+
+        jpEjemplarAdmin.add(jpFormularioEjemplarA, java.awt.BorderLayout.PAGE_START);
+
+        jpTablaEjemplarA.setOpaque(false);
+        jpTablaEjemplarA.setLayout(new java.awt.GridBagLayout());
+
+        jtTablaLibroU.getTableHeader().setFont(new java.awt.Font("Montserrat",0, 12));
+        jtTablaLibroU.setDefaultEditor(Object.class, null);
+        jtTablaEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        jtTablaEjemplarA.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null}
+                },
+                new String [] {
+                        "# EJEMPLAR", "ISBN", "ESTANTE", "# CAJON", "NOMBRE SALA", "# PASILLO"
+                }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtTablaEjemplarA.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtTablaEjemplarA.getTableHeader().setResizingAllowed(false);
+        jtTablaEjemplarA.getTableHeader().setReorderingAllowed(false);
+        jpsTablaEjemplarA.setViewportView(jtTablaEjemplarA);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpTablaEjemplarA.add(jpsTablaEjemplarA, gridBagConstraints);
+
+        jpEjemplarAdmin.add(jpTablaEjemplarA, java.awt.BorderLayout.CENTER);
+
+        tabLibroAdmin.addTab("EJEMPLARES", jpEjemplarAdmin);
+
+        jpDigitalAdmin.setBackground(new java.awt.Color(249, 250, 252));
+        jpDigitalAdmin.setLayout(new java.awt.BorderLayout());
+
+        jpFormularioDigitalA.setOpaque(false);
+        jpFormularioDigitalA.setLayout(new java.awt.GridBagLayout());
+
+        lblTituloDigitalA.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
+        lblTituloDigitalA.setText("DIGITALES");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 10, 0);
+        jpFormularioDigitalA.add(lblTituloDigitalA, gridBagConstraints);
+
+        lblIsbnDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblIsbnDigitalA.setText("ISBN");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 5, 0);
+        jpFormularioDigitalA.add(lblIsbnDigitalA, gridBagConstraints);
+
+        txtIsbnDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioDigitalA.add(txtIsbnDigitalA, gridBagConstraints);
+
+        btnAgregarDigitalA.setBackground(new java.awt.Color(255, 0, 51));
+        btnAgregarDigitalA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnAgregarDigitalA.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarDigitalA.setText("AGREGAR");
+        btnAgregarDigitalA.setBorderPainted(false);
+        btnAgregarDigitalA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        jpFormularioDigitalA.add(btnAgregarDigitalA, gridBagConstraints);
+
+        lblUrlDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblUrlDigitalA.setText("URL");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioDigitalA.add(lblUrlDigitalA, gridBagConstraints);
+
+        txtUrlDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioDigitalA.add(txtUrlDigitalA, gridBagConstraints);
+
+        lblBytesDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblBytesDigitalA.setText("BYTES");
+        lblBytesDigitalA.setToolTipText("");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 0);
+        jpFormularioDigitalA.add(lblBytesDigitalA, gridBagConstraints);
+
+        txtBytesDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioDigitalA.add(txtBytesDigitalA, gridBagConstraints);
+
+        lblFormatoDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblFormatoDigitalA.setText("FORMATO");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 5, 0);
+        jpFormularioDigitalA.add(lblFormatoDigitalA, gridBagConstraints);
+
+        txtFormatoDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
+        jpFormularioDigitalA.add(txtFormatoDigitalA, gridBagConstraints);
+
+        btnModificarDigitalA.setBackground(new java.awt.Color(255, 0, 51));
+        btnModificarDigitalA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnModificarDigitalA.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificarDigitalA.setText("MODIFICAR");
+        btnModificarDigitalA.setBorderPainted(false);
+        btnModificarDigitalA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        jpFormularioDigitalA.add(btnModificarDigitalA, gridBagConstraints);
+
+        btnEliminarDigitalA.setBackground(new java.awt.Color(255, 0, 51));
+        btnEliminarDigitalA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        btnEliminarDigitalA.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarDigitalA.setText("ELIMINAR");
+        btnEliminarDigitalA.setBorderPainted(false);
+        btnEliminarDigitalA.setFocusPainted(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        jpFormularioDigitalA.add(btnEliminarDigitalA, gridBagConstraints);
+
+        txtNumDigitalA.setVisible(false);
+        txtNumDigitalA.setEditable(false);
+        txtNumDigitalA.setText("0");
+        txtNumDigitalA.setEnabled(false);
+        txtNumDigitalA.setFocusable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jpFormularioDigitalA.add(txtNumDigitalA, gridBagConstraints);
+
+        jpDigitalAdmin.add(jpFormularioDigitalA, java.awt.BorderLayout.PAGE_START);
+
+        jpTablaDigitalA.setOpaque(false);
+        jpTablaDigitalA.setLayout(new java.awt.GridBagLayout());
+
+        jtTablaLibroU.getTableHeader().setFont(new java.awt.Font("Montserrat",0, 12));
+        jtTablaLibroU.setDefaultEditor(Object.class, null);
+        jtTablaDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        jtTablaDigitalA.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null}
+                },
+                new String [] {
+                        "# DIGITAL", "ISBN", "URL", "FORMATO", "BYTES"
+                }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtTablaDigitalA.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtTablaDigitalA.getTableHeader().setResizingAllowed(false);
+        jtTablaDigitalA.getTableHeader().setReorderingAllowed(false);
+        jpsTablaDigitalA.setViewportView(jtTablaDigitalA);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        jpTablaDigitalA.add(jpsTablaDigitalA, gridBagConstraints);
+
+        jpDigitalAdmin.add(jpTablaDigitalA, java.awt.BorderLayout.CENTER);
+
+        tabLibroAdmin.addTab("DIGITAL", jpDigitalAdmin);
+
+        jpContenido.add(tabLibroAdmin, "jpLibroAdmin");
+
         getContentPane().add(jpContenido, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -2907,6 +3661,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         a.show(jpContenido, "jpSolicitudEmpleado");
     }
 
+    public void pagLibroAdmin()
+    {
+        CardLayout a = (CardLayout)jpContenido.getLayout();
+        a.show(jpContenido, "jpLibroAdmin");
+    }
+
     class CambiarPaginaUListener implements ActionListener
     {
         @Override
@@ -2973,10 +3733,18 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             {
                 pagDescargaAdmin();
             }
+            if (e.getActionCommand().equalsIgnoreCase("libroAdmin"))
+            {
+                pagLibroAdmin();
+            }
             limpiarAutorAdmin();
             limpiarAreaAdmin();
             limpiarEditorialAdmin();
             limpiarEmpleadoAdmin();
+            limpiarLibroAdmin();
+            limpiarAutorLibroAdmin();
+            limpiarEjemplarAdmin();
+            limpiarDigitalAdmin();
         }
     }
 
@@ -3021,6 +3789,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnEmpleadosAdmin.addActionListener(listenControles);
         btnDescargasAdmin.addActionListener(listenControles);
         btnUsuariosAdmin.addActionListener(listenControles);
+        btnLibrosAdmin.addActionListener(listenControles);
     }
 
     public void addBotonesMenuEListener(ActionListener listenControles)
@@ -3114,7 +3883,37 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtCedulaUDevolucionE.setText("");
         txtCedulaEDevolucionE.setText("");
         txtNumeroPrestamoDevE.setText("");
+    }
 
+    public void limpiarLibroAdmin()
+    {
+        txtIsbnLibroA.setText("");
+        txtEditorialLibroA.setText("");
+        txtIdiomaLibroA.setText("");
+        txtNumPaginasLibroA.setText("");
+        jyAnoPublicLibroA.setYear(2023);
+    }
+
+    public void limpiarEjemplarAdmin()
+    {
+        txtIsbnEjemplarA.setText("");
+        txtEstanteEjemplarA.setText("");
+        txtNumPasilloEjemplarA.setText("");
+        txtNomSalaEjemplarA.setText("");
+        txtNumCajonEjemplarA.setText("");
+    }
+
+    public void limpiarDigitalAdmin()
+    {
+        txtIsbnDigitalA.setText("");
+        txtUrlDigitalA.setText("");
+        txtFormatoDigitalA.setText("");
+        txtBytesDigitalA.setText("");
+    }
+
+    public void limpiarAutorLibroAdmin()
+    {
+        txtAutorLibroA.setText("");
     }
 
     class TablaAutorAListener extends MouseAdapter
@@ -3232,6 +4031,116 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             }
         }
     }
+
+    class TablaLibroAListener extends MouseAdapter
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            JTable tabla = (JTable)e.getSource();
+            int fila = tabla.getSelectedRow();
+            if(fila == -1)
+            {
+                txtIsbnLibroA.setEditable(true);
+                btnAgregarLibroA.setEnabled(true);
+
+                txtIsbnLibroA.setText("");
+                txtEditorialLibroA.setText("");
+                txtIdiomaLibroA.setText("");
+                txtNumPaginasLibroA.setText("");
+                jyAnoPublicLibroA.setYear(2023);
+            }
+            else
+            {
+                limpiarLibroAdmin();
+                txtIsbnLibroA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+                txtTituloLibroA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
+                txtEditorialLibroA.setText(String.valueOf(tabla.getValueAt(fila , 3)));
+                //jyAnoPublicLibroA.setYear((int)(tabla.getValueAt(fila , 4)));
+                txtIdiomaLibroA.setText(String.valueOf(tabla.getValueAt(fila , 5)));
+                txtNumPaginasLibroA.setText(String.valueOf(tabla.getValueAt(fila , 6)));
+
+                txtIsbnLibroA.setEditable(false);
+                btnAgregarLibroA.setEnabled(false);
+            }
+        }
+    }
+
+    class TablaAutorLibroAListener extends MouseAdapter
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            JTable tabla = (JTable)e.getSource();
+            int fila = tabla.getSelectedRow();
+            if(fila == -1)
+            {
+                txtAutorLibroA.setText("");
+            }
+            else
+            {
+                limpiarAutorLibroAdmin();
+                txtAutorLibroA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+            }
+        }
+    }
+
+    class TablaEjemplarAListener extends MouseAdapter
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            JTable tabla = (JTable)e.getSource();
+            int fila = tabla.getSelectedRow();
+            if(fila == -1)
+            {
+                txtNumEjemplarA.setText("0");
+                txtIsbnEjemplarA.setText("");
+                txtEstanteEjemplarA.setText("");
+                txtNumPasilloEjemplarA.setText("");
+                txtNomSalaEjemplarA.setText("");
+                txtNumCajonEjemplarA.setText("");
+            }
+            else
+            {
+                limpiarEjemplarAdmin();
+                txtNumEjemplarA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+                txtIsbnEjemplarA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
+                txtEstanteEjemplarA.setText(String.valueOf(tabla.getValueAt(fila , 2)));
+                txtNumCajonEjemplarA.setText(String.valueOf(tabla.getValueAt(fila , 3)));
+                txtNomSalaEjemplarA.setText(String.valueOf(tabla.getValueAt(fila , 4)));
+                txtNumPasilloEjemplarA.setText(String.valueOf(tabla.getValueAt(fila , 5)));
+            }
+        }
+    }
+
+    class TablaDigitalAListener extends MouseAdapter
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            JTable tabla = (JTable)e.getSource();
+            int fila = tabla.getSelectedRow();
+            if(fila == -1)
+            {
+                txtNumDigitalA.setText("0");
+                txtIsbnDigitalA.setText("");
+                txtUrlDigitalA.setText("");
+                txtFormatoDigitalA.setText("");
+                txtBytesDigitalA.setText("");
+            }
+            else
+            {
+                limpiarDigitalAdmin();
+                txtNumDigitalA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+                txtIsbnDigitalA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
+                txtUrlDigitalA.setText(String.valueOf(tabla.getValueAt(fila , 2)));
+                txtFormatoDigitalA.setText(String.valueOf(tabla.getValueAt(fila , 3)));
+                txtBytesDigitalA.setText(String.valueOf(tabla.getValueAt(fila , 4)));
+            }
+        }
+    }
+
 
     class TablaLibroUListener extends MouseAdapter
     {
@@ -3359,6 +4268,26 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public void addTablaDevolucionEListener(MouseAdapter listenControles)
     {
         jtTablaDevolucionE.addMouseListener(listenControles);
+    }
+
+    public void addTablaLibroAListener(MouseAdapter listenControles)
+    {
+        jtTablaLibroA.addMouseListener(listenControles);
+    }
+
+    public void addTablaAutorLibroAListener(MouseAdapter listenControles)
+    {
+        jtTablaAutorLibroA.addMouseListener(listenControles);
+    }
+
+    public void addTablaEjemplarAListener(MouseAdapter listenControles)
+    {
+        jtTablaEjemplarA.addMouseListener(listenControles);
+    }
+
+    public void addTablaDigitalAListener(MouseAdapter listenControles)
+    {
+        jtTablaDigitalA.addMouseListener(listenControles);
     }
 
     public void setCedulaEstudianteP(String txt)
@@ -3518,8 +4447,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     // Variables declaration - do not modify
     private javax.swing.JButton btnAgregarAreaA;
     private javax.swing.JButton btnAgregarAutorA;
+    private javax.swing.JButton btnAgregarAutorLibroA;
+    private javax.swing.JButton btnAgregarDigitalA;
     private javax.swing.JButton btnAgregarEditorialA;
+    private javax.swing.JButton btnAgregarEjemplarA;
     private javax.swing.JButton btnAgregarEmpleadoA;
+    private javax.swing.JButton btnAgregarLibroA;
     private javax.swing.JButton btnAgregarLibroE;
     private javax.swing.JButton btnAreasAdmin;
     private javax.swing.JButton btnAutoresAdmin;
@@ -3532,16 +4465,23 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JButton btnEditorialesAdmin;
     private javax.swing.JButton btnEliminarAreaA;
     private javax.swing.JButton btnEliminarAutorA;
+    private javax.swing.JButton btnEliminarAutorLibroA;
+    private javax.swing.JButton btnEliminarDigitalA;
     private javax.swing.JButton btnEliminarEditorialA;
+    private javax.swing.JButton btnEliminarEjemplarA;
     private javax.swing.JButton btnEliminarEmpleadoA;
+    private javax.swing.JButton btnEliminarLibroA;
     private javax.swing.JButton btnEmpleadosAdmin;
     private javax.swing.JButton btnEnviarSolicitudU;
     private javax.swing.JButton btnLibrosAdmin;
     private javax.swing.JButton btnLibrosUsuario;
     private javax.swing.JButton btnModificarAreaA;
     private javax.swing.JButton btnModificarAutorA;
+    private javax.swing.JButton btnModificarDigitalA;
     private javax.swing.JButton btnModificarEditorialA;
+    private javax.swing.JButton btnModificarEjemplarA;
     private javax.swing.JButton btnModificarEmpleadoA;
+    private javax.swing.JButton btnModificarLibroA;
     private javax.swing.JButton btnModificarPerfilE;
     private javax.swing.JButton btnModificarPerfilP;
     private javax.swing.JButton btnMultasAdmin;
@@ -3558,6 +4498,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JButton btnUsuario;
     private javax.swing.JButton btnUsuariosAdmin;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private com.toedter.calendar.JDateChooser jdFechaDPrestamoE;
     private com.toedter.calendar.JDateChooser jdFechaRPrestamoE;
     private javax.swing.JPanel jpAreaAdmin;
@@ -3565,15 +4506,20 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JPanel jpContenido;
     private javax.swing.JPanel jpDescargaAdmin;
     private javax.swing.JPanel jpDevolucionEmpleado;
+    private javax.swing.JPanel jpDigitalAdmin;
     private javax.swing.JPanel jpEditorialAdmin;
+    private javax.swing.JPanel jpEjemplarAdmin;
     private javax.swing.JPanel jpEmpleadoAdmin;
     private javax.swing.JPanel jpEncabezado;
     private javax.swing.JPanel jpFormularioAreaA;
     private javax.swing.JPanel jpFormularioAutorA;
     private javax.swing.JPanel jpFormularioDescargaA;
     private javax.swing.JPanel jpFormularioDevolucionE;
+    private javax.swing.JPanel jpFormularioDigitalA;
     private javax.swing.JPanel jpFormularioEditorialA;
+    private javax.swing.JPanel jpFormularioEjemplarA;
     private javax.swing.JPanel jpFormularioEmpleadoA;
+    private javax.swing.JPanel jpFormularioLibroA;
     private javax.swing.JPanel jpFormularioLibroU;
     private javax.swing.JPanel jpFormularioMultaA;
     private javax.swing.JPanel jpFormularioMultaU;
@@ -3584,6 +4530,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JPanel jpFormularioSolicitudE;
     private javax.swing.JPanel jpFormularioSolicitudU;
     private javax.swing.JPanel jpFormularioUsuarioA;
+    private javax.swing.JPanel jpLibroAdmin;
     private javax.swing.JPanel jpLibroUsuario;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JPanel jpMenuAdmin;
@@ -3601,11 +4548,15 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JPanel jpSolicitudUsuario;
     private javax.swing.JPanel jpTablaAreaA;
     private javax.swing.JPanel jpTablaAutorA;
+    private javax.swing.JPanel jpTablaAutorLibroA;
     private javax.swing.JPanel jpTablaDescargaA;
     private javax.swing.JPanel jpTablaDevolucionE;
+    private javax.swing.JPanel jpTablaDigitalA;
     private javax.swing.JPanel jpTablaEditorialA;
+    private javax.swing.JPanel jpTablaEjemplarA;
     private javax.swing.JPanel jpTablaEmpleadoA;
     private javax.swing.JPanel jpTablaEmpleadoA1;
+    private javax.swing.JPanel jpTablaLibroA;
     private javax.swing.JPanel jpTablaLibroPreE;
     private javax.swing.JPanel jpTablaLibroU;
     private javax.swing.JPanel jpTablaMultaA;
@@ -3620,6 +4571,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JScrollPane jpsDescripcionSolicitudU;
     private javax.swing.JScrollPane jpsTablaAreaA;
     private javax.swing.JScrollPane jpsTablaDevolucionE;
+    private javax.swing.JScrollPane jpsTablaDigitalA;
+    private javax.swing.JScrollPane jpsTablaEjemplarA;
+    private javax.swing.JScrollPane jpsTablaLibroA;
     private javax.swing.JScrollPane jpsTablaLibroU;
     private javax.swing.JScrollPane jpsTablaMultaU;
     private javax.swing.JScrollPane jpsTablaPrestamoE;
@@ -3627,6 +4581,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JScrollPane jpsTablaSolicitudU;
     private javax.swing.JScrollPane jspDescripcionAreaA;
     private javax.swing.JScrollPane jspTablaAutorA;
+    private javax.swing.JScrollPane jspTablaAutorLibroA;
     private javax.swing.JScrollPane jspTablaDescargaA;
     private javax.swing.JScrollPane jspTablaEditorialA;
     private javax.swing.JScrollPane jspTablaEmpleadoA;
@@ -3638,10 +4593,14 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JScrollPane jspTablaUsuarioA;
     private javax.swing.JTable jtTablaAreaA;
     private javax.swing.JTable jtTablaAutorA;
+    private javax.swing.JTable jtTablaAutorLibroA;
     private javax.swing.JTable jtTablaDescargaA;
     private javax.swing.JTable jtTablaDevolucionE;
+    private javax.swing.JTable jtTablaDigitalA;
     private javax.swing.JTable jtTablaEditorialA;
+    private javax.swing.JTable jtTablaEjemplarA;
     private javax.swing.JTable jtTablaEmpleadoA;
+    private javax.swing.JTable jtTablaLibroA;
     private javax.swing.JTable jtTablaLibroPreE;
     private javax.swing.JTable jtTablaLibroU;
     private javax.swing.JTable jtTablaMultaA;
@@ -3653,8 +4612,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTable jtTablaSolicitudE;
     private javax.swing.JTable jtTablaSolicitudU;
     private javax.swing.JTable jtTablaUsuarioA;
+    private com.toedter.calendar.JYearChooser jyAnoPublicLibroA;
+    private javax.swing.JLabel lblAnoPublicLibroA;
     private javax.swing.JLabel lblApellido1AutorA;
     private javax.swing.JLabel lblApellido2AutorA;
+    private javax.swing.JLabel lblAutorLibroA;
+    private javax.swing.JLabel lblBytesDigitalA;
     private javax.swing.JLabel lblCargoEmpleadoA;
     private javax.swing.JLabel lblCarreraEstudianteP;
     private javax.swing.JLabel lblCedulaEDevolucionE;
@@ -3677,14 +4640,22 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblDireccionEmpleadoA;
     private javax.swing.JLabel lblDireccionEstudianteP;
     private javax.swing.JLabel lblDireccionProfesorP;
+    private javax.swing.JLabel lblEditorialLibroA;
+    private javax.swing.JLabel lblEstanteEjemplarA;
     private javax.swing.JLabel lblFechaDPrestamoE;
     private javax.swing.JLabel lblFechaRPrestamoE;
+    private javax.swing.JLabel lblFormatoDigitalA;
     private javax.swing.JLabel lblIcono;
+    private javax.swing.JLabel lblIdiomaLibroA;
     private javax.swing.JLabel lblIsbnDevolucionE;
+    private javax.swing.JLabel lblIsbnDigitalA;
+    private javax.swing.JLabel lblIsbnEjemplarA;
+    private javax.swing.JLabel lblIsbnLibroA;
     private javax.swing.JLabel lblIsbnLibroU;
     private javax.swing.JLabel lblIsbnPrestamoE;
     private javax.swing.JLabel lblIsbnSolicitudU;
     private javax.swing.JLabel lblMultasTitulo;
+    private javax.swing.JLabel lblNomSalaEjemplarA;
     private javax.swing.JLabel lblNombre1AutorA;
     private javax.swing.JLabel lblNombre2Autor2;
     private javax.swing.JLabel lblNombreAreaA;
@@ -3692,6 +4663,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreEmpleadoA;
     private javax.swing.JLabel lblNombreEstudianteP;
     private javax.swing.JLabel lblNombreProfesorP;
+    private javax.swing.JLabel lblNumCajonEjemplarA;
+    private javax.swing.JLabel lblNumPaginasLibroA;
+    private javax.swing.JLabel lblNumPasilloEjemplarA;
     private javax.swing.JLabel lblNumeroEjemplarDevE;
     private javax.swing.JLabel lblNumeroEjemplarPreE;
     private javax.swing.JLabel lblNumeroMultaU;
@@ -3706,9 +4680,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblTituloAutorA;
     private javax.swing.JLabel lblTituloDescargaA;
     private javax.swing.JLabel lblTituloDevolucionE;
+    private javax.swing.JLabel lblTituloDigitalA;
     private javax.swing.JLabel lblTituloEditorialA;
+    private javax.swing.JLabel lblTituloEjemplarA;
     private javax.swing.JLabel lblTituloEmpleadoA;
+    private javax.swing.JLabel lblTituloLibroA;
     private javax.swing.JLabel lblTituloLibroU;
+    private javax.swing.JLabel lblTituloLibrosA;
     private javax.swing.JLabel lblTituloMultaA;
     private javax.swing.JLabel lblTituloPrestamoA;
     private javax.swing.JLabel lblTituloPrestamoE;
@@ -3722,10 +4700,14 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblTituloUsuarioPE;
     private javax.swing.JLabel lblTituloUsuarioPP;
     private javax.swing.JLabel lblUniversidadEstudianteP;
+    private javax.swing.JLabel lblUrlDigitalA;
+    private javax.swing.JTabbedPane tabLibroAdmin;
     private javax.swing.JTextArea txaDescripcionAreaA;
     private javax.swing.JTextArea txaDescripcionSolicitudU;
     private javax.swing.JTextField txtApellido1AutorA;
     private javax.swing.JTextField txtApellido2AutorA;
+    private javax.swing.JTextField txtAutorLibroA;
+    private javax.swing.JTextField txtBytesDigitalA;
     private javax.swing.JTextField txtCargoEmpleadoA;
     private javax.swing.JTextField txtCarreraEstudianteP;
     private javax.swing.JTextField txtCedulaEDevolucionE;
@@ -3746,13 +4728,21 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTextField txtDireccionEmpleadoA;
     private javax.swing.JTextField txtDireccionEstudianteP;
     private javax.swing.JTextField txtDireccionProfesorP;
+    private javax.swing.JTextField txtEditorialLibroA;
+    private javax.swing.JTextField txtEstanteEjemplarA;
+    private javax.swing.JTextField txtFormatoDigitalA;
     private javax.swing.JTextField txtIdAreaA;
     private javax.swing.JTextField txtIdAutorA;
     private javax.swing.JTextField txtIdEditorialA;
+    private javax.swing.JTextField txtIdiomaLibroA;
     private javax.swing.JTextField txtIsbnDevolucionE;
+    private javax.swing.JTextField txtIsbnDigitalA;
+    private javax.swing.JTextField txtIsbnEjemplarA;
+    private javax.swing.JTextField txtIsbnLibroA;
     private javax.swing.JTextField txtIsbnLibroU;
     private javax.swing.JTextField txtIsbnPrestamoE;
     private javax.swing.JTextField txtIsbnSolicitudU;
+    private javax.swing.JTextField txtNomSalaEjemplarA;
     private javax.swing.JTextField txtNombre1AutorA;
     private javax.swing.JTextField txtNombre2AutorA;
     private javax.swing.JTextField txtNombreAreaA;
@@ -3760,6 +4750,11 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreEmpleadoA;
     private javax.swing.JTextField txtNombreEstudianteP;
     private javax.swing.JTextField txtNombreProfesorP;
+    private javax.swing.JTextField txtNumCajonEjemplarA;
+    private javax.swing.JTextField txtNumDigitalA;
+    private javax.swing.JTextField txtNumEjemplarA;
+    private javax.swing.JTextField txtNumPaginasLibroA;
+    private javax.swing.JTextField txtNumPasilloEjemplarA;
     private javax.swing.JTextField txtNumeroEjemplarDevE;
     private javax.swing.JTextField txtNumeroEjemplarPreE;
     private javax.swing.JTextField txtNumeroMultaU;
@@ -3769,8 +4764,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefonoEmpleadoA;
     private javax.swing.JTextField txtTelefonoEstudianteP;
     private javax.swing.JTextField txtTelefonoProfesorP;
+    private javax.swing.JTextField txtTituloLibroA;
     private javax.swing.JTextField txtTituloProfesorP;
     private javax.swing.JTextField txtTituloSolicitudU;
     private javax.swing.JTextField txtUniversidadEstudianteP;
+    private javax.swing.JTextField txtUrlDigitalA;
     // End of variables declaration
 }
