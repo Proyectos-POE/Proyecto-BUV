@@ -14,7 +14,7 @@ public class DaoPrestamo
     FachadaBd fachada;
     Connection conn;
 
-    DaoPrestamo(){
+    public DaoPrestamo(){
         fachada = new FachadaBd();
     }
 

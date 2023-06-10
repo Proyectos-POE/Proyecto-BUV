@@ -14,7 +14,7 @@ public class DaoSolicitud {
     FachadaBd fachada;
     Connection conn;
 
-    DaoSolicitud(){
+    public DaoSolicitud(){
         fachada = new FachadaBd();
     }
 
