@@ -13,8 +13,7 @@ public class Solicitud
 
     }
 
-    public Solicitud(int numero, String idUsuario, String isbnLibro, String titulo, String descripcion) {
-        this.numero = numero;
+    public Solicitud(String idUsuario, String isbnLibro, String titulo, String descripcion) {
         this.idUsuario = idUsuario;
         this.isbnLibro = isbnLibro;
         this.titulo = titulo;

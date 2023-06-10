@@ -40,9 +40,9 @@ public class DaoPrestamo
         String sql_select;
         sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha FROM  Prestamo WHERE num_prestamo='" + numero +  "'";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
@@ -51,7 +51,7 @@ public class DaoPrestamo
                 pres.setIdEmpleado(tabla.getString(3));
                 pres.setFecha(tabla.getDate(4));
             }
-
+            conn.close();
             return pres;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -63,20 +63,20 @@ public class DaoPrestamo
         String sql_select;
         sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha FROM  Prestamo";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Prestamo pres = new Prestamo();
                 pres.setNumPrestamo(tabla.getInt(1));
                 pres.setIdUsuario(tabla.getString(2));
                 pres.setIdEmpleado(tabla.getString(3));
                 pres.setFecha(tabla.getDate(4));
                 arrayPres.add(pres);
-            }while (tabla.next());
-
+            }
+            conn.close();
             return arrayPres;
         }
         catch(SQLException e){ System.out.println(e); }

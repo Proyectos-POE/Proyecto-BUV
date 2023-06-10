@@ -2,6 +2,8 @@ package modelo;
 
 import dao.*;
 
+import java.util.ArrayList;
+
 public class ManejadorDao {
     private final String nombre;
     private DaoEstudiante daoEstudiante;
@@ -77,6 +79,20 @@ public class ManejadorDao {
     public Boolean modificarPro(Profesor profesor)
     {
         return this.daoProfesor.modificarProfesor(profesor);
+    }
+
+    /*******
+     * Solicitud
+     */
+
+    public int agregarSolicitud(Solicitud soli)
+    {
+        return this.daoSolicitud.insertSolicitud(soli);
+    }
+
+    public ArrayList<Solicitud> listarSolicitudesUsuario(String id)
+    {
+        return this.daoSolicitud.listarSolicitudesUsuario(id);
     }
 
 }

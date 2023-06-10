@@ -41,9 +41,9 @@ public class DaoEstudiante {
         String sql_select;
         sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, carrera, universidad FROM Usuario NATURAL JOIN Estudiante WHERE id_usuario='" + identificacion +  "'";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
@@ -112,12 +112,12 @@ public class DaoEstudiante {
         String sql_select;
         sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, carrera, universidad FROM  estudiante NATURAL JOIN usuario";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Estudiante est = new Estudiante();
                 est.setId(tabla.getString(1));
                 est.setContrasena(tabla.getString(2));
@@ -128,8 +128,8 @@ public class DaoEstudiante {
                 est.setCarrera(tabla.getString(7));
                 est.setUniversidad(tabla.getString(8));
                 arrayEst.add(est);
-            }while (tabla.next());
-
+            }
+            conn.close();
             return arrayEst;
         }
         catch(SQLException e){ System.out.println(e); }
