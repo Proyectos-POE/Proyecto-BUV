@@ -8,7 +8,7 @@ public class DaoLibro
     FachadaBd fachada;
     Connection conn;
 
-    DaoLibro()
+    public DaoLibro()
     {
         fachada = new FachadaBd();
     }

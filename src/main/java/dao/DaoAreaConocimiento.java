@@ -9,7 +9,7 @@ public class DaoAreaConocimiento
 
     Connection conn;
 
-    DaoAreaConocimiento()
+    public DaoAreaConocimiento()
     {
         fachada = new FachadaBd();
     }

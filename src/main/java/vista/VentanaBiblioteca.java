@@ -9,8 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JTable;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 /**
  *
@@ -3031,6 +3030,16 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnSolicitudesEmpleado.addActionListener(listenControles);
     }
 
+    public void addBotonesPerfilEsudianteListener(ActionListener listenControles)
+    {
+        btnModificarPerfilE.addActionListener(listenControles);
+    }
+
+    public void addBotonesPerfilProfesorListener(ActionListener listenControles)
+    {
+        btnModificarPerfilP.addActionListener(listenControles);
+    }
+
     public void addBotonesEncabezadoListener(ActionListener listenControles)
     {
         btnUsuario.addActionListener(listenControles);
@@ -3432,6 +3441,79 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtDependenciaProfesorP.setText(txt);
     }
 
+    public String getCarreraEstudianteP() {
+        return txtCarreraEstudianteP.getText();
+    }
+
+    public String getCedulaEstudianteP() {
+        return txtCedulaEstudianteP.getText();
+    }
+
+    public String getCedulaProfesorP() {
+        return txtCedulaProfesorP.getText();
+    }
+
+    public String getClaveEstudianteP() {
+        return txtClaveEstudianteP.getText();
+    }
+
+    public String getClaveProfesorP() {
+        return txtClaveProfesorP.getText();
+    }
+
+    public String getCorreoEstudianteP() {
+        return txtCorreoEstudianteP.getText();
+    }
+
+    public String getCorreoProfesorP() {
+        return txtCorreoProfesorP.getText();
+    }
+
+    public String getDependenciaProfesorP() {
+        return txtDependenciaProfesorP.getText();
+    }
+
+    public String getDireccionEstudianteP() {
+        return txtDireccionEstudianteP.getText();
+    }
+
+    public String getDireccionProfesorP() {
+        return txtDireccionProfesorP.getText();
+    }
+
+    public String getNombreEstudianteP() {
+        return txtNombreEstudianteP.getText();
+    }
+
+    public String getNombreProfesorP() {
+        return txtNombreProfesorP.getText();
+    }
+
+    public String getTelefonoEstudianteP() {
+        return txtTelefonoEstudianteP.getText();
+    }
+
+    public String getTelefonoProfesorP() {
+        return txtTelefonoProfesorP.getText();
+    }
+
+    public String getTituloProfesorP() {
+        return txtTituloProfesorP.getText();
+    }
+
+    public String getUniversidadEstudianteP() {
+        return txtUniversidadEstudianteP.getText();
+    }
+
+    public void mostrarMensaje(String auxMensaje)
+    {
+        JOptionPane.showMessageDialog(this, auxMensaje);
+    }
+
+    public void mostrarMensajeError(String auxMensaje)
+    {
+        JOptionPane.showMessageDialog(this, auxMensaje, "", JOptionPane.ERROR_MESSAGE);
+    }
 
     // Variables declaration - do not modify
     private javax.swing.JButton btnAgregarAreaA;

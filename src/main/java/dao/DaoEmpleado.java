@@ -15,7 +15,7 @@ public class DaoEmpleado
     FachadaBd fachada;
     Connection conn;
 
-    DaoEmpleado(){
+    public DaoEmpleado(){
         fachada = new FachadaBd();
     }
 

@@ -9,7 +9,7 @@ public class DaoEjemplar
 
     Connection conn;
 
-    DaoEjemplar()
+    public DaoEjemplar()
     {
         fachada = new FachadaBd();
     }

@@ -10,7 +10,7 @@ public class DaoMulta
 
     Connection conn;
 
-    DaoMulta()
+    public DaoMulta()
     {
         fachada = new FachadaBd();
     }

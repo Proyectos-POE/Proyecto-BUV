@@ -11,7 +11,7 @@ public class DaoDigital
 
     Connection conn;
 
-    DaoDigital()
+    public DaoDigital()
     {
         fachada = new FachadaBd();
     }

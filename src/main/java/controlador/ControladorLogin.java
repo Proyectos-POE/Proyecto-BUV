@@ -4,6 +4,7 @@ import dao.DaoEstudiante;
 import dao.DaoProfesor;
 import modelo.Empleado;
 import modelo.Estudiante;
+import modelo.ManejadorDao;
 import modelo.Profesor;
 import vista.VentanaBiblioteca;
 import vista.VentanaLogin;
@@ -253,12 +254,12 @@ public class ControladorLogin
         if(auxProfesor != null)
         {
             ventanaLogin.dispose();
-            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxProfesor);
+            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxProfesor, new ManejadorDao("profesor", auxProfesor));
         }
         else if(auxEstudiante != null)
         {
             ventanaLogin.dispose();
-            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEstudiante);
+            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEstudiante, new ManejadorDao("estudiante", auxEstudiante));
         }
         /*else if(auxEmpleado != null)
         {
@@ -268,7 +269,7 @@ public class ControladorLogin
         else if(auxCorreo.equals(admin) && auxContrasena.equals(admin))
         {
             ventanaLogin.dispose();
-            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), null);
+            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), null, new ManejadorDao("admin"));
         }
         else
         {

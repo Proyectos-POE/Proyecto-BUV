@@ -10,7 +10,7 @@ public class DaoEditorial
 
     Connection conn;
 
-    DaoEditorial()
+    public DaoEditorial()
     {
         fachada = new FachadaBd();
     }

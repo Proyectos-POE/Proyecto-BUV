@@ -10,7 +10,7 @@ public class DaoAutor
 
     Connection conn;
 
-    DaoAutor()
+    public DaoAutor()
     {
         fachada = new FachadaBd();
     }
