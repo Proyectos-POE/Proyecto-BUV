@@ -24,6 +24,7 @@ public class ManejadorDao {
         this.daoSolicitud = new DaoSolicitud();
         this.daoPrestamo = new DaoPrestamo();
         this.daoMulta = new DaoMulta();
+        this.daoLibro = new DaoLibro();
     }
 
     public ManejadorDao(String nombre, Profesor profesor)
@@ -33,6 +34,7 @@ public class ManejadorDao {
         this.daoSolicitud = new DaoSolicitud();
         this.daoPrestamo = new DaoPrestamo();
         this.daoMulta = new DaoMulta();
+        this.daoLibro = new DaoLibro();
     }
 
     public ManejadorDao(String nombre)
@@ -53,13 +55,6 @@ public class ManejadorDao {
     /*******
      * Estudiante
      */
-    /*
-    public int agregarEst(Estudiante estudiante)
-    {
-        return this.daoEstudiante.insertEstudiante(estudiante);
-    }
-
-     */
 
     public Estudiante consultarEstId(String id)
     {
@@ -74,14 +69,6 @@ public class ManejadorDao {
     /*******
      * Profesor
      */
-    /*
-    public int agregarEst(Estudiante estudiante)
-    {
-        return this.daoEstudiante.insertEstudiante(estudiante);
-    }
-
-     */
-
     public Profesor consultarProId(String id)
     {
         return this.daoProfesor.consultarProfesorId(id);
