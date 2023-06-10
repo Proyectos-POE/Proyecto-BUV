@@ -1,13 +1,8 @@
 package dao;
 
-import modelo.Empleado;
-import modelo.Prestamo;
 import modelo.Solicitud;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class DaoSolicitud {
@@ -21,8 +16,8 @@ public class DaoSolicitud {
     public int insertSolicitud(Solicitud soli){
         String sql_soli;
 
-        sql_soli = "INSERT INTO solicitud(num_solicitud, id_usuario, isbn, titulo, descripcion) VALUES ('" +
-                soli.getNumero() + "', '" + soli.getIdUsuario() +"', '" + soli.getIsbnLibro() +"', '" + soli.getTitulo() +"', '" + soli.getDescripcion() +"')";
+        sql_soli = "INSERT INTO solicitud(id_usuario, isbn, titulo, descripcion) VALUES ('" +
+                  soli.getIdUsuario() +"', '" + soli.getIsbnLibro() +"', '" + soli.getTitulo() +"', '" + soli.getDescripcion() +"')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaSoli = conn.createStatement();
@@ -40,7 +35,7 @@ public class DaoSolicitud {
         String sql_select;
         sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM  solicitud WHERE num_solicitud='" + numero +  "'";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
             Statement sentencia = this.conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
@@ -52,7 +47,7 @@ public class DaoSolicitud {
                 soli.setTitulo(tabla.getString(4));
                 soli.setDescripcion(tabla.getString(5));
             }
-
+            conn.close();
             return soli;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -60,17 +55,43 @@ public class DaoSolicitud {
         return null;
     }
 
-    public ArrayList<Solicitud> listarSolicitud(){
+    public ArrayList<Solicitud> listarAllSolicitudes(){
         ArrayList<Solicitud> arraySoli = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM  solicitud";
+        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM solicitud";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
+                while (tabla.next()){
+                    Solicitud soli = new Solicitud();
+                    soli.setNumero(tabla.getInt(1));
+                    soli.setIdUsuario(tabla.getString(2));
+                    soli.setIsbnLibro(tabla.getString(3));
+                    soli.setTitulo(tabla.getString(4));
+                    soli.setDescripcion(tabla.getString(5));
+                    arraySoli.add(soli);
+                }
+            conn.close();
+            System.out.println("no se encontro nada");
+            return arraySoli;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
 
-            do{
+    public ArrayList<Solicitud> listarSolicitudesUsuario(String id){
+        ArrayList<Solicitud> arraySoli = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM solicitud WHERE id_usuario = '" + id +  "'";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            while (tabla.next()){
                 Solicitud soli = new Solicitud();
                 soli.setNumero(tabla.getInt(1));
                 soli.setIdUsuario(tabla.getString(2));
@@ -78,8 +99,8 @@ public class DaoSolicitud {
                 soli.setTitulo(tabla.getString(4));
                 soli.setDescripcion(tabla.getString(5));
                 arraySoli.add(soli);
-            }while (tabla.next());
-
+            }
+            conn.close();
             return arraySoli;
         }
         catch(SQLException e){ System.out.println(e); }

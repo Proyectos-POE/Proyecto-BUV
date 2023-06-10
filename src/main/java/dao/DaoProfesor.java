@@ -46,9 +46,9 @@ public class DaoProfesor {
         String sql_select;
         sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM Usuario NATURAL JOIN Profesor WHERE id_usuario='" + identificacion +  "'";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
@@ -62,7 +62,7 @@ public class DaoProfesor {
                 pro.setDependencia(tabla.getString(7));
                 pro.setTitulo(tabla.getString(8));
             }
-
+            conn.close();
             return pro;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -101,10 +101,12 @@ public class DaoProfesor {
 
             if(valido)
             {
+                conn.close();
                 return pro;
             }
             else
             {
+                conn.close();
                 return null;
             }
         }
@@ -118,12 +120,12 @@ public class DaoProfesor {
         String sql_select;
         sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM  estudiante NATURAL JOIN usuario";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Profesor pro = new Profesor();
                 pro.setId(tabla.getString(1));
                 pro.setContrasena(tabla.getString(2));
@@ -134,8 +136,8 @@ public class DaoProfesor {
                 pro.setDependencia(tabla.getString(7));
                 pro.setTitulo(tabla.getString(8));
                 arrayPro.add(pro);
-            }while (tabla.next());
-
+            }
+            conn.close();
             return arrayPro;
         }
         catch(SQLException e){ System.out.println(e); }

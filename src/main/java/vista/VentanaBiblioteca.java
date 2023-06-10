@@ -19,6 +19,8 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -751,10 +753,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaLibroU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaLibroU.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null}
                 },
                 new String [] {
                         "ISBN", "TITULO", "AUTOR", "EDITORIAL", "PUBLICACION", "IDIOMA", "# PAGINAS", "EJEMPLARES", "DIGITAL"
@@ -805,10 +803,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaPrestamoU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaPrestamoU.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null}
                 },
                 new String [] {
                         "# PRESTAMO", "FECHA REALIZACION", "ISBN", "# EJEMPLAR", "FECHA DEVOLUCION", "EMPLEADO"
@@ -889,11 +883,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaMultaU.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {"1", "0000", "1", "24/87/21", "5000", "Hola"},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null}
                 },
                 new String [] {
                         "# MULTA", "ISBN", "# EJEMPLAR", "FECHA MULTA", "VALOR", "DESCRIPCION"
@@ -1017,10 +1006,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaSolicitudU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaSolicitudU.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
                 },
                 new String [] {
                         "# SOLICITUD", "ISBN", "TITULO", "DESCRIPCION"
@@ -1228,10 +1213,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaAreaA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaAreaA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
                 },
                 new String [] {
                         "# AREA", "NOMBRE", "DESCRIPCION", "AREAS HIJAS"
@@ -1375,10 +1356,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaEditorialA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaEditorialA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
                 },
                 new String [] {
                         "# EDITORIAL", "NOMBRE", "PAIS", "PAGINA WEB"
@@ -1546,10 +1523,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaAutorA.setDefaultEditor(Object.class, null);
         jtTablaAutorA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null}
                 },
                 new String [] {
                         "# AUTOR", "1° NOMBRE", "2° NOMBRE", "1° APELLIDO", "2° APELLIDO"
@@ -1594,10 +1567,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaPrestamoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaPrestamoA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null}
                 },
                 new String [] {
                         "# PRESTAMO", "ISBN", "# EJEMPLAR", "TITULO", "# USUARIO", "# EMPLEADO", "FECHA REALIZACION", "FECHA DEVOLUCION"
@@ -1642,10 +1611,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaDescargaA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaDescargaA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null}
                 },
                 new String [] {
                         "ISBN", "TITULO", "# USUARIO", "IP", "FECHA DESCARGA", "HORA DESCARGA"
@@ -1690,10 +1655,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaMultaA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaMultaA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null}
                 },
                 new String [] {
                         "# EJEMPLAR", "ISBN", "TITULO", "# USUARIO", "VALOR", "DESCRIPCION", "FECHA MULTA"
@@ -1738,10 +1699,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaSolicitudA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaSolicitudA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
                 },
                 new String [] {
                         "# SOLICITUD", "ISBN", "TITULO", "DESCRIPCION"
@@ -1956,10 +1913,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaEmpleadoA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null}
                 },
                 new String [] {
                         "CEDULA", "NOMBRE", "EMAIL", "CLAVE", "DIRECCION", "TELEFONO", "CARGO"
@@ -2007,10 +1960,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaUsuarioA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaUsuarioA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null}
                 },
                 new String [] {
                         "CEDULA", "NOMBRE", "EMAIL", "DIRECCION", "TELEFONO"
@@ -2587,10 +2536,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaPrestamoE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaPrestamoE.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null}
                 },
                 new String [] {
                         "ISBN", "# EJEMPLAR", "TITULO", "AUTOR", "EDITORIAL", "PUBLICACION", "IDIOMA", "# PAGINAS"
@@ -2748,10 +2693,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaDevolucionE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaDevolucionE.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null}
                 },
                 new String [] {
                         "# PRESTAMO", "ISBN", "# EJEMPLAR", "# CEDULA", "# EMPLEADO", "FECHA REALIZACION", "FECHA DEVOLUCION"
@@ -2803,10 +2744,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaSolicitudE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaSolicitudE.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
                 },
                 new String [] {
                         "# SOLICITUD", "ISBN", "TITULO", "DESCRIPCION"
@@ -3095,10 +3032,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaLibroA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null, null}
                 },
                 new String [] {
                         "ISBN", "TITULO", "AUTOR", "EDITORIAL", "PUBLICACION", "IDIOMA", "# PAGINAS", "EJEMPLARES", "DIGITAL"
@@ -3808,6 +3741,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     {
         btnModificarPerfilP.addActionListener(listenControles);
     }
+    public void addBotonAgregarSolicitud(ActionListener listenControles)
+    {
+        btnEnviarSolicitudU.addActionListener(listenControles);
+    }
 
     public void addBotonesEncabezadoListener(ActionListener listenControles)
     {
@@ -4433,6 +4370,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public String getUniversidadEstudianteP() {
         return txtUniversidadEstudianteP.getText();
     }
+
+    public String getTxaDescripcionSolicitudU() {return txaDescripcionSolicitudU.getText();}
+
+    public String getTxtIsbnSolicitudU() {return txtIsbnSolicitudU.getText();}
+
+    public String getTxtTituloSolicitudU() {return txtTituloSolicitudU.getText();}
+    public TableModel getSolicitudUTableModel(){return jtTablaSolicitudU.getModel();}
 
     public void mostrarMensaje(String auxMensaje)
     {

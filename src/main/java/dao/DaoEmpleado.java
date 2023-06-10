@@ -41,9 +41,9 @@ public class DaoEmpleado
         String sql_select;
         sql_select="SELECT id_empleado, nombre, cargo FROM  empleado WHERE id_empleado='" + identificacion +  "'";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
@@ -51,7 +51,7 @@ public class DaoEmpleado
                 emp.setNombre(tabla.getString(2));
                 emp.setCargo(tabla.getString(3));
             }
-
+            conn.close();
             return emp;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -59,24 +59,24 @@ public class DaoEmpleado
         return null;
     }
 
-    public ArrayList<Empleado> listarEmpleado(){
+    public ArrayList<Empleado> listarEmpleados(){
         ArrayList<Empleado> arrayEmp = new ArrayList<>();
         String sql_select;
         sql_select="SELECT d_empleado, nombre, cargo FROM  empleado";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Empleado emp = new Empleado();
                 emp.setId(tabla.getString(1));
                 emp.setNombre(tabla.getString(2));
                 emp.setCargo(tabla.getString(3));
                 arrayEmp.add(emp);
-            }while (tabla.next());
-
+            }
+            conn.close();
             return arrayEmp;
         }
         catch(SQLException e){ System.out.println(e); }
