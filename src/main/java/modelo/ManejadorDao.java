@@ -95,4 +95,13 @@ public class ManejadorDao {
         return this.daoSolicitud.listarSolicitudesUsuario(id);
     }
 
+
+    /*******
+     * Prestamo
+     */
+
+    public ArrayList<Prestamo> listarPrestamosUsuario(String id)
+    {
+        return this.daoPrestamo.listarPrestamosU(id);
+    }
 }
