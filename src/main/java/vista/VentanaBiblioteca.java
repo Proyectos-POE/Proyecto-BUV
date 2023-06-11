@@ -3218,10 +3218,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaEjemplarA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null}
                 },
                 new String [] {
                         "# EJEMPLAR", "ISBN", "ESTANTE", "# CAJON", "NOMBRE SALA", "# PASILLO"
@@ -3389,10 +3385,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaDigitalA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null}
                 },
                 new String [] {
                         "# DIGITAL", "ISBN", "URL", "FORMATO", "BYTES"
@@ -4377,6 +4369,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public String getTxtTituloSolicitudU() {return txtTituloSolicitudU.getText();}
     public TableModel getSolicitudUTableModel(){return jtTablaSolicitudU.getModel();}
+    public TableModel getPrestamoUTableModel(){return  jtTablaPrestamoU.getModel();}
 
     public void mostrarMensaje(String auxMensaje)
     {

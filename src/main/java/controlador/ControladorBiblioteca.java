@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class ControladorBiblioteca
@@ -31,7 +32,7 @@ public class ControladorBiblioteca
             ventanaBiblioteca.menuUsuario();
             ventanaBiblioteca.pagLibroUsuario();
             ventanaBiblioteca.pantallaCompleta();
-            listarSolicitudesTablaU(manejadorDao.listarSolicitudesUsuario(usuario.getId()));
+            listarTablasUsuarios(usuario.getId());
         }
         else if(usuario == null)
         {
@@ -103,6 +104,13 @@ public class ControladorBiblioteca
             }
         }
     }
+
+    private boolean comprobarCorreo(String email)
+    {
+        String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        return Pattern.compile(regexPattern).matcher(email).matches();
+    }
+
     /**************************************************************************
      * Listar
      *************************************************************************/
@@ -110,13 +118,13 @@ public class ControladorBiblioteca
     {
         if(!manejadorDao.listarSolicitudesUsuario(id).isEmpty())
         {
-            for(Solicitud solicitud : manejadorDao.listarSolicitudesUsuario(id))
-            {
-                listarTablasUsuarios(id);
-            }
+            listarSolicitudesTablaU(manejadorDao.listarSolicitudesUsuario(usuario.getId()));
+        }
+        if(!manejadorDao.listarPrestamosUsuario(id).isEmpty())
+        {
+            listarPrestamosTablaU(manejadorDao.listarPrestamosUsuario(usuario.getId()));
         }
     }
-
 
     /**************************************************************************
      * Estudiante - usuario
@@ -346,9 +354,34 @@ public class ControladorBiblioteca
         return valido;
     }
 
-    private boolean comprobarCorreo(String email)
+    /**************************************************************************
+     * Prestamo - Usuario
+     *************************************************************************/
+    public void listarPrestamosTablaU(ArrayList<Prestamo> arrayPrestamo)
     {
-        String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-        return Pattern.compile(regexPattern).matcher(email).matches();
+        if(arrayPrestamo != null)
+        {
+            int num;
+            String idU;
+            String idE;
+            Date fecha;
+            String isbn;
+            int numEje;
+            Date fechaD;
+
+            for (Prestamo prestamo : arrayPrestamo) {
+                num = prestamo.getNumPrestamo();
+                idU = prestamo.getIdUsuario();
+                idE = prestamo.getIdEmpleado();
+                fecha = prestamo.getFecha();
+                isbn = prestamo.getIsbn();
+                numEje = prestamo.getNumEjemplar();
+                fechaD = prestamo.getFechaDevolucion();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoUTableModel();
+                auxModeloTabla.addRow(new Object[]{num, idU, idE, fecha, isbn, numEje, fechaD});
+            }
+        }
     }
+
 }
