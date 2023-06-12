@@ -3,6 +3,7 @@ package modelo;
 public class Libro
 {
     protected String isbn;
+    private String titulo;
     private String codigoEditorial;
     private String anhoPublicacion;
     private String numPaginas;
@@ -14,6 +15,14 @@ public class Libro
 
     public void setIsbn(String isbn){
         this.isbn = isbn;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getCodigoEditorial()

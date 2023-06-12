@@ -118,7 +118,7 @@ public class DaoProfesor {
     public ArrayList<Profesor> listarProfesores(){
         ArrayList<Profesor> arrayPro = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM  estudiante NATURAL JOIN usuario";
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM  profesor NATURAL JOIN usuario";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
