@@ -45,6 +45,7 @@ public class ManejadorDao {
     public ManejadorDao(String nombre)
     {
         this.nombre = nombre;
+        this.daoUsuario = new DaoUsuario();
         this.daoProfesor = new DaoProfesor();
         this.daoEstudiante = new DaoEstudiante();
         this.daoEmpleado = new DaoEmpleado();
@@ -60,9 +61,13 @@ public class ManejadorDao {
     }
 
     /*******
+     * usuario
+     */
+    public ArrayList<Usuario> listarUsuarios(){return this.daoUsuario.listarUsuarios();}
+
+    /*******
      * Estudiante
      */
-
     public Estudiante consultarEstId(String id)
     {
         return this.daoEstudiante.consultarEstudianteId(id);
