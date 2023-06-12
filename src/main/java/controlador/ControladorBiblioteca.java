@@ -9,6 +9,9 @@ import vista.VentanaLogin;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLDataException;
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -39,12 +42,14 @@ public class ControladorBiblioteca
             ventanaBiblioteca.menuAdmin();
             ventanaBiblioteca.pagAreaAdmin();
             ventanaBiblioteca.pantallaCompleta();
+            listarTablasAdmin();
         }
 
         ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
         ventanaBiblioteca.addBotonesPerfilEsudianteListener(new EstudianteUListener());
         ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
         ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
+        ventanaBiblioteca.addBotonesEmpleadoAdminListener(new EmpleadoListener());
     }
 
     private void cerrarSesion()
@@ -124,6 +129,15 @@ public class ControladorBiblioteca
         {
             listarPrestamosTablaU(manejadorDao.listarPrestamosUsuario(usuario.getId()));
         }
+    }
+
+    public void listarTablasAdmin()
+    {
+        if(!manejadorDao.listarEmpleados().isEmpty())
+        {
+            listarEmpleadosTablaA(manejadorDao.listarEmpleados());
+        }
+
     }
 
     /**************************************************************************
@@ -362,8 +376,7 @@ public class ControladorBiblioteca
         if(arrayPrestamo != null)
         {
             int num;
-            String idU;
-            String idE;
+            String nomE;
             Date fecha;
             String isbn;
             int numEje;
@@ -371,17 +384,240 @@ public class ControladorBiblioteca
 
             for (Prestamo prestamo : arrayPrestamo) {
                 num = prestamo.getNumPrestamo();
-                idU = prestamo.getIdUsuario();
-                idE = prestamo.getIdEmpleado();
                 fecha = prestamo.getFecha();
                 isbn = prestamo.getIsbn();
                 numEje = prestamo.getNumEjemplar();
                 fechaD = prestamo.getFechaDevolucion();
+                nomE = manejadorDao.buscarNombreEmpleado(prestamo.getIdEmpleado());
 
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoUTableModel();
-                auxModeloTabla.addRow(new Object[]{num, idU, idE, fecha, isbn, numEje, fechaD});
+                auxModeloTabla.addRow(new Object[]{num, fecha, isbn, numEje, fechaD, nomE});
             }
         }
     }
 
+    /**************************************************************************
+     * Empleado - admin
+     *************************************************************************/
+    class EmpleadoListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("agregar"))
+            {
+                agregarEmpleado();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("modificar"))
+            {
+                editarEmpleado();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("eliminar"))
+            {
+                eliminarEmpleado();
+            }
+        }
+    }
+
+    public void listarEmpleadosTablaA(ArrayList<Empleado> arrayEmpleado)
+    {
+        if(arrayEmpleado != null)
+        {
+            String id;
+            String nom;
+            String email;
+            String clave;
+            String dir;
+            String telefono;
+            String cargo;
+
+            for (Empleado empleado : arrayEmpleado) {
+                id = empleado.getId();
+                nom = empleado.getNombre();
+                email = empleado.getEmail();
+                clave = empleado.getContrasena();
+                dir = empleado.getDireccion();
+                telefono = empleado.getTelefono();
+                cargo = empleado.getCargo();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEmpleadoTableModel();
+                auxModeloTabla.addRow(new Object[]{id, nom, email, clave, dir, telefono, cargo});
+            }
+        }
+    }
+    public boolean comprobarCamposEmpleadoA()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getTxtCedulaEmpleadoA().isEmpty() && !ventanaBiblioteca.getTxtNombreEmpleadoA().isEmpty() && !ventanaBiblioteca.getTxtClaveEmpleadoA().isEmpty() && !ventanaBiblioteca.getTxtCorreoEmpleadoA().isEmpty() && !ventanaBiblioteca.getTxtTelefonoEmpleadoA().isEmpty() && !ventanaBiblioteca.getTxtCargoEmpleadoA().isEmpty() && !ventanaBiblioteca.getTxtDireccionEmpleadoA().isEmpty();
+        return valido;
+    }
+
+    public void agregarEmpleado()
+    {
+        Empleado empleado;
+        String cedula;
+        String clave;
+        String nombre;
+        String direccion;
+        String correo;
+        String telefono;
+        String cargo;
+        if(comprobarCamposEmpleadoA())
+        {
+            cedula = ventanaBiblioteca.getTxtCedulaEmpleadoA();
+            clave = ventanaBiblioteca.getTxtClaveEmpleadoA();
+            nombre = ventanaBiblioteca.getTxtNombreEmpleadoA();
+            direccion = ventanaBiblioteca.getTxtDireccionEmpleadoA();
+            correo = ventanaBiblioteca.getTxtCorreoEmpleadoA();
+            telefono = ventanaBiblioteca.getTxtTelefonoEmpleadoA();
+            cargo = ventanaBiblioteca.getTxtCargoEmpleadoA();
+
+            if(comprobarCorreo(correo)) {
+                empleado = new Empleado(cedula, nombre, correo, clave, direccion, telefono, cargo);
+                if (manejadorDao.agregarEmpleado(empleado) > 0) {
+                    listarEmpleadoTablaAdAgregar(empleado);
+                    ventanaBiblioteca.mostrarMensaje("Empleado agregado con exito");
+                    ventanaBiblioteca.limpiarEmpleadoAdmin();
+                } else {
+                    ventanaBiblioteca.mostrarMensajeError("No se pudo crear el empleado");
+                }
+            }
+        }
+        else
+        {
+                ventanaBiblioteca.mostrarMensajeError("Verifique que los campos hayan sido bien digitados");
+        }
+    }
+
+    public void listarEmpleadoTablaAdAgregar(Empleado empleado)
+    {
+        if(empleado != null)
+        {
+            String cedula;
+            String clave;
+            String nombre;
+            String direccion;
+            String correo;
+            String telefono;
+            String cargo;
+
+            cedula = empleado.getId();
+            clave = empleado.getContrasena();
+            nombre = empleado.getNombre();
+            direccion = empleado.getDireccion();
+            correo = empleado.getEmail();
+            telefono = empleado.getTelefono();
+            cargo = empleado.getCargo();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEmpleadoTableModel();
+            auxModeloTabla.addRow(new Object[]{cedula, nombre, correo, clave, direccion, telefono, cargo});
+        }
+    }
+
+    public void editarEmpleado()
+    {
+        Empleado empleado;
+        String cedula;
+        String correo;
+
+        cedula = ventanaBiblioteca.getTxtCedulaEmpleadoA();
+        empleado = manejadorDao.buscarEmpleado(cedula);
+
+        if(empleado != null)
+        {
+            correo = ventanaBiblioteca.getTxtCorreoEmpleadoA();
+            if(comprobarCamposEmpleadoA() && comprobarCorreo(correo))
+            {
+                empleado.setContrasena(ventanaBiblioteca.getTxtClaveEmpleadoA());
+                empleado.setNombre(ventanaBiblioteca.getTxtNombreEmpleadoA());
+                empleado.setEmail(ventanaBiblioteca.getTxtCorreoEmpleadoA());
+                empleado.setDireccion(ventanaBiblioteca.getTxtDireccionEmpleadoA());
+                empleado.setTelefono(ventanaBiblioteca.getTxtTelefonoEmpleadoA());
+                empleado.setCargo(ventanaBiblioteca.getTxtCargoEmpleadoA());
+
+                if(manejadorDao.editarEmpleado(empleado))
+                {
+                    ventanaBiblioteca.mostrarMensaje("Empleado editado con exito");
+                    listarEmpleadoTabAdEditar(empleado);
+                    ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
+                    ventanaBiblioteca.limpiarEmpleadoAdmin();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar el empleado, puede que el correo ya este en uso");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Digite bien los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+        }
+    }
+
+    public void listarEmpleadoTabAdEditar(Empleado empleado)
+    {
+        if(empleado != null) {
+            String cedula;
+            String clave;
+            String nombre;
+            String direccion;
+            String correo;
+            String telefono;
+            String cargo;
+
+            cedula = empleado.getId();
+            clave = empleado.getContrasena();
+            nombre = empleado.getNombre();
+            direccion = empleado.getDireccion();
+            correo = empleado.getEmail();
+            telefono = empleado.getTelefono();
+            cargo = empleado.getCargo();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEmpleadoTableModel();
+            int auxFila = ventanaBiblioteca.getFilaSeleccionadaEmpleado();
+
+            auxModeloTabla.setValueAt(nombre, auxFila, 1);
+            auxModeloTabla.setValueAt(correo, auxFila, 2);
+            auxModeloTabla.setValueAt(clave, auxFila, 3);
+            auxModeloTabla.setValueAt(direccion, auxFila, 4);
+            auxModeloTabla.setValueAt(telefono, auxFila, 5);
+            auxModeloTabla.setValueAt(cargo, auxFila, 6);
+        }
+    }
+
+    public void eliminarEmpleado()
+    {
+        String id = ventanaBiblioteca.getTxtCedulaEmpleadoA();
+        Empleado empleado = manejadorDao.buscarEmpleado(id);
+
+        if(empleado != null)
+        {
+            if(manejadorDao.eliminarEmpleado(id))
+            {
+                ventanaBiblioteca.mostrarMensaje("Empleado eliminado");
+                ventanaBiblioteca.limpiarEmpleadoAdmin();
+                listarEmpleadoTabAdEliminar();
+                ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("No se encontro el empleado");
+        }
+    }
+
+    public void listarEmpleadoTabAdEliminar()
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEmpleadoTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaEmpleado();
+        auxModeloTabla.removeRow(auxFila);
+    }
 }

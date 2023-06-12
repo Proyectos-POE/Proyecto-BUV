@@ -1,9 +1,9 @@
 package modelo;
 
-public class Empleado
+import java.sql.Struct;
+
+public class Empleado extends Usuario
 {
-    private String id;
-    private String nombre;
     private String cargo;
 
     public Empleado()
@@ -11,28 +11,17 @@ public class Empleado
 
     }
 
-    public Empleado(String auxId, String auxNombre, String auxCargo)
+    public Empleado(String auxIdentificacion, String auxNombre, String auxEmail, String auxContrasena, String auxDireccion, String  auxTelefono, String auxCargo)
     {
-        this.id = auxId;
+        this.identificacion = auxIdentificacion;
         this.nombre = auxNombre;
+        this.contrasena = auxContrasena;
+        this.direccion = auxDireccion;
+        this.telefono = auxTelefono;
         this.cargo = auxCargo;
+        this.email = auxEmail;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public String getCargo() {
         return cargo;
