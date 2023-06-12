@@ -4410,7 +4410,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getSolicitudUTableModel(){return jtTablaSolicitudU.getModel();}
     public TableModel getPrestamoUTableModel(){return  jtTablaPrestamoU.getModel();}
     public TableModel getEmpleadoTableModel(){return  jtTablaEmpleadoA.getModel();}
-
+    public TableModel getUsuarioAdminTableModel(){return jtTablaUsuarioA.getModel();}
+    public TableModel getSolicitudAdminTableModel(){return jtTablaSolicitudA.getModel();}
+    public TableModel getPrestamoAdminTableModel(){return jtTablaPrestamoA.getModel();}
     public int getFilaSeleccionadaEmpleado()
     {
         return jtTablaEmpleadoA.getSelectedRow();

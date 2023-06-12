@@ -90,7 +90,7 @@ public class DaoEmpleado
                 emp.setCargo(tabla.getString(7));
                 arrayEmp.add(emp);
             }
-            System.out.println(arrayEmp.size());
+            conn.close();
             return arrayEmp;
         }
         catch(SQLException e){ System.out.println(e); }

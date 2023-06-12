@@ -9,9 +9,6 @@ import vista.VentanaLogin;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLDataException;
-import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -123,11 +120,11 @@ public class ControladorBiblioteca
     {
         if(!manejadorDao.listarSolicitudesUsuario(id).isEmpty())
         {
-            listarSolicitudesTablaU(manejadorDao.listarSolicitudesUsuario(usuario.getId()));
+            listarSolicitudesTablaU(usuario.getId());
         }
         if(!manejadorDao.listarPrestamosUsuario(id).isEmpty())
         {
-            listarPrestamosTablaU(manejadorDao.listarPrestamosUsuario(usuario.getId()));
+            listarPrestamosTablaU(usuario.getId());
         }
     }
 
@@ -135,11 +132,92 @@ public class ControladorBiblioteca
     {
         if(!manejadorDao.listarEmpleados().isEmpty())
         {
-            listarEmpleadosTablaA(manejadorDao.listarEmpleados());
+            listarEmpleadosTablaA();
         }
-
+        if(!manejadorDao.listarEstudiantes().isEmpty() || !manejadorDao.listarProfesores().isEmpty() || !manejadorDao.listarEmpleados().isEmpty()) {
+            listarUsuariosTablaA();
+        }
+        if(!manejadorDao.listarSolicitudes().isEmpty())
+        {
+            listarSolicitudesTablaA();
+        }
+        if(!manejadorDao.listarPrestamos().isEmpty())
+        {
+            listarPrestamosTablaA();
+        }
     }
 
+    /**************************************************************************
+     * usuario - Admin
+     *************************************************************************/
+    public void listarUsuariosTablaA()
+    {
+        ArrayList<Estudiante> arrayEst;
+        ArrayList<Profesor> arrayPro;
+        ArrayList<Empleado> arrayEmp;
+
+        arrayEst = manejadorDao.listarEstudiantes();
+        arrayPro = manejadorDao.listarProfesores();
+        arrayEmp = manejadorDao.listarEmpleados();
+
+        if(arrayEst != null)
+        {
+            String id;
+            String nom;
+            String email;
+            String dir;
+            String telefono;
+
+            for (Estudiante estudiante : arrayEst) {
+                id = estudiante.getId();
+                nom = estudiante.getNombre();
+                email = estudiante.getEmail();
+                dir = estudiante.getDireccion();
+                telefono = estudiante.getTelefono();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getUsuarioAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{id, nom, email, dir, telefono});
+            }
+        }
+        if(arrayPro != null)
+        {
+            String id;
+            String nom;
+            String email;
+            String dir;
+            String telefono;
+
+            for (Profesor profesor : arrayPro) {
+                id = profesor.getId();
+                nom = profesor.getNombre();
+                email = profesor.getEmail();
+                dir = profesor.getDireccion();
+                telefono = profesor.getTelefono();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getUsuarioAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{id, nom, email, dir, telefono});
+            }
+        }
+        if(arrayEmp != null)
+        {
+            String id;
+            String nom;
+            String email;
+            String dir;
+            String telefono;
+
+            for (Empleado empleado : arrayEmp) {
+                id = empleado.getId();
+                nom = empleado.getNombre();
+                email = empleado.getEmail();
+                dir = empleado.getDireccion();
+                telefono = empleado.getTelefono();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getUsuarioAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{id, nom, email, dir, telefono});
+            }
+        }
+    }
     /**************************************************************************
      * Estudiante - usuario
      *************************************************************************/
@@ -321,8 +399,10 @@ public class ControladorBiblioteca
         }
     }
 
-    public void listarSolicitudesTablaU(ArrayList<Solicitud> arraySol)
+    public void listarSolicitudesTablaU(String id)
     {
+        ArrayList<Solicitud> arraySol;
+        arraySol = manejadorDao.listarSolicitudesUsuario(id);
         if(arraySol != null)
         {
             int auxId;
@@ -369,10 +449,38 @@ public class ControladorBiblioteca
     }
 
     /**************************************************************************
+     * Solicitud - Admin
+     *************************************************************************/
+    public void listarSolicitudesTablaA()
+    {
+        ArrayList<Solicitud> arraySol;
+        arraySol = manejadorDao.listarSolicitudes();
+        if(arraySol != null)
+        {
+            int auxId;
+            String auxIsbn;
+            String auxTitulo;
+            String auxDescripcion;
+
+            for (Solicitud solicitud : arraySol) {
+                auxId = solicitud.getNumero();
+                auxIsbn = solicitud.getIsbnLibro();
+                auxTitulo = solicitud.getTitulo();
+                auxDescripcion = solicitud.getDescripcion();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getSolicitudAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{auxId, auxIsbn, auxTitulo, auxDescripcion});
+            }
+        }
+    }
+
+    /**************************************************************************
      * Prestamo - Usuario
      *************************************************************************/
-    public void listarPrestamosTablaU(ArrayList<Prestamo> arrayPrestamo)
+    public void listarPrestamosTablaU(String id)
     {
+        ArrayList<Prestamo> arrayPrestamo;
+        arrayPrestamo = manejadorDao.listarPrestamosUsuario(id);
         if(arrayPrestamo != null)
         {
             int num;
@@ -397,6 +505,39 @@ public class ControladorBiblioteca
     }
 
     /**************************************************************************
+     * Prestamo - Admin
+     *************************************************************************/
+    public void listarPrestamosTablaA()
+    {
+        ArrayList<Prestamo> arrayPrestamo;
+        arrayPrestamo = manejadorDao.listarPrestamos();
+        if(arrayPrestamo != null)
+        {
+            int num;
+            String nomE;
+            Date fecha;
+            String isbn;
+            int numEje;
+            Date fechaD;
+            String tituloL;
+            String idUsu;
+
+            for (Prestamo prestamo : arrayPrestamo) {
+                num = prestamo.getNumPrestamo();
+                fecha = prestamo.getFecha();
+                isbn = prestamo.getIsbn();
+                numEje = prestamo.getNumEjemplar();
+                fechaD = prestamo.getFechaDevolucion();
+                idUsu = prestamo.getIdUsuario();
+                tituloL = manejadorDao.buscarLibroIsbn(isbn).getTitulo();
+                nomE = manejadorDao.buscarNombreEmpleado(prestamo.getIdEmpleado());
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{num, isbn, numEje, tituloL, idUsu, nomE, fecha, fechaD});
+            }
+        }
+    }
+    /**************************************************************************
      * Empleado - admin
      *************************************************************************/
     class EmpleadoListener implements ActionListener
@@ -419,8 +560,10 @@ public class ControladorBiblioteca
         }
     }
 
-    public void listarEmpleadosTablaA(ArrayList<Empleado> arrayEmpleado)
+    public void listarEmpleadosTablaA()
     {
+        ArrayList<Empleado> arrayEmpleado;
+        arrayEmpleado = manejadorDao.listarEmpleados();
         if(arrayEmpleado != null)
         {
             String id;

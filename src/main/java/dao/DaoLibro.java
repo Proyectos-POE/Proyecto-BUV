@@ -37,12 +37,12 @@ public class DaoLibro
     {
         Libro lb = new Libro();
         String sql_select;
-        sql_select = "SELECT isbn, codigo_ed, anho_publi, num_paginas, idioma FROM libro WHERE isbn='" + isbn + "'";
+        sql_select = "SELECT isbn, codigo_ed, anho_publi, num_paginas, idioma, titulo FROM libro WHERE isbn='" + isbn + "'";
 
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
@@ -52,8 +52,9 @@ public class DaoLibro
                 lb.setAnhoPublicacion(tabla.getString(3));
                 lb.setNumPaginas(tabla.getString(4));
                 lb.setIdioma(tabla.getString(5));
+                lb.setTitulo(tabla.getString(6));
             }
-
+            conn.close();
             return lb;
         }
         catch(SQLException e){ System.out.println(e); }

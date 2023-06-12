@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class ManejadorDao {
     private final String nombre;
+    private DaoUsuario daoUsuario;
     private DaoEstudiante daoEstudiante;
     private DaoProfesor daoProfesor;
     private DaoAutor daoAutor;
@@ -44,6 +45,8 @@ public class ManejadorDao {
     public ManejadorDao(String nombre)
     {
         this.nombre = nombre;
+        this.daoProfesor = new DaoProfesor();
+        this.daoEstudiante = new DaoEstudiante();
         this.daoEmpleado = new DaoEmpleado();
         this.daoAutor = new DaoAutor();
         this.daoEditorial = new DaoEditorial();
@@ -69,7 +72,7 @@ public class ManejadorDao {
     {
         return this.daoEstudiante.modificarEstudiante(estudiante);
     }
-
+    public ArrayList<Estudiante> listarEstudiantes(){return this.daoEstudiante.listarEstudiantes();}
     /*******
      * Profesor
      */
@@ -82,6 +85,7 @@ public class ManejadorDao {
     {
         return this.daoProfesor.modificarProfesor(profesor);
     }
+    public ArrayList<Profesor> listarProfesores(){return this.daoProfesor.listarProfesores();}
 
     /*******
      * Solicitud
@@ -91,7 +95,10 @@ public class ManejadorDao {
     {
         return this.daoSolicitud.insertSolicitud(soli);
     }
-
+    public ArrayList<Solicitud> listarSolicitudes()
+    {
+        return this.daoSolicitud.listarAllSolicitudes();
+    }
     public ArrayList<Solicitud> listarSolicitudesUsuario(String id)
     {
         return this.daoSolicitud.listarSolicitudesUsuario(id);
@@ -105,6 +112,10 @@ public class ManejadorDao {
     public ArrayList<Prestamo> listarPrestamosUsuario(String id)
     {
         return this.daoPrestamo.listarPrestamosU(id);
+    }
+    public ArrayList<Prestamo> listarPrestamos()
+    {
+        return this.daoPrestamo.listarPrestamos();
     }
 
     /*******
@@ -139,5 +150,14 @@ public class ManejadorDao {
     public ArrayList<Empleado> listarEmpleados()
     {
         return this.daoEmpleado.listarEmpleados();
+    }
+
+    /*******
+     * Libro
+     */
+
+    public Libro buscarLibroIsbn(String isbn)
+    {
+        return this.daoLibro.consultarLibro(isbn);
     }
 }
