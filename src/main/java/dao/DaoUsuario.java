@@ -1,5 +1,6 @@
-/*package dao;
+package dao;
 
+import modelo.Estudiante;
 import modelo.Usuario;
 
 import java.sql.Connection;
@@ -18,33 +19,31 @@ public class DaoUsuario
         fachada = new FachadaBd();
     }
 
-    public Usuario consultarUsuario(String identificacion)
-    {
-        Usuario usa = new Usuario();
+    public ArrayList<Usuario> listarUsuarios(){
+        ArrayList<Usuario> arrayUsu = new ArrayList<>();
         String sql_select;
-        sql_select= "SELECT id_usuario, nombre, direccion, telefono, email, contrasena FROM usuario NATURAL JOIN profesor WHERE id_usuario='" + identificacion +  "'";
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email FROM usuario";
         try{
-
+            Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            while(tabla.next()){
-
-                pro.setId(tabla.getString(1));
-                pro.setContrasena(tabla.getString(2));
-                pro.setNombre(tabla.getString(3));
-                pro.setDireccion(tabla.getString(4));
-                pro.setTelefono(tabla.getString(5));
-                pro.setEmail(tabla.getString(6));
-                pro.setDependencia(tabla.getString(7));
-                pro.setTitulo(tabla.getString(8));
+            while (tabla.next()){
+                Usuario usu = new Usuario();
+                usu.setId(tabla.getString(1));
+                usu.setContrasena(tabla.getString(2));
+                usu.setNombre(tabla.getString(3));
+                usu.setDireccion(tabla.getString(4));
+                usu.setTelefono(tabla.getString(5));
+                usu.setEmail(tabla.getString(6));
+                arrayUsu.add(usu);
             }
-
-            return pro;
+            conn.close();
+            return arrayUsu;
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return null;
     }
-}*/
+}
