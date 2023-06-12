@@ -3744,6 +3744,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnCerrarSesion.addActionListener(listenControles);
     }
 
+    public void addBotonesEmpleadoAdminListener(ActionListener listenControles)
+    {
+        btnAgregarEmpleadoA.addActionListener(listenControles);
+        btnEliminarEmpleadoA.addActionListener(listenControles);
+        btnModificarEmpleadoA.addActionListener(listenControles);
+    }
+
     public void limpiarSolicitudUsuario()
     {
         txtIsbnSolicitudU.setText("");
@@ -3778,7 +3785,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     {
         txtCedulaEmpleadoA.setText("");
         txtNombreEmpleadoA.setText("");
-        txtCargoEmpleadoA.setText("");
+        txtCorreoEmpleadoA.setText("");
         txtClaveEmpleadoA.setText("");
         txtDireccionEmpleadoA.setText("");
         txtTelefonoEmpleadoA.setText("");
@@ -4368,8 +4375,51 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public String getTxtIsbnSolicitudU() {return txtIsbnSolicitudU.getText();}
 
     public String getTxtTituloSolicitudU() {return txtTituloSolicitudU.getText();}
+
+    public String getTxtCargoEmpleadoA() {
+        return txtCargoEmpleadoA.getText();
+    }
+
+
+    public String getTxtCedulaEmpleadoA() {
+        return txtCedulaEmpleadoA.getText();
+    }
+
+
+    public String getTxtClaveEmpleadoA() {
+        return txtClaveEmpleadoA.getText();
+    }
+
+
+    public String getTxtCorreoEmpleadoA() {
+        return txtCorreoEmpleadoA.getText();
+    }
+
+    public String getTxtDireccionEmpleadoA() {
+        return txtDireccionEmpleadoA.getText();
+    }
+
+    public String getTxtNombreEmpleadoA() {
+        return txtNombreEmpleadoA.getText();
+    }
+
+    public String getTxtTelefonoEmpleadoA() {
+        return txtTelefonoEmpleadoA.getText();
+    }
+
     public TableModel getSolicitudUTableModel(){return jtTablaSolicitudU.getModel();}
     public TableModel getPrestamoUTableModel(){return  jtTablaPrestamoU.getModel();}
+    public TableModel getEmpleadoTableModel(){return  jtTablaEmpleadoA.getModel();}
+
+    public int getFilaSeleccionadaEmpleado()
+    {
+        return jtTablaEmpleadoA.getSelectedRow();
+    }
+
+    public void deseleccionarFilaTablaEmpleado()
+    {
+        jtTablaEmpleadoA.getSelectionModel().clearSelection();
+    }
 
     public void mostrarMensaje(String auxMensaje)
     {

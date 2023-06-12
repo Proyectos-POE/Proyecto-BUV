@@ -27,6 +27,7 @@ public class ManejadorDao {
         this.daoPrestamo = new DaoPrestamo();
         this.daoMulta = new DaoMulta();
         this.daoLibro = new DaoLibro();
+        this.daoEmpleado = new DaoEmpleado();
     }
 
     public ManejadorDao(String nombre, Profesor profesor)
@@ -37,6 +38,7 @@ public class ManejadorDao {
         this.daoPrestamo = new DaoPrestamo();
         this.daoMulta = new DaoMulta();
         this.daoLibro = new DaoLibro();
+        this.daoEmpleado = new DaoEmpleado();
     }
 
     public ManejadorDao(String nombre)
@@ -103,5 +105,39 @@ public class ManejadorDao {
     public ArrayList<Prestamo> listarPrestamosUsuario(String id)
     {
         return this.daoPrestamo.listarPrestamosU(id);
+    }
+
+    /*******
+     * Empleado
+     */
+
+    public int agregarEmpleado(Empleado empleado)
+    {
+        return this.daoEmpleado.insertEmpleado(empleado);
+    }
+
+    public boolean editarEmpleado(Empleado empleado)
+    {
+        return this.daoEmpleado.modificarEmpleado(empleado);
+    }
+
+    public boolean eliminarEmpleado(String id)
+    {
+        return this.daoEmpleado.eliminarEmpleado(id);
+    }
+
+    public Empleado buscarEmpleado(String id)
+    {
+        return this.daoEmpleado.consultarEmpleado(id);
+    }
+
+    public String buscarNombreEmpleado(String id)
+    {
+        return this.daoEmpleado.consultarEmpleado(id).getNombre();
+    }
+
+    public ArrayList<Empleado> listarEmpleados()
+    {
+        return this.daoEmpleado.listarEmpleados();
     }
 }
