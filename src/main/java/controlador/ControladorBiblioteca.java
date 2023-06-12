@@ -134,7 +134,7 @@ public class ControladorBiblioteca
         {
             listarEmpleadosTablaA();
         }
-        if(!manejadorDao.listarEstudiantes().isEmpty() || !manejadorDao.listarProfesores().isEmpty() || !manejadorDao.listarEmpleados().isEmpty()) {
+        if(!manejadorDao.listarUsuarios().isEmpty()) {
             listarUsuariosTablaA();
         }
         if(!manejadorDao.listarSolicitudes().isEmpty())
@@ -152,15 +152,9 @@ public class ControladorBiblioteca
      *************************************************************************/
     public void listarUsuariosTablaA()
     {
-        ArrayList<Estudiante> arrayEst;
-        ArrayList<Profesor> arrayPro;
-        ArrayList<Empleado> arrayEmp;
-
-        arrayEst = manejadorDao.listarEstudiantes();
-        arrayPro = manejadorDao.listarProfesores();
-        arrayEmp = manejadorDao.listarEmpleados();
-
-        if(arrayEst != null)
+        ArrayList<Usuario> arrayUsu;
+        arrayUsu = manejadorDao.listarUsuarios();
+        if(arrayUsu != null)
         {
             String id;
             String nom;
@@ -168,50 +162,12 @@ public class ControladorBiblioteca
             String dir;
             String telefono;
 
-            for (Estudiante estudiante : arrayEst) {
-                id = estudiante.getId();
-                nom = estudiante.getNombre();
-                email = estudiante.getEmail();
-                dir = estudiante.getDireccion();
-                telefono = estudiante.getTelefono();
-
-                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getUsuarioAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{id, nom, email, dir, telefono});
-            }
-        }
-        if(arrayPro != null)
-        {
-            String id;
-            String nom;
-            String email;
-            String dir;
-            String telefono;
-
-            for (Profesor profesor : arrayPro) {
-                id = profesor.getId();
-                nom = profesor.getNombre();
-                email = profesor.getEmail();
-                dir = profesor.getDireccion();
-                telefono = profesor.getTelefono();
-
-                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getUsuarioAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{id, nom, email, dir, telefono});
-            }
-        }
-        if(arrayEmp != null)
-        {
-            String id;
-            String nom;
-            String email;
-            String dir;
-            String telefono;
-
-            for (Empleado empleado : arrayEmp) {
-                id = empleado.getId();
-                nom = empleado.getNombre();
-                email = empleado.getEmail();
-                dir = empleado.getDireccion();
-                telefono = empleado.getTelefono();
+            for (Usuario usuario : arrayUsu) {
+                id = usuario.getId();
+                nom = usuario.getNombre();
+                email = usuario.getEmail();
+                dir = usuario.getDireccion();
+                telefono = usuario.getTelefono();
 
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getUsuarioAdminTableModel();
                 auxModeloTabla.addRow(new Object[]{id, nom, email, dir, telefono});
