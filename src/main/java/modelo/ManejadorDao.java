@@ -163,6 +163,14 @@ public class ManejadorDao {
     }
 
     /*******
+     * Autor
+     */
+    public int agregarAutor(Autor autor){return this.daoAutor.insertAutor(autor);}
+    public boolean modificarAutor(Autor autor){return this.daoAutor.modificarAutor(autor);}
+    public ArrayList<Autor> listarAutores(){return this.daoAutor.listarAutor();}
+    public Autor ultimoAutor(){return this.daoAutor.consultarUltimoAutor();}
+
+    /*******
      * Libro
      */
 

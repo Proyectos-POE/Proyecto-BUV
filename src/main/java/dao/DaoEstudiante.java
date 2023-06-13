@@ -141,9 +141,9 @@ public class DaoEstudiante {
         String sql_usu;
         String sql_est;
 
-        sql_usu = "UPDATE usuario" + " SET id_usuario = '" + est.getId() + "', contrasena = '" + est.getContrasena() + "', nombre = '" + est.getNombre() + "', direccion = '"  + est.getDireccion() + "', telefono = '" + est.getTelefono() +"' , email = '" + est.getEmail() +"' WHERE id_usuario ='" + est.getId() +"'";
+        sql_usu = "UPDATE usuario" + " SET contrasena = '" + est.getContrasena() + "', nombre = '" + est.getNombre() + "', direccion = '"  + est.getDireccion() + "', telefono = '" + est.getTelefono() +"' , email = '" + est.getEmail() +"' WHERE id_usuario ='" + est.getId() +"'";
 
-        sql_est = "UPDATE estudiante" + " SET carrera = '" + est.getCarrera() + "', universidad = '" + est.getUniversidad() + "'WHERE id_usuario ='" + est.getId() +"'";
+        sql_est = "UPDATE estudiante" + " SET universidad = '" + est.getUniversidad() + "'WHERE id_usuario ='" + est.getId() +"'";
         try
         {
             Connection conn= fachada.openConnection();

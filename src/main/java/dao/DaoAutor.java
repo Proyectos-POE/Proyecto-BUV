@@ -19,7 +19,7 @@ public class DaoAutor
     {
         String sql_at;
 
-        sql_at = "INSERT INTO autor(codigo_autor, primer_nom, segundo_nom, primer_apellido, segundo_apellido) VALUES('"+ at.getCodAutor() + "', '" +
+        sql_at = "INSERT INTO autor(primer_nom, segundo_nom, primer_apellido, segundo_apellido) VALUES('"+
                 at.getPrimerNombre() + "', '" + at.getSegundoNombre() + "', '" + at.getPrimerApellido() + "', '" +
                 at.getSegundoApellido() +"')";
 
@@ -35,7 +35,7 @@ public class DaoAutor
         return -1;
     }
 
-    public Autor consultarAutor(String codAutor)
+    public Autor consultarAutor(int codAutor)
     {
         Autor at = new Autor();
         String sql_select;
@@ -49,7 +49,7 @@ public class DaoAutor
 
             while(tabla.next()){
 
-                at.setCodAutor(tabla.getString(1));
+                at.setCodAutor(tabla.getInt(1));
                 at.setPrimerNombre(tabla.getString(2));
                 at.setSegundoNombre(tabla.getString(3));
                 at.setPrimerApellido(tabla.getString(4));
@@ -57,6 +57,33 @@ public class DaoAutor
             }
             conn.close();
             return at;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+    public Autor consultarUltimoAutor()
+    {
+        ArrayList<Autor> arrayAt = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT codigo_autor, primer_nom, segundo_nom, primer_apellido, segundo_apellido FROM  autor";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while (tabla.next()){
+                Autor at = new Autor();
+                at.setCodAutor(tabla.getInt(1));
+                at.setPrimerNombre(tabla.getString(2));
+                at.setSegundoNombre(tabla.getString(3));
+                at.setPrimerApellido(tabla.getString(4));
+                at.setSegundoApellido(tabla.getString(5));
+                arrayAt.add(at);
+            }
+            conn.close();
+            return arrayAt.get(arrayAt.size()-1);
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
@@ -75,7 +102,7 @@ public class DaoAutor
 
             while (tabla.next()){
                 Autor at = new Autor();
-                at.setCodAutor(tabla.getString(1));
+                at.setCodAutor(tabla.getInt(1));
                 at.setPrimerNombre(tabla.getString(2));
                 at.setSegundoNombre(tabla.getString(3));
                 at.setPrimerApellido(tabla.getString(4));
@@ -94,7 +121,7 @@ public class DaoAutor
     {
         String sql_at;
 
-        sql_at = "UPDATE autor" + " SET codigo_autor = '" + at.getCodAutor() + "', primer_nom = '"+ at.getPrimerNombre() + "', segundo_nom = '" + at.getSegundoNombre() + "', primer_apellido = '" + at.getPrimerApellido() + "', segundo_apellido = '" + at.getSegundoApellido() + "' WHERE codigo_autor = '" + at.getCodAutor() + "'";
+        sql_at = "UPDATE autor" + " SET primer_nom = '"+ at.getPrimerNombre() + "', segundo_nom = '" + at.getSegundoNombre() + "', primer_apellido = '" + at.getPrimerApellido() + "', segundo_apellido = '" + at.getSegundoApellido() + "' WHERE codigo_autor = '" + at.getCodAutor() + "'";
 
         try{
             Connection conn= fachada.openConnection();

@@ -2,15 +2,23 @@ package modelo;
 
 public class Autor
 {
-    private String codAutor;
+    private int codAutor;
     private String primerNombre;
     private String segundoNombre;
     private String primerApellido;
     private String segundoApellido;
 
-    public Autor(String auxCodAutor, String auxPrimerNombre, String auxSegundoNombre, String auxPrimerApellido, String auxSegundoApellido)
+    public Autor(String auxPrimerNombre, String auxSegundoNombre, String auxPrimerApellido, String auxSegundoApellido)
     {
-        this.codAutor = auxCodAutor;
+        this.primerNombre = auxPrimerNombre;
+        this.segundoNombre = auxSegundoNombre;
+        this.primerApellido = auxPrimerApellido;
+        this.segundoApellido = auxSegundoApellido;
+    }
+
+    public Autor(int auxCod, String auxPrimerNombre, String auxSegundoNombre, String auxPrimerApellido, String auxSegundoApellido)
+    {
+        this.codAutor = auxCod;
         this.primerNombre = auxPrimerNombre;
         this.segundoNombre = auxSegundoNombre;
         this.primerApellido = auxPrimerApellido;
@@ -22,12 +30,12 @@ public class Autor
 
     }
 
-    public String getCodAutor()
+    public int getCodAutor()
     {
         return codAutor;
     }
 
-    public void setCodAutor(String codAutor)
+    public void setCodAutor(int codAutor)
     {
         this.codAutor = codAutor;
     }
