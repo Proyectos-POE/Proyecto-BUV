@@ -102,9 +102,9 @@ public class DaoEmpleado
         String sql_emp;
         String sql_usu;
 
-        sql_usu = "UPDATE usuario" + " SET id_usuario = '" + emp.getId() + "', contrasena = '" + emp.getContrasena() + "', nombre = '" + emp.getNombre() + "', direccion = '"  + emp.getDireccion() + "', telefono = '" + emp.getTelefono() +"' , email = '" + emp.getEmail() +"' WHERE id_usuario ='" + emp.getId() +"'";
+        sql_usu = "UPDATE usuario" + " SET contrasena = '" + emp.getContrasena() + "', nombre = '" + emp.getNombre() + "', direccion = '"  + emp.getDireccion() + "', telefono = '" + emp.getTelefono() +"' , email = '" + emp.getEmail() +"' WHERE id_usuario ='" + emp.getId() +"'";
 
-        sql_emp = "UPDATE empleado" + " SET id_empleado = '" + emp.getId() + "', cargo = '"  + emp.getCargo() +"' WHERE id_empleado ='" + emp.getId() +"'";
+        sql_emp = "UPDATE empleado" + " SET cargo = '"  + emp.getCargo() +"' WHERE id_empleado ='" + emp.getId() +"'";
 
         try{
             Connection conn= fachada.openConnection();

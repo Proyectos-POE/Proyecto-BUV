@@ -124,7 +124,7 @@ public class DaoPrestamo
     public boolean modificarPrestamo(Prestamo pres){
         String sql_pres;
 
-        sql_pres = "UPDATE Prestamo" + " SET num_prestamo = '" + pres.getNumPrestamo() + "', id_usuario = '" + pres.getIdUsuario() + "', id_empleado = '" + pres.getIdEmpleado() + "', fecha = '"  + pres.getFecha() +"'";
+        sql_pres = "UPDATE Prestamo" + " SET id_usuario = '" + pres.getIdUsuario() + "', id_empleado = '" + pres.getIdEmpleado() + "', fecha = '"  + pres.getFecha() +"'";
 
         try{
             Connection conn= fachada.openConnection();
