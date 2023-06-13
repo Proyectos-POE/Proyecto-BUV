@@ -3,7 +3,6 @@ package dao;
 import modelo.Empleado;
 import modelo.Estudiante;
 import modelo.Prestamo;
-import org.postgresql.util.PSQLException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -63,6 +62,44 @@ public class DaoEmpleado
             }
             conn.close();
             return emp;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public Empleado consultarEmpleadoEmail(String email, String contrasena){
+        Empleado emp = new Empleado();
+        String sql_select;
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, cargo  FROM Empleado INNER JOIN Usuario ON id_empleado = id_usuario WHERE email ='" + email +  "' AND contrasena = '" + contrasena +  "'";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            boolean valido = false;
+
+            while(tabla.next()){
+                valido = true;
+                emp.setId(tabla.getString(1));
+                emp.setContrasena(tabla.getString(2));
+                emp.setNombre(tabla.getString(3));
+                emp.setDireccion(tabla.getString(4));
+                emp.setTelefono(tabla.getString(5));
+                emp.setEmail(tabla.getString(6));
+                emp.setCargo(tabla.getString(7));
+            }
+            conn.close();
+
+            if(valido)
+            {
+                return emp;
+            }
+            else
+            {
+                return null;
+            }
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }

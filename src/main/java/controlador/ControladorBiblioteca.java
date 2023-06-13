@@ -1,5 +1,6 @@
 package controlador;
 
+import dao.DaoEmpleado;
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
 import modelo.*;
@@ -55,7 +56,8 @@ public class ControladorBiblioteca
         VentanaLogin a = new VentanaLogin();
         DaoEstudiante b = new DaoEstudiante();
         DaoProfesor d = new DaoProfesor();
-        ControladorLogin c = new ControladorLogin(a, b, d);
+        DaoEmpleado e = new DaoEmpleado();
+        ControladorLogin c = new ControladorLogin(a, b, d, e);
     }
 
     private void perfilEstudiante()

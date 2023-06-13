@@ -1,5 +1,6 @@
 package controlador;
 
+import dao.DaoEmpleado;
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
 import modelo.Empleado;
@@ -19,13 +20,16 @@ public class ControladorLogin
     private final VentanaLogin ventanaLogin;
     private final DaoEstudiante daoEstudiante;
     private final DaoProfesor daoProfesor;
+
+    private final DaoEmpleado daoEmpleado;
     private final String admin = "admin";
 
-    public ControladorLogin(VentanaLogin auxA, DaoEstudiante auxB, DaoProfesor auxC)
+    public ControladorLogin(VentanaLogin auxA, DaoEstudiante auxB, DaoProfesor auxC, DaoEmpleado auxD)
     {
         this.ventanaLogin = auxA;
         this.daoEstudiante = auxB;
         this.daoProfesor = auxC;
+        this.daoEmpleado = auxD;
 
         RegistroListener registroListener = new RegistroListener();
         ventanaLogin.addBtnRegistrarseAListener(registroListener);
@@ -245,7 +249,7 @@ public class ControladorLogin
         {
             auxProfesor = daoProfesor.consultarProfesorEmail(auxCorreo, auxContrasena);
             auxEstudiante = daoEstudiante.consultarEstudianteEmail(auxCorreo, auxContrasena);
-            //auxEmpleado = daoEmpleado.consultarEmpleadoEmail(auxCorreo, auxContrasena);
+            auxEmpleado = daoEmpleado.consultarEmpleadoEmail(auxCorreo, auxContrasena);
         }
 
         System.out.println(auxEstudiante);
@@ -261,11 +265,11 @@ public class ControladorLogin
             ventanaLogin.dispose();
             ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEstudiante, new ManejadorDao("estudiante", auxEstudiante));
         }
-        /*else if(auxEmpleado != null)
+        else if(auxEmpleado != null)
         {
             ventanaLogin.dispose();
-            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEmpleado);
-        }*/
+            ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEmpleado, new ManejadorDao("empleado", auxEmpleado));
+        }
         else if(auxCorreo.equals(admin) && auxContrasena.equals(admin))
         {
             ventanaLogin.dispose();
