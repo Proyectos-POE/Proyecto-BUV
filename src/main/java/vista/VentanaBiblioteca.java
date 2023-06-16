@@ -3751,6 +3751,14 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnModificarEmpleadoA.addActionListener(listenControles);
     }
 
+    public void addBotonesAreaAdminListener(ActionListener listenControles)
+    {
+        btnAgregarAreaA.addActionListener(listenControles);
+        btnModificarAreaA.addActionListener(listenControles);
+        btnRelacionarAreaA.addActionListener(listenControles);
+        btnEliminarAreaA.addActionListener(listenControles);
+    }
+
     public void limpiarSolicitudUsuario()
     {
         txtIsbnSolicitudU.setText("");
@@ -3760,6 +3768,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public void limpiarAreaAdmin()
     {
+        txtIdAreaA.setText("0");
         txtNombreAreaA.setText("");
         txtCodigoArea1A.setText("");
         txtCodigoArea2A.setText("");
@@ -3923,10 +3932,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             {
                 limpiarAreaAdmin();
                 txtIdAreaA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+                txtCodigoArea1A.setText(String.valueOf(tabla.getValueAt(fila , 0)));
                 txtNombreAreaA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
-                txtCodigoArea1A.setText(String.valueOf(tabla.getValueAt(fila , 2)));
+                txaDescripcionAreaA.setText(String.valueOf(tabla.getValueAt(fila , 2)));
                 txtCodigoArea2A.setText(String.valueOf(tabla.getValueAt(fila , 3)));
-                txaDescripcionAreaA.setText(String.valueOf(tabla.getValueAt(fila , 4)));
             }
         }
     }
@@ -4413,6 +4422,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getUsuarioAdminTableModel(){return jtTablaUsuarioA.getModel();}
     public TableModel getSolicitudAdminTableModel(){return jtTablaSolicitudA.getModel();}
     public TableModel getPrestamoAdminTableModel(){return jtTablaPrestamoA.getModel();}
+    public TableModel getAreaAdminTableModel(){return jtTablaAreaA.getModel();}
     public int getFilaSeleccionadaEmpleado()
     {
         return jtTablaEmpleadoA.getSelectedRow();
@@ -4421,6 +4431,41 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public void deseleccionarFilaTablaEmpleado()
     {
         jtTablaEmpleadoA.getSelectionModel().clearSelection();
+    }
+
+    public String getTxtCodAreaA()
+    {
+        return txtIdAreaA.getText();
+    }
+
+    public String getTxtNombreAreaA()
+    {
+        return txtNombreAreaA.getText();
+    }
+
+    public String getTxaDescripcionAreaA()
+    {
+        return txaDescripcionAreaA.getText();
+    }
+
+    public String getTxtCodigoArea1A()
+    {
+        return txtCodigoArea1A.getText();
+    }
+
+    public String getTxtCodigoArea2A()
+    {
+        return txtCodigoArea2A.getText();
+    }
+
+    public int getFilaSeleccionadaArea()
+    {
+        return jtTablaAreaA.getSelectedRow();
+    }
+
+    public void deseleccionarFilaTablaArea()
+    {
+        jtTablaAreaA.getSelectionModel().clearSelection();
     }
 
     public void mostrarMensaje(String auxMensaje)

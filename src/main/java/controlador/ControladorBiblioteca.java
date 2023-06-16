@@ -6,6 +6,7 @@ import modelo.*;
 import vista.VentanaBiblioteca;
 import vista.VentanaLogin;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,6 +48,7 @@ public class ControladorBiblioteca
         ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
         ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
         ventanaBiblioteca.addBotonesEmpleadoAdminListener(new EmpleadoListener());
+        ventanaBiblioteca.addBotonesAreaAdminListener(new AreaConocimientoListener());
     }
 
     private void cerrarSesion()
@@ -144,6 +146,10 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarPrestamos().isEmpty())
         {
             listarPrestamosTablaA();
+        }
+        if(!manejadorDao.listarAreas().isEmpty())
+        {
+            listarAreasTablaA();
         }
     }
 
@@ -718,5 +724,213 @@ public class ControladorBiblioteca
         DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEmpleadoTableModel();
         int auxFila = ventanaBiblioteca.getFilaSeleccionadaEmpleado();
         auxModeloTabla.removeRow(auxFila);
+    }
+
+    /**************************************************************************
+     * AreaConocimiento - admin
+     *************************************************************************/
+
+    class AreaConocimientoListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("agregar"))
+            {
+                agregarArea();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("modificar"))
+            {
+                editarArea();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("eliminar"))
+            {
+                eliminarArea();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("relacionar"))
+            {
+               //relacionarAreas();
+            }
+        }
+    }
+
+    public void listarAreasTablaA()
+    {
+        ArrayList<AreaConocimiento> arrayArea;
+        arrayArea = manejadorDao.listarAreas();
+        if(arrayArea != null)
+        {
+            int codArea;
+            String nomArea;
+            String descripcion;
+            String areaHija;
+
+            for (AreaConocimiento area : arrayArea) {
+                codArea = area.getCodigoArea();
+                nomArea = area.getNomArea();
+                descripcion = area.getDescripcion();
+                areaHija = area.getAreaHija();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{codArea, nomArea, descripcion, areaHija});
+            }
+        }
+    }
+    public boolean comprobarCamposAreaA()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getTxtNombreAreaA().isEmpty();
+        return valido;
+    }
+
+    public void listarAreaTablaAdAgregar(AreaConocimiento area)
+    {
+        if(area != null)
+        {
+            int codArea;
+            String nomArea;
+            String descripcion;
+            String areaHija;
+
+            codArea = area.getCodigoArea();
+            nomArea = area.getNomArea();
+            descripcion = area.getDescripcion();
+            areaHija = area.getAreaHija();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+            auxModeloTabla.addRow(new Object[]{codArea, nomArea, descripcion, areaHija});
+        }
+    }
+
+    public void agregarArea()
+    {
+        AreaConocimiento area;
+        int codArea;
+        String nomArea;
+        String descripcion;
+
+        codArea = Integer.parseInt(ventanaBiblioteca.getTxtCodAreaA());
+        if(codArea == 0)
+        {
+            if (comprobarCamposAreaA())
+            {
+                try
+                {
+                    nomArea = ventanaBiblioteca.getTxtNombreAreaA();
+                    descripcion = ventanaBiblioteca.getTxaDescripcionAreaA();
+
+                    area = new AreaConocimiento(nomArea, descripcion);
+
+                    if (manejadorDao.agregarArea(area) > 0)
+                    {
+                        listarAreaTablaAdAgregar(area);
+                        ventanaBiblioteca.mostrarMensaje("Area agregada con exito");
+                        ventanaBiblioteca.limpiarAreaAdmin();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("No se pudo crear el area");
+                    }
+                }
+                catch (NumberFormatException e)
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Llene el campo del nombre");
+                }
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Deseleccione el area");
+        }
+    }
+
+    public void listarAreaTabAdEditar(AreaConocimiento area){
+        if(area != null)
+        {
+            String nomArea;
+            String descripcion;
+            String areaHija;
+
+            nomArea = area.getNomArea();
+            descripcion = area.getDescripcion();
+            areaHija = area.getAreaHija();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+            int auxFila = ventanaBiblioteca.getFilaSeleccionadaArea();
+
+            auxModeloTabla.setValueAt(nomArea, auxFila, 1);
+            auxModeloTabla.setValueAt(descripcion, auxFila, 2);
+            auxModeloTabla.setValueAt(areaHija, auxFila, 3);
+        }
+    }
+
+    public void editarArea()
+    {
+        AreaConocimiento area;
+        int codArea;
+
+        codArea = Integer.parseInt(ventanaBiblioteca.getTxtCodAreaA());
+        area = manejadorDao.buscarArea(codArea);
+
+        if(area != null)
+        {
+            if(comprobarCamposAreaA())
+            {
+                area.setNomArea(ventanaBiblioteca.getTxtNombreAreaA());
+                area.setDescripcion(ventanaBiblioteca.getTxaDescripcionAreaA());
+
+                if(manejadorDao.editarArea(area))
+                {
+                    ventanaBiblioteca.mostrarMensaje("Area editado con exito");
+                    listarAreaTabAdEditar(area);
+                    ventanaBiblioteca.deseleccionarFilaTablaArea();
+                    ventanaBiblioteca.limpiarAreaAdmin();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar el area");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene el campo del nombre");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+        }
+    }
+
+    public void listarAreaTablaAdEliminar(AreaConocimiento area)
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaArea();
+        auxModeloTabla.removeRow(auxFila);
+    }
+
+    public void eliminarArea()
+    {
+        int codArea = Integer.parseInt(ventanaBiblioteca.getTxtCodAreaA());
+        AreaConocimiento area = manejadorDao.buscarArea(codArea);
+
+        if (area != null)
+        {
+           if (manejadorDao.eliminarArea(codArea))
+           {
+               ventanaBiblioteca.mostrarMensaje("Area eliminada");
+               ventanaBiblioteca.limpiarAreaAdmin();
+               listarAreaTablaAdEliminar(area);
+               ventanaBiblioteca.deseleccionarFilaTablaArea();
+           }
+           else
+           {
+               ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+           }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("No se encontró el area");
+        }
     }
 }
