@@ -1,5 +1,6 @@
 package controlador;
 
+import dao.DaoEmpleado;
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
 import modelo.*;
@@ -8,6 +9,7 @@ import vista.VentanaLogin;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class ControladorBiblioteca
         ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
         ventanaBiblioteca.addBotonesEmpleadoAdminListener(new EmpleadoListener());
         ventanaBiblioteca.addBotonesAreaAdminListener(new AreaConocimientoListener());
+        ventanaBiblioteca.addBotonesAutorAdListener(new AutorListener());
     }
 
     private void cerrarSesion()
@@ -57,7 +60,8 @@ public class ControladorBiblioteca
         VentanaLogin a = new VentanaLogin();
         DaoEstudiante b = new DaoEstudiante();
         DaoProfesor d = new DaoProfesor();
-        ControladorLogin c = new ControladorLogin(a, b, d);
+        DaoEmpleado e = new DaoEmpleado();
+        ControladorLogin c = new ControladorLogin(a, b, d, e);
     }
 
     private void perfilEstudiante()
@@ -150,6 +154,9 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarAreas().isEmpty())
         {
             listarAreasTablaA();
+        if(!manejadorDao.listarAutores().isEmpty())
+        {
+            listarAutorTablaAd();
         }
     }
 
@@ -727,12 +734,13 @@ public class ControladorBiblioteca
     }
 
     /**************************************************************************
+     Controlador_AreaConocimiento
      * AreaConocimiento - admin
      *************************************************************************/
 
     class AreaConocimientoListener implements ActionListener
     {
-        @Override
+       @Override
         public void actionPerformed(ActionEvent e)
         {
             if (e.getActionCommand().equalsIgnoreCase("agregar"))
@@ -747,14 +755,10 @@ public class ControladorBiblioteca
             {
                 eliminarArea();
             }
-            if (e.getActionCommand().equalsIgnoreCase("relacionar"))
-            {
-               //relacionarAreas();
-            }
         }
     }
-
-    public void listarAreasTablaA()
+      
+      public void listarAreasTablaA()
     {
         ArrayList<AreaConocimiento> arrayArea;
         arrayArea = manejadorDao.listarAreas();
@@ -932,5 +936,174 @@ public class ControladorBiblioteca
         {
             ventanaBiblioteca.mostrarMensajeError("No se encontró el area");
         }
+    }
+     /**************************************************************************
+     Controlador_Autor
+     * Autor - admin
+     *************************************************************************/
+/**************************************************************************
+     * Autor - admin
+     *************************************************************************/
+    class AutorListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("agregar"))
+            {
+                agregarAutor();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("modificar"))
+            {
+                editarAutor();
+            }
+        }
+    }
+
+    public void listarAutorTablaAd()
+    {
+        ArrayList<Autor> arrayList;
+        arrayList = manejadorDao.listarAutores();
+
+        int cod;
+        String primerN;
+        String segundoN;
+        String primerA;
+        String segundoA;
+        if(arrayList != null)
+        {
+            for(Autor autor : arrayList)
+            {
+                cod = autor.getCodAutor();
+                primerN = autor.getPrimerNombre();
+                segundoN = autor.getSegundoNombre();
+                primerA =  autor.getPrimerApellido();
+                segundoA = autor.getSegundoApellido();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{cod, primerN, segundoN, primerA, segundoA});
+            }
+        }
+    }
+
+    public void agregarAutor()
+    {
+        Autor autor;
+        String primerN;
+        String segundoN;
+        String primerA;
+        String segundoA;
+        if(comprobarCamposAutor())
+        {
+            primerN = ventanaBiblioteca.getTxtPrimerNomAu();
+            segundoN = ventanaBiblioteca.getTxtSegundoNomAu();
+            primerA = ventanaBiblioteca.getTxtPrimerApeAu();
+            segundoA = ventanaBiblioteca.getTxtSegundoApeAu();
+            autor = new Autor(primerN,segundoN,primerA,segundoA);
+
+            if(manejadorDao.agregarAutor(autor) > 0)
+            {
+                listarAutorAgregar(manejadorDao.ultimoAutor());
+                ventanaBiblioteca.mostrarMensaje("Autor agregado con exito");
+                ventanaBiblioteca.limpiarAutorAdmin();
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No se pudo agregar el Autor");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor");
+        }
+    }
+
+    public void listarAutorAgregar(Autor autor)
+    {
+        if(autor != null)
+        {
+            int cod;
+            String primerN;
+            String segundoN;
+            String primerA;
+            String segundoA;
+
+            cod = autor.getCodAutor();
+            primerN = autor.getPrimerNombre();
+            segundoN = autor.getSegundoNombre();
+            primerA = autor.getPrimerApellido();
+            segundoA = autor.getSegundoApellido();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorAdminTableModel();
+            auxModeloTabla.addRow(new Object[]{cod, primerN, segundoN, primerA, segundoA});
+        }
+    }
+
+    public void editarAutor()
+    {
+        Autor autor;
+        int codAutor;
+        String primerN;
+        String segundoN;
+        String primerA;
+        String segundoA;
+        if(comprobarCamposAutor())
+        {
+            codAutor = ventanaBiblioteca.getCodigoAutor();
+            primerN = ventanaBiblioteca.getTxtPrimerNomAu();
+            segundoN = ventanaBiblioteca.getTxtSegundoNomAu();
+            primerA = ventanaBiblioteca.getTxtPrimerApeAu();
+            segundoA = ventanaBiblioteca.getTxtSegundoApeAu();
+            autor = new Autor(codAutor, primerN,segundoN,primerA,segundoA);
+
+            if(manejadorDao.modificarAutor(autor))
+            {
+                listarAutorEditar(autor);
+                ventanaBiblioteca.mostrarMensaje("Autor editado con exito");
+                ventanaBiblioteca.limpiarAutorAdmin();
+                ventanaBiblioteca.deseleccionarFilaTablaAutori();
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No se pudo editar el Autor");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor a editar");
+        }
+    }
+
+    public void listarAutorEditar(Autor autor)
+    {
+        if(autor != null)
+        {
+            String primerN;
+            String segundoN;
+            String primerA;
+            String segundoA;
+
+            primerN = autor.getPrimerNombre();
+            segundoN = autor.getSegundoNombre();
+            primerA = autor.getPrimerApellido();
+            segundoA = autor.getPrimerApellido();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorAdminTableModel();
+            int auxFila = ventanaBiblioteca.getFilaSeleccionadaAutor();
+
+            auxModeloTabla.setValueAt(primerN, auxFila, 1);
+            auxModeloTabla.setValueAt(segundoN, auxFila, 2);
+            auxModeloTabla.setValueAt(primerA, auxFila, 3);
+            auxModeloTabla.setValueAt(segundoA, auxFila, 4);
+
+
+        }
+    }
+
+    public boolean comprobarCamposAutor()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getTxtPrimerNomAu().isEmpty() && !ventanaBiblioteca.getTxtPrimerApeAu().isEmpty() && !ventanaBiblioteca.getTxtSegundoApeAu().isEmpty();
+        return valido;
     }
 }

@@ -111,7 +111,7 @@ public class DaoSolicitud {
     public boolean modificarSolicitud(Solicitud soli){
         String sql_soli;
 
-        sql_soli = "UPDATE solicitud" + " SET num_solicitud = '" + soli.getNumero() + "', id_usuario = '" + soli.getIdUsuario() + "', isbn = '" + soli.getIsbnLibro() + "', titulo = '"  + soli.getTitulo() +"', descripcion = '"  + soli.getDescripcion() +"'";
+        sql_soli = "UPDATE solicitud" + " SET id_usuario = '" + soli.getIdUsuario() + "', isbn = '" + soli.getIsbnLibro() + "', titulo = '"  + soli.getTitulo() +"', descripcion = '"  + soli.getDescripcion() +"'";
 
         try{
             Connection conn= fachada.openConnection();

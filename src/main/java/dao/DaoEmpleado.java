@@ -3,7 +3,6 @@ package dao;
 import modelo.Empleado;
 import modelo.Estudiante;
 import modelo.Prestamo;
-import org.postgresql.util.PSQLException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -69,6 +68,44 @@ public class DaoEmpleado
         return null;
     }
 
+    public Empleado consultarEmpleadoEmail(String email, String contrasena){
+        Empleado emp = new Empleado();
+        String sql_select;
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, cargo  FROM Empleado INNER JOIN Usuario ON id_empleado = id_usuario WHERE email ='" + email +  "' AND contrasena = '" + contrasena +  "'";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            boolean valido = false;
+
+            while(tabla.next()){
+                valido = true;
+                emp.setId(tabla.getString(1));
+                emp.setContrasena(tabla.getString(2));
+                emp.setNombre(tabla.getString(3));
+                emp.setDireccion(tabla.getString(4));
+                emp.setTelefono(tabla.getString(5));
+                emp.setEmail(tabla.getString(6));
+                emp.setCargo(tabla.getString(7));
+            }
+            conn.close();
+
+            if(valido)
+            {
+                return emp;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
     public ArrayList<Empleado> listarEmpleados(){
         ArrayList<Empleado> arrayEmp = new ArrayList<>();
         String sql_select;
@@ -102,9 +139,9 @@ public class DaoEmpleado
         String sql_emp;
         String sql_usu;
 
-        sql_usu = "UPDATE usuario" + " SET id_usuario = '" + emp.getId() + "', contrasena = '" + emp.getContrasena() + "', nombre = '" + emp.getNombre() + "', direccion = '"  + emp.getDireccion() + "', telefono = '" + emp.getTelefono() +"' , email = '" + emp.getEmail() +"' WHERE id_usuario ='" + emp.getId() +"'";
+        sql_usu = "UPDATE usuario" + " SET contrasena = '" + emp.getContrasena() + "', nombre = '" + emp.getNombre() + "', direccion = '"  + emp.getDireccion() + "', telefono = '" + emp.getTelefono() +"' , email = '" + emp.getEmail() +"' WHERE id_usuario ='" + emp.getId() +"'";
 
-        sql_emp = "UPDATE empleado" + " SET id_empleado = '" + emp.getId() + "', cargo = '"  + emp.getCargo() +"' WHERE id_empleado ='" + emp.getId() +"'";
+        sql_emp = "UPDATE empleado" + " SET cargo = '"  + emp.getCargo() +"' WHERE id_empleado ='" + emp.getId() +"'";
 
         try{
             Connection conn= fachada.openConnection();

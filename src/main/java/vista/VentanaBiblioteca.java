@@ -3751,12 +3751,19 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnModificarEmpleadoA.addActionListener(listenControles);
     }
 
+
     public void addBotonesAreaAdminListener(ActionListener listenControles)
     {
         btnAgregarAreaA.addActionListener(listenControles);
         btnModificarAreaA.addActionListener(listenControles);
         btnRelacionarAreaA.addActionListener(listenControles);
         btnEliminarAreaA.addActionListener(listenControles);
+    }
+
+    public void addBotonesAutorAdListener(ActionListener listenControles)
+    {
+        btnAgregarAutorA.addActionListener(listenControles);
+        btnModificarAutorA.addActionListener(listenControles);
     }
 
     public void limpiarSolicitudUsuario()
@@ -4314,6 +4321,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     {
         txtDependenciaProfesorP.setText(txt);
     }
+    /**************************************************************************
+     * Getters
+     *************************************************************************/
 
     public String getCarreraEstudianteP() {
         return txtCarreraEstudianteP.getText();
@@ -4415,6 +4425,16 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public String getTxtTelefonoEmpleadoA() {
         return txtTelefonoEmpleadoA.getText();
     }
+    public String getTxtPrimerNomAu(){return txtNombre1AutorA.getText();}
+    public String getTxtSegundoNomAu(){return txtNombre2AutorA.getText();}
+    public String getTxtPrimerApeAu(){return txtApellido1AutorA.getText();}
+    public String getTxtSegundoApeAu(){return txtApellido2AutorA.getText();}
+    public int getCodigoAutor(){return (int) getAutorAdminTableModel().getValueAt(getFilaSeleccionadaAutor(),0);}
+
+
+    /**************************************************************************
+     * TableModel's
+     *************************************************************************/
 
     public TableModel getSolicitudUTableModel(){return jtTablaSolicitudU.getModel();}
     public TableModel getPrestamoUTableModel(){return  jtTablaPrestamoU.getModel();}
@@ -4423,6 +4443,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getSolicitudAdminTableModel(){return jtTablaSolicitudA.getModel();}
     public TableModel getPrestamoAdminTableModel(){return jtTablaPrestamoA.getModel();}
     public TableModel getAreaAdminTableModel(){return jtTablaAreaA.getModel();}
+    public TableModel getAutorAdminTableModel(){return jtTablaAutorA.getModel();}
     public int getFilaSeleccionadaEmpleado()
     {
         return jtTablaEmpleadoA.getSelectedRow();
@@ -4432,6 +4453,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     {
         jtTablaEmpleadoA.getSelectionModel().clearSelection();
     }
+    public int getFilaSeleccionadaAutor(){return jtTablaAutorA.getSelectedRow();}
+    public void deseleccionarFilaTablaAutori(){jtTablaAutorA.getSelectionModel().clearSelection();}
 
     public String getTxtCodAreaA()
     {
