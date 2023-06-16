@@ -2,23 +2,25 @@ package modelo;
 
 public class AreaConocimiento
 {
-    private String codigoArea;
+    private int codigoArea;
     private String nomArea;
+    private String descripcion;
+    private String areaHija;
 
-    public AreaConocimiento(String auxCodigoArea, String auxNomArea)
+    public AreaConocimiento(String auxNomArea, String auxDescripcion)
     {
-        this.codigoArea = auxCodigoArea;
         this.nomArea = auxNomArea;
+        this.descripcion = auxDescripcion;
     }
 
     public AreaConocimiento(){}
 
-    public String getCodigoArea()
+    public int getCodigoArea()
     {
         return codigoArea;
     }
 
-    public void setCodigoArea(String codigoArea)
+    public void setCodigoArea(int codigoArea)
     {
         this.codigoArea = codigoArea;
     }
@@ -31,5 +33,21 @@ public class AreaConocimiento
     public void setNomArea(String nomArea)
     {
         this.nomArea = nomArea;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    public String getAreaHija()
+    {
+        return areaHija;
+    }
+    public void setAreaHija(String areaHija)
+    {
+        this.areaHija = areaHija;
     }
 }

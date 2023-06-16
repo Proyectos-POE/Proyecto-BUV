@@ -178,4 +178,31 @@ public class ManejadorDao {
     {
         return this.daoLibro.consultarLibro(isbn);
     }
+
+    /*******
+     * AreaConocimiento
+     */
+
+    public int agregarArea(AreaConocimiento area)
+    {
+        return this.daoAreaConocimiento.insertAreaConocimiento(area);
+    }
+
+    public boolean editarArea(AreaConocimiento area)
+    {
+        return this.daoAreaConocimiento.modificarAreaConocimiento(area);
+    }
+
+    public boolean eliminarArea(int codigoArea)
+    {
+        return this.daoAreaConocimiento.eliminarAreaConocimiento(codigoArea);
+    }
+    public AreaConocimiento buscarArea(int codigoArea)
+    {
+        return this.daoAreaConocimiento.consultarAreaConocimiento(codigoArea);
+    }
+    public ArrayList<AreaConocimiento> listarAreas()
+    {
+        return this.daoAreaConocimiento.listarAreasConocimientos();
+    }
 }

@@ -18,8 +18,8 @@ public class DaoAreaConocimiento
     {
         String sql_ac;
 
-        sql_ac = "INSERT INTO area_conocimiento(cod_area, nom_area) VALUES('"+ ac.getCodigoArea() + "', '" +
-                ac.getNomArea() + "')";
+        sql_ac = "INSERT INTO area_conocimiento(nom_area, descripcion) VALUES('"+ ac.getNomArea() + "', '" +
+                ac.getDescripcion() + "')";
 
         try{
             Connection conn= fachada.openConnection();
@@ -33,22 +33,23 @@ public class DaoAreaConocimiento
         return -1;
     }
 
-    public AreaConocimiento consultarAreaConocimiento(String codigoArea)
+    public AreaConocimiento consultarAreaConocimiento(int codigoArea)
     {
         AreaConocimiento ac = new AreaConocimiento();
         String sql_select;
-        sql_select = "SELECT cod_area, nom_area FROM area_conocimiento WHERE cod_area='" + codigoArea + "'";
+        sql_select = "SELECT cod_area, nom_area, descripcion FROM area_conocimiento WHERE cod_area='" + codigoArea + "'";
 
         try{
-
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()) {
 
-                ac.setCodigoArea(tabla.getString(1));
+                ac.setCodigoArea(tabla.getInt(1));
                 ac.setNomArea(tabla.getString(2));
+                ac.setDescripcion(tabla.getString(3));
             }
 
             return ac;
@@ -58,23 +59,26 @@ public class DaoAreaConocimiento
         return null;
     }
 
-    public ArrayList<AreaConocimiento> listarAreaConocimiento(){
+    public ArrayList<AreaConocimiento> listarAreasConocimientos(){
         ArrayList<AreaConocimiento> arrayAc = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT cod_area, nom_area FROM area_conocimiento";
+        sql_select="SELECT cod_area, nom_area, descripcion FROM area_conocimiento";
         try{
-
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next())
+            {
                 AreaConocimiento ac = new AreaConocimiento();
-                ac.setCodigoArea(tabla.getString(1));
+                ac.setCodigoArea(tabla.getInt(1));
                 ac.setNomArea(tabla.getString(2));
+                ac.setDescripcion(tabla.getString(3));
                 arrayAc.add(ac);
-            }while (tabla.next());
+            }
 
+            conn.close();
             return arrayAc;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -86,12 +90,29 @@ public class DaoAreaConocimiento
     {
         String sql_ac;
 
-        sql_ac = "UPDATE area_conocimiento" + " SET cod_area = '" + ac.getCodigoArea() + "', nom_area = '"+ ac.getNomArea() + "' WHERE cod_area = '" + ac.getCodigoArea() + "'";
+        sql_ac = "UPDATE area_conocimiento" + " SET nom_area = '"+ ac.getNomArea() +"', descripcion = '" + ac.getDescripcion() + "' WHERE cod_area = '" + ac.getCodigoArea() + "'";
 
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaAc = conn.createStatement();
             sentenciaAc.executeUpdate(sql_ac);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public boolean eliminarAreaConocimiento(int codigoArea){
+        String sql_ac;
+
+        sql_ac = "DELETE FROM area_conocimiento WHERE cod_area = '" + codigoArea + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaEmp = conn.createStatement();
+            sentenciaEmp.executeUpdate(sql_ac);
             conn.close();
             return true;
         }
