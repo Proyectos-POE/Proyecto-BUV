@@ -19,7 +19,7 @@ public class DaoEditorial
     {
         String sql_ed;
 
-        sql_ed = "INSERT INTO editorial(codigo_ed, nom_ed, pagina_web, pais_origen) VALUES('"+ ed.getCodEditorial() + "', '" +
+        sql_ed = "INSERT INTO editorial(nom_ed, pagina_web, pais_origen) VALUES('" +
                 ed.getNomEditorial() + "', '" + ed.getPaginaWeb() + "', '" + ed.getPaisOrigen() + "')";
 
         try{
@@ -34,21 +34,21 @@ public class DaoEditorial
         return -1;
     }
 
-    public Editorial consultarEditorial(String codEditorial)
+    public Editorial consultarEditorial(int codEditorial)
     {
         Editorial ed = new Editorial();
         String sql_select;
         sql_select = "SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM editorial WHERE codigo_ed='" + codEditorial + "'";
 
         try{
-
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()) {
 
-                ed.setCodEditorial(tabla.getString(1));
+                ed.setCodEditorial(tabla.getInt(1));
                 ed.setNomEditorial(tabla.getString(2));
                 ed.setPaginaWeb(tabla.getString(3));
                 ed.setPaisOrigen(tabla.getString(4));
@@ -66,20 +66,21 @@ public class DaoEditorial
         String sql_select;
         sql_select="SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM  editorial";
         try{
-
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Editorial ed = new Editorial();
-                ed.setCodEditorial(tabla.getString(1));
+                ed.setCodEditorial(tabla.getInt(1));
                 ed.setNomEditorial(tabla.getString(2));
                 ed.setPaginaWeb(tabla.getString(3));
                 ed.setPaisOrigen(tabla.getString(4));
                 arrayEd.add(ed);
-            }while (tabla.next());
+            }
 
+            conn.close();
             return arrayEd;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -91,12 +92,30 @@ public class DaoEditorial
     {
         String sql_ed;
 
-        sql_ed = "UPDATE editorial" + " SET codigo_ed = '" + ed.getCodEditorial() + "', nom_ed = '"+ ed.getNomEditorial() + "', pagina_web = '" + ed.getPaginaWeb() + "', pais_origen = '" + ed.getPaisOrigen() + "' WHERE codigo_ed = '" + ed.getCodEditorial() + "'";
+        sql_ed = "UPDATE editorial" + " SET  nom_ed = '"+ ed.getNomEditorial() + "', pagina_web = '" + ed.getPaginaWeb() + "', pais_origen = '" + ed.getPaisOrigen() + "' WHERE codigo_ed = '" + ed.getCodEditorial() + "'";
 
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaEd = conn.createStatement();
             sentenciaEd.executeUpdate(sql_ed);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public boolean eliminarEditorial(int codEditorial)
+    {
+        String sql_ed;
+
+        sql_ed = "DELETE FROM editorial WHERE codigo_ed = '" + codEditorial + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaEmp = conn.createStatement();
+            sentenciaEmp.executeUpdate(sql_ed);
             conn.close();
             return true;
         }

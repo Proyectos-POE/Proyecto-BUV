@@ -205,4 +205,33 @@ public class ManejadorDao {
     {
         return this.daoAreaConocimiento.listarAreasConocimientos();
     }
+
+    /*******
+     * Editorial
+     */
+
+    public int agregarEditorial(Editorial editorial)
+    {
+        return this.daoEditorial.insertEditorial(editorial);
+    }
+
+    public boolean editarEditorial(Editorial editorial)
+    {
+        return this.daoEditorial.modificarEditorial(editorial);
+    }
+
+    public boolean eliminarEditorial(int codEditorial)
+    {
+        return this.daoEditorial.eliminarEditorial(codEditorial);
+    }
+
+    public Editorial buscarEditorial(int codEditorial)
+    {
+        return this.daoEditorial.consultarEditorial(codEditorial);
+    }
+
+    public ArrayList<Editorial> listarEditoriales()
+    {
+        return this.daoEditorial.listarEditorial();
+    }
 }

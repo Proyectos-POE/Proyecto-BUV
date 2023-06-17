@@ -2,17 +2,26 @@ package modelo;
 
 public class Editorial
 {
-    protected String codEditorial;
+    private int codEditorial;
     private String nomEditorial;
     private String paginaWeb;
     private String paisOrigen;
 
-    public String getCodEditorial()
+    public Editorial(String auxNomEditorial, String auxPaginaWeb, String auxPaisOrigen)
+    {
+        this.nomEditorial = auxNomEditorial;
+        this.paginaWeb = auxPaginaWeb;
+        this.paisOrigen = auxPaisOrigen;
+    }
+
+    public Editorial(){}
+
+    public int getCodEditorial()
     {
         return codEditorial;
     }
 
-    public void setCodEditorial(String codEditorial)
+    public void setCodEditorial(int codEditorial)
     {
         this.codEditorial = codEditorial;
     }
