@@ -151,9 +151,13 @@ public class ControladorBiblioteca
         {
             listarPrestamosTablaA();
         }
+        /*
         if(!manejadorDao.listarAreas().isEmpty())
         {
             listarAreasTablaA();
+        }
+
+         */
         if(!manejadorDao.listarAutores().isEmpty())
         {
             listarAutorTablaAd();
@@ -634,46 +638,41 @@ public class ControladorBiblioteca
 
         cedula = ventanaBiblioteca.getTxtCedulaEmpleadoA();
         empleado = manejadorDao.buscarEmpleado(cedula);
+        if(ventanaBiblioteca.getFilaSeleccionadaEmpleado() >-1) {
+            if (empleado != null) {
+                correo = ventanaBiblioteca.getTxtCorreoEmpleadoA();
+                if (comprobarCamposEmpleadoA() && comprobarCorreo(correo)) {
+                    empleado.setContrasena(ventanaBiblioteca.getTxtClaveEmpleadoA());
+                    empleado.setNombre(ventanaBiblioteca.getTxtNombreEmpleadoA());
+                    empleado.setEmail(ventanaBiblioteca.getTxtCorreoEmpleadoA());
+                    empleado.setDireccion(ventanaBiblioteca.getTxtDireccionEmpleadoA());
+                    empleado.setTelefono(ventanaBiblioteca.getTxtTelefonoEmpleadoA());
+                    empleado.setCargo(ventanaBiblioteca.getTxtCargoEmpleadoA());
 
-        if(empleado != null)
-        {
-            correo = ventanaBiblioteca.getTxtCorreoEmpleadoA();
-            if(comprobarCamposEmpleadoA() && comprobarCorreo(correo))
-            {
-                empleado.setContrasena(ventanaBiblioteca.getTxtClaveEmpleadoA());
-                empleado.setNombre(ventanaBiblioteca.getTxtNombreEmpleadoA());
-                empleado.setEmail(ventanaBiblioteca.getTxtCorreoEmpleadoA());
-                empleado.setDireccion(ventanaBiblioteca.getTxtDireccionEmpleadoA());
-                empleado.setTelefono(ventanaBiblioteca.getTxtTelefonoEmpleadoA());
-                empleado.setCargo(ventanaBiblioteca.getTxtCargoEmpleadoA());
-
-                if(manejadorDao.editarEmpleado(empleado))
-                {
-                    ventanaBiblioteca.mostrarMensaje("Empleado editado con exito");
-                    listarEmpleadoTabAdEditar(empleado);
-                    ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
-                    ventanaBiblioteca.limpiarEmpleadoAdmin();
+                    if (manejadorDao.editarEmpleado(empleado)) {
+                        ventanaBiblioteca.mostrarMensaje("Empleado editado con exito");
+                        listarEmpleadoTabAdEditar(empleado);
+                        ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
+                        ventanaBiblioteca.limpiarEmpleadoAdmin();
+                    } else {
+                        ventanaBiblioteca.mostrarMensajeError("No se pudo editar el empleado, puede que el correo ya este en uso");
+                    }
+                } else {
+                    ventanaBiblioteca.mostrarMensajeError("Digite bien los campos");
                 }
-                else
-                {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar el empleado, puede que el correo ya este en uso");
-                }
-            }
-            else
-            {
-                ventanaBiblioteca.mostrarMensajeError("Digite bien los campos");
+            } else {
+                ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione la fila a editar");
         }
     }
 
     public void listarEmpleadoTabAdEditar(Empleado empleado)
     {
         if(empleado != null) {
-            String cedula;
             String clave;
             String nombre;
             String direccion;
@@ -681,7 +680,6 @@ public class ControladorBiblioteca
             String telefono;
             String cargo;
 
-            cedula = empleado.getId();
             clave = empleado.getContrasena();
             nombre = empleado.getNombre();
             direccion = empleado.getDireccion();
@@ -1047,30 +1045,32 @@ public class ControladorBiblioteca
         String segundoN;
         String primerA;
         String segundoA;
-        if(comprobarCamposAutor())
-        {
-            codAutor = ventanaBiblioteca.getCodigoAutor();
-            primerN = ventanaBiblioteca.getTxtPrimerNomAu();
-            segundoN = ventanaBiblioteca.getTxtSegundoNomAu();
-            primerA = ventanaBiblioteca.getTxtPrimerApeAu();
-            segundoA = ventanaBiblioteca.getTxtSegundoApeAu();
-            autor = new Autor(codAutor, primerN,segundoN,primerA,segundoA);
 
-            if(manejadorDao.modificarAutor(autor))
-            {
-                listarAutorEditar(autor);
-                ventanaBiblioteca.mostrarMensaje("Autor editado con exito");
-                ventanaBiblioteca.limpiarAutorAdmin();
-                ventanaBiblioteca.deseleccionarFilaTablaAutori();
-            }
-            else
-            {
-                ventanaBiblioteca.mostrarMensajeError("No se pudo editar el Autor");
+        if (ventanaBiblioteca.getFilaSeleccionadaAutor() > -1) {
+            if (comprobarCamposAutor()) {
+                codAutor = (int) ventanaBiblioteca.getAutorAdminTableModel().getValueAt(ventanaBiblioteca.getFilaSeleccionadaAutor(), 0);
+                System.out.println(codAutor);
+                primerN = ventanaBiblioteca.getTxtPrimerNomAu();
+                segundoN = ventanaBiblioteca.getTxtSegundoNomAu();
+                primerA = ventanaBiblioteca.getTxtPrimerApeAu();
+                segundoA = ventanaBiblioteca.getTxtSegundoApeAu();
+                autor = new Autor(codAutor, primerN, segundoN, primerA, segundoA);
+
+                if (manejadorDao.modificarAutor(autor)) {
+                    listarAutorEditar(autor);
+                    ventanaBiblioteca.mostrarMensaje("Autor editado con exito");
+                    ventanaBiblioteca.limpiarAutorAdmin();
+                    ventanaBiblioteca.deseleccionarFilaTablaAutori();
+                } else {
+                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar el Autor");
+                }
+            } else {
+                ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor a editar");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor a editar");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione la fila a editar");
         }
     }
 
@@ -1086,7 +1086,7 @@ public class ControladorBiblioteca
             primerN = autor.getPrimerNombre();
             segundoN = autor.getSegundoNombre();
             primerA = autor.getPrimerApellido();
-            segundoA = autor.getPrimerApellido();
+            segundoA = autor.getSegundoApellido();
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorAdminTableModel();
             int auxFila = ventanaBiblioteca.getFilaSeleccionadaAutor();
@@ -1095,8 +1095,6 @@ public class ControladorBiblioteca
             auxModeloTabla.setValueAt(segundoN, auxFila, 2);
             auxModeloTabla.setValueAt(primerA, auxFila, 3);
             auxModeloTabla.setValueAt(segundoA, auxFila, 4);
-
-
         }
     }
 

@@ -109,7 +109,7 @@ public class DaoEmpleado
     public ArrayList<Empleado> listarEmpleados(){
         ArrayList<Empleado> arrayEmp = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, cargo  FROM  empleado INNER JOIN usuario ON id_empleado = id_usuario";
+        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, cargo  FROM  empleado INNER JOIN usuario ON id_empleado = id_usuario ORDER BY id_usuario";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");

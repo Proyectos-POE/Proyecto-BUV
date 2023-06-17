@@ -2,7 +2,6 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import modelo.Autor;
-import modelo.Ejemplar;
 
 public class DaoAutor
 {
@@ -90,10 +89,10 @@ public class DaoAutor
         return null;
     }
 
-    public ArrayList<Autor> listarAutor(){
+    public ArrayList<Autor> listarAutores(){
         ArrayList<Autor> arrayAt = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT codigo_autor, primer_nom, segundo_nom, primer_apellido, segundo_apellido FROM  autor";
+        sql_select="SELECT codigo_autor, primer_nom, segundo_nom, primer_apellido, segundo_apellido FROM  autor ORDER BY codigo_autor";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
