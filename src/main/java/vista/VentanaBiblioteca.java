@@ -3766,6 +3766,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnModificarAutorA.addActionListener(listenControles);
     }
 
+    public void addBotonesEditorialAdListener(ActionListener listenControles)
+    {
+        btnAgregarEditorialA.addActionListener(listenControles);
+        btnModificarEditorialA.addActionListener(listenControles);
+        btnEliminarEditorialA.addActionListener(listenControles);
+    }
+
     public void limpiarSolicitudUsuario()
     {
         txtIsbnSolicitudU.setText("");
@@ -4444,6 +4451,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getPrestamoAdminTableModel(){return jtTablaPrestamoA.getModel();}
     public TableModel getAreaAdminTableModel(){return jtTablaAreaA.getModel();}
     public TableModel getAutorAdminTableModel(){return jtTablaAutorA.getModel();}
+    public TableModel getEditorialAdminTableModel(){return jtTablaEditorialA.getModel();}
     public int getFilaSeleccionadaEmpleado()
     {
         return jtTablaEmpleadoA.getSelectedRow();
@@ -4489,6 +4497,30 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public void deseleccionarFilaTablaArea()
     {
         jtTablaAreaA.getSelectionModel().clearSelection();
+    }
+
+    public String getTxtIdEditorialA() {
+        return txtIdEditorialA.getText();
+    }
+
+    public String getTxtNombreEditorialA() {
+        return txtNombreEditorialA.getText();
+    }
+
+    public String getTxtPaginaWebEditorialA() {
+        return txtPaginaWebEditorialA.getText();
+    }
+
+    public String getTxtPaisEditorialA() {
+        return txtPaisEditorialA.getText();
+    }
+
+    public int getFilaSeleccionadaEditorial(){
+        return jtTablaEditorialA.getSelectedRow();
+    }
+
+    public void deseleccionarFilaTablaEditorial(){
+        jtTablaEditorialA.getSelectionModel().clearSelection();
     }
 
     public void mostrarMensaje(String auxMensaje)
