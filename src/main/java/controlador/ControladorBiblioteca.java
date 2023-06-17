@@ -52,6 +52,7 @@ public class ControladorBiblioteca
         ventanaBiblioteca.addBotonesEmpleadoAdminListener(new EmpleadoListener());
         ventanaBiblioteca.addBotonesAreaAdminListener(new AreaConocimientoListener());
         ventanaBiblioteca.addBotonesAutorAdListener(new AutorListener());
+        ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
     }
 
     private void cerrarSesion()
@@ -151,16 +152,17 @@ public class ControladorBiblioteca
         {
             listarPrestamosTablaA();
         }
-        /*
         if(!manejadorDao.listarAreas().isEmpty())
         {
             listarAreasTablaA();
         }
-
-         */
         if(!manejadorDao.listarAutores().isEmpty())
         {
             listarAutorTablaAd();
+        }
+        if(!manejadorDao.listarEditoriales().isEmpty())
+        {
+            listarEditorialTablaAd();
         }
     }
 
@@ -935,13 +937,11 @@ public class ControladorBiblioteca
             ventanaBiblioteca.mostrarMensajeError("No se encontró el area");
         }
     }
-     /**************************************************************************
-     Controlador_Autor
-     * Autor - admin
-     *************************************************************************/
-/**************************************************************************
-     * Autor - admin
-     *************************************************************************/
+
+    /**************************************************************************
+    Controlador_Autor
+    * Autor - admin
+    *************************************************************************/
     class AutorListener implements ActionListener
     {
         @Override
@@ -1103,5 +1103,213 @@ public class ControladorBiblioteca
         boolean valido;
         valido = !ventanaBiblioteca.getTxtPrimerNomAu().isEmpty() && !ventanaBiblioteca.getTxtPrimerApeAu().isEmpty() && !ventanaBiblioteca.getTxtSegundoApeAu().isEmpty();
         return valido;
+    }
+
+    /**************************************************************************
+     Controlador_AreaConocimiento
+     * AreaConocimiento - admin
+     *************************************************************************/
+
+    class EditorialListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("agregar"))
+            {
+                agregarEditorial();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("modificar"))
+            {
+                editarEditorial();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("eliminar"))
+            {
+                eliminarEditorial();
+            }
+        }
+    }
+
+    public void listarEditorialTablaAd()
+    {
+        ArrayList<Editorial> arrayEditorial;
+        arrayEditorial = manejadorDao.listarEditoriales();
+        if(arrayEditorial != null)
+        {
+            int codEditorial;
+            String nomEditorial;
+            String paginaWeb;
+            String paisOrigen;
+
+            for (Editorial editorial : arrayEditorial) {
+                codEditorial = editorial.getCodEditorial();
+                nomEditorial = editorial.getNomEditorial();
+                paginaWeb = editorial.getPaginaWeb();
+                paisOrigen = editorial.getPaisOrigen();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{codEditorial, nomEditorial, paginaWeb, paisOrigen});
+            }
+        }
+    }
+    public boolean comprobarCamposEditorialA()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getTxtNombreEditorialA().isEmpty() && !ventanaBiblioteca.getTxtPaginaWebEditorialA().isEmpty() && !ventanaBiblioteca.getTxtPaisEditorialA().isEmpty();
+        return valido;
+    }
+
+    public void listarEditorialTablaAdAgregar(Editorial editorial)
+    {
+        if(editorial != null)
+        {
+            int codEditorial;
+            String nomEditorial;
+            String paginaWeb;
+            String paisOrigen;
+
+            codEditorial = editorial.getCodEditorial();
+            nomEditorial = editorial.getNomEditorial();
+            paginaWeb = editorial.getPaginaWeb();
+            paisOrigen = editorial.getPaisOrigen();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
+            auxModeloTabla.addRow(new Object[]{codEditorial, nomEditorial, paginaWeb, paisOrigen});
+        }
+    }
+
+    public void agregarEditorial()
+    {
+        Editorial editorial;
+        int codEditorial;
+        String nomEditorial;
+        String paginaWeb;
+        String paisOrigen;
+
+        codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
+        if(codEditorial == 0)
+        {
+            if (comprobarCamposEditorialA())
+            {
+                try
+                {
+                    nomEditorial = ventanaBiblioteca.getTxtNombreEditorialA();
+                    paginaWeb = ventanaBiblioteca.getTxtPaginaWebEditorialA();
+                    paisOrigen = ventanaBiblioteca.getTxtPaisEditorialA();
+
+                    editorial = new Editorial(nomEditorial, paginaWeb, paisOrigen);
+
+                    if (manejadorDao.agregarEditorial(editorial) > 0)
+                    {
+                        listarEditorialTablaAdAgregar(editorial);
+                        ventanaBiblioteca.mostrarMensaje("Editorial agregada con exito");
+                        ventanaBiblioteca.limpiarEditorialAdmin();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("No se pudo crear la editorial");
+                    }
+                }
+                catch (NumberFormatException e)
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+                }
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Deseleccione la editorial");
+        }
+    }
+
+    public void listarEditorialTabAdEditar(Editorial editorial){
+        if(editorial != null)
+        {
+            String nomEditorial;
+            String paginaWeb;
+            String paisOrigen;
+
+            nomEditorial = editorial.getNomEditorial();
+            paginaWeb = editorial.getPaginaWeb();
+            paisOrigen = editorial.getPaisOrigen();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
+            int auxFila = ventanaBiblioteca.getFilaSeleccionadaEditorial();
+
+            auxModeloTabla.setValueAt(nomEditorial, auxFila, 1);
+            auxModeloTabla.setValueAt(paginaWeb, auxFila, 2);
+            auxModeloTabla.setValueAt(paisOrigen, auxFila, 3);
+        }
+    }
+
+    public void editarEditorial()
+    {
+        Editorial editorial;
+        int codEditorial;
+
+        codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
+        editorial = manejadorDao.buscarEditorial(codEditorial);
+
+        if(editorial != null)
+        {
+            if(comprobarCamposEditorialA())
+            {
+                editorial.setNomEditorial(ventanaBiblioteca.getTxtNombreEditorialA());
+                editorial.setPaginaWeb(ventanaBiblioteca.getTxtPaginaWebEditorialA());
+                editorial.setPaisOrigen(ventanaBiblioteca.getTxtPaisEditorialA());
+
+                if(manejadorDao.editarEditorial(editorial))
+                {
+                    ventanaBiblioteca.mostrarMensaje("Editorial editada con exito");
+                    listarEditorialTabAdEditar(editorial);
+                    ventanaBiblioteca.deseleccionarFilaTablaEditorial();
+                    ventanaBiblioteca.limpiarEditorialAdmin();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar la editorial");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+        }
+    }
+
+    public void listarEditorialTablaAdEliminar(Editorial editorial)
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaEditorial();
+        auxModeloTabla.removeRow(auxFila);
+    }
+
+    public void eliminarEditorial()
+    {
+        int codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
+        Editorial editorial = manejadorDao.buscarEditorial(codEditorial);
+
+        if (editorial != null)
+        {
+            if (manejadorDao.eliminarEditorial(codEditorial))
+            {
+                ventanaBiblioteca.mostrarMensaje("Editorial eliminada");
+                ventanaBiblioteca.limpiarEditorialAdmin();
+                listarEditorialTablaAdEliminar(editorial);
+                ventanaBiblioteca.deseleccionarFilaTablaEditorial();
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("No se encontró el editorial");
+        }
     }
 }
