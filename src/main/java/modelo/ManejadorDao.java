@@ -234,4 +234,33 @@ public class ManejadorDao {
     {
         return this.daoEditorial.listarEditorial();
     }
+
+    /*******
+     * Libro
+     */
+
+    public int agregarLibro(Libro libro)
+    {
+        return this.daoLibro.insertLibro(libro);
+    }
+
+    public boolean editarLibro(Libro libro)
+    {
+        return this.daoLibro.modificarLibro(libro);
+    }
+
+    public boolean eliminarLibro(String isbn)
+    {
+        return this.daoLibro.eliminarLibro(isbn);
+    }
+
+    public Libro buscarLibro(String isbn)
+    {
+        return this.daoLibro.consultarLibro(isbn);
+    }
+
+    public ArrayList<Libro> listarLibros()
+    {
+        return this.daoLibro.listarLibro();
+    }
 }
