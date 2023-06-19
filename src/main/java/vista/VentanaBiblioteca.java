@@ -7,21 +7,14 @@ package vista;
 import com.toedter.calendar.JYearChooser;
 
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.RoundRectangle2D;
-import javax.swing.JButton;
+import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -3775,6 +3768,17 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnEliminarEditorialA.addActionListener(listenControles);
     }
 
+    public void addBtnDevolucionListener(ActionListener listenControles)
+    {
+        btnDevolverLibroE.addActionListener(listenControles);
+    }
+
+    public void addBotonesPrestamoEmpListener(ActionListener listenControles)
+    {
+        btnPrestarPrestamoE.addActionListener(listenControles);
+        btnBorrarPrestamoE.addActionListener(listenControles);
+        btnAgregarLibroE.addActionListener(listenControles);
+    }
     public void addBotonesLibroAdListener(ActionListener listenControles)
     {
         btnAgregarLibroA.addActionListener(listenControles);
@@ -3846,7 +3850,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtCedulaPrestamoE.setText("");
         jdFechaRPrestamoE.setDate(null);
         jdFechaDPrestamoE.setDate(null);
-
     }
 
     public void limpiarDevolucionEmpleado()
@@ -4450,9 +4453,20 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public String getTxtSegundoNomAu(){return txtNombre2AutorA.getText();}
     public String getTxtPrimerApeAu(){return txtApellido1AutorA.getText();}
     public String getTxtSegundoApeAu(){return txtApellido2AutorA.getText();}
-    public int getCodigoAutor(){return (int) getAutorAdminTableModel().getValueAt(getFilaSeleccionadaAutor(),0);}
+    //Prestamo-Empleado
+    public String getIsbnPresEmp(){return txtIsbnPrestamoE.getText();}
+    public int getEjemplarPresEmp(){return Integer.parseInt(txtNumeroEjemplarPreE.getText());}
+    public Date getFechaRPresEmp(){return jdFechaRPrestamoE.getDate();}
+    public Date getFechaDPresEmp(){return jdFechaDPrestamoE.getDate();}
+    public String getCedulaPresEmp(){return txtCedulaPrestamoE.getText();}
 
+    //Devolución empleado
 
+    public int getNumPresDevEmp(){return Integer.parseInt(txtNumeroPrestamoDevE.getText());}
+    public String getCedulaDevEmp(){return txtCedulaEDevolucionE.getText();}
+    public int getNumEjemDevEmp(){return Integer.parseInt(txtNumeroEjemplarDevE.getText());}
+    public String getCedulaDevUsu(){return txtCedulaUDevolucionE.getText();}
+    public String getIsbnDev(){return txtIsbnDevolucionE.getText();}
     /**************************************************************************
      * TableModel's
      *************************************************************************/
@@ -4466,8 +4480,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getAreaAdminTableModel(){return jtTablaAreaA.getModel();}
     public TableModel getAutorAdminTableModel(){return jtTablaAutorA.getModel();}
     public TableModel getEditorialAdminTableModel(){return jtTablaEditorialA.getModel();}
+    public TableModel getSolicitudEmpTableModel(){return  jtTablaSolicitudE.getModel();}
     public TableModel getLibroAdminTableModel(){return jtTablaLibroA.getModel();}
     public TableModel getLibroUTableModel(){return jtTablaLibroU.getModel();}
+  
     public int getFilaSeleccionadaEmpleado()
     {
         return jtTablaEmpleadoA.getSelectedRow();
@@ -4478,7 +4494,16 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaEmpleadoA.getSelectionModel().clearSelection();
     }
     public int getFilaSeleccionadaAutor(){return jtTablaAutorA.getSelectedRow();}
-    public void deseleccionarFilaTablaAutori(){jtTablaAutorA.getSelectionModel().clearSelection();}
+    public void deseleccionarFilaTablaAutor(){jtTablaAutorA.getSelectionModel().clearSelection();}
+
+    //tablas prestamos-admin
+    public TableModel getPrestamoEmpTabMod(){return jtTablaPrestamoE.getModel();}
+    public TableModel getLibrosPresEmpTabMod(){return jtTablaLibroPreE.getModel();}
+    public int getFilaLibrosPres(){return jtTablaLibroPreE.getSelectedRow();}
+    public void deseleccionarFilaLibrosPres(){jtTablaLibroPreE.getSelectionModel().clearSelection();}
+
+    //tablas devoluciones-admin
+    public TableModel getDevEmpTabMod(){return jtTablaDevolucionE.getModel();}
 
     public String getTxtCodAreaA()
     {

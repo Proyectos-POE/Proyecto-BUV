@@ -8,9 +8,7 @@ import modelo.*;
 import vista.VentanaBiblioteca;
 import vista.VentanaLogin;
 
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
@@ -31,14 +29,22 @@ public class ControladorBiblioteca
         this.usuario = auxB;
         this.manejadorDao = manejadorDao;
 
-
-
         if(usuario instanceof Profesor || usuario instanceof Estudiante)
         {
             ventanaBiblioteca.menuUsuario();
             ventanaBiblioteca.pagLibroUsuario();
             ventanaBiblioteca.pantallaCompleta();
             listarTablasUsuarios(usuario.getId());
+
+            ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
+            ventanaBiblioteca.addBotonesPerfilEsudianteListener(new EstudianteUListener());
+            ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
+            ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
+        }
+        if(usuario instanceof Empleado)
+        {
+            ventanaBiblioteca.pantallaCompleta();
+            listarTablasEmpleado();
         }
         else if(usuario == null)
         {
@@ -46,17 +52,14 @@ public class ControladorBiblioteca
             ventanaBiblioteca.pagAreaAdmin();
             ventanaBiblioteca.pantallaCompleta();
             listarTablasAdmin();
-        }
 
-        ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
-        ventanaBiblioteca.addBotonesPerfilEsudianteListener(new EstudianteUListener());
-        ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
-        ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
-        ventanaBiblioteca.addBotonesEmpleadoAdminListener(new EmpleadoListener());
-        ventanaBiblioteca.addBotonesAreaAdminListener(new AreaConocimientoListener());
-        ventanaBiblioteca.addBotonesAutorAdListener(new AutorListener());
-        ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
-        ventanaBiblioteca.addBotonesLibroAdListener(new LibroListener());
+            ventanaBiblioteca.addBotonesEmpleadoAdminListener(new EmpleadoListener());
+            ventanaBiblioteca.addBotonesAreaAdminListener(new AreaConocimientoListener());
+            ventanaBiblioteca.addBotonesAutorAdListener(new AutorListener());
+            ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
+            ventanaBiblioteca.addBotonesLibroAdListener(new LibroListener());
+            ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
+        }
     }
 
     private void cerrarSesion()
@@ -156,10 +159,13 @@ public class ControladorBiblioteca
         {
             listarPrestamosTablaA();
         }
+        /*
         if(!manejadorDao.listarAreas().isEmpty())
         {
             listarAreasTablaA();
         }
+
+         */
         if(!manejadorDao.listarAutores().isEmpty())
         {
             listarAutorTablaAd();
@@ -171,6 +177,14 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarLibros().isEmpty())
         {
             listarLibroTablaAd();
+        }
+    }
+
+    public void listarTablasEmpleado()
+    {
+        if(!manejadorDao.listarSolicitudes().isEmpty())
+        {
+            listarSolicitudesTablaE();
         }
     }
 
@@ -202,7 +216,7 @@ public class ControladorBiblioteca
         }
     }
     /**************************************************************************
-     * Estudiante - usuario
+     * Estudiante - Usuario
      *************************************************************************/
     class EstudianteUListener implements ActionListener
     {
@@ -347,7 +361,6 @@ public class ControladorBiblioteca
             {
                 agregarSolicitud();
             }
-
         }
     }
 
@@ -458,6 +471,32 @@ public class ControladorBiblioteca
     }
 
     /**************************************************************************
+     * Solicitud - Empleado
+     *************************************************************************/
+    public void listarSolicitudesTablaE()
+    {
+        ArrayList<Solicitud> arraySol;
+        arraySol = manejadorDao.listarSolicitudes();
+        if(arraySol != null)
+        {
+            int auxId;
+            String auxIsbn;
+            String auxTitulo;
+            String auxDescripcion;
+
+            for (Solicitud solicitud : arraySol) {
+                auxId = solicitud.getNumero();
+                auxIsbn = solicitud.getIsbnLibro();
+                auxTitulo = solicitud.getTitulo();
+                auxDescripcion = solicitud.getDescripcion();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getSolicitudEmpTableModel();
+                auxModeloTabla.addRow(new Object[]{auxId, auxIsbn, auxTitulo, auxDescripcion});
+            }
+        }
+    }
+
+    /**************************************************************************
      * Prestamo - Usuario
      *************************************************************************/
     public void listarPrestamosTablaU(String id)
@@ -520,6 +559,7 @@ public class ControladorBiblioteca
             }
         }
     }
+
     /**************************************************************************
      * Empleado - admin
      *************************************************************************/
@@ -1068,7 +1108,7 @@ public class ControladorBiblioteca
                     listarAutorEditar(autor);
                     ventanaBiblioteca.mostrarMensaje("Autor editado con exito");
                     ventanaBiblioteca.limpiarAutorAdmin();
-                    ventanaBiblioteca.deseleccionarFilaTablaAutori();
+                    ventanaBiblioteca.deseleccionarFilaTablaAutor();
                 } else {
                     ventanaBiblioteca.mostrarMensajeError("No se pudo editar el Autor");
                 }
