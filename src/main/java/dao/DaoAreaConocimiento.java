@@ -37,7 +37,7 @@ public class DaoAreaConocimiento
     {
         AreaConocimiento ac = new AreaConocimiento();
         String sql_select;
-        sql_select = "SELECT cod_area, nom_area, descripcion FROM area_conocimiento WHERE cod_area='" + codigoArea + "'";
+        sql_select = "SELECT cod_area, nom_area, descripcion FROM area_conocimiento WHERE cod_area='" + codigoArea + "' GROUP BY cod_area '" + "'";
 
         try{
             Connection conn = fachada.openConnection();
@@ -111,8 +111,8 @@ public class DaoAreaConocimiento
 
         try{
             Connection conn= fachada.openConnection();
-            Statement sentenciaEmp = conn.createStatement();
-            sentenciaEmp.executeUpdate(sql_ac);
+            Statement sentenciaAc = conn.createStatement();
+            sentenciaAc.executeUpdate(sql_ac);
             conn.close();
             return true;
         }

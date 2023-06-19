@@ -4,10 +4,22 @@ public class Libro
 {
     protected String isbn;
     private String titulo;
-    private String codigoEditorial;
-    private String anhoPublicacion;
+    private int codEditorial;
+    private int anhoPublicacion;
     private String numPaginas;
     private String idioma;
+
+    public Libro(String auxIsbn, String auxTitulo, int auxCodEditorial, int auxAnhoPublicacion, String auxNumPaginas, String auxIdioma)
+    {
+        this.isbn = auxIsbn;
+        this.titulo = auxTitulo;
+        this.codEditorial = auxCodEditorial;
+        this.anhoPublicacion = auxAnhoPublicacion;
+        this.numPaginas = auxNumPaginas;
+        this.idioma = auxIdioma;
+    }
+
+    public Libro(){}
 
     public String getIsbn() {
         return isbn;
@@ -25,21 +37,21 @@ public class Libro
         this.titulo = titulo;
     }
 
-    public String getCodigoEditorial()
+    public int getCodEditorial()
     {
-        return codigoEditorial;
+        return codEditorial;
     }
 
-    public void setCodigoEditorial(String codigoEditorial) {
-        this.codigoEditorial = codigoEditorial;
+    public void setCodEditorial(int codigoEditorial) {
+        this.codEditorial = codEditorial;
     }
 
-    public String getAnhoPublicacion()
+    public int getAnhoPublicacion()
     {
         return anhoPublicacion;
     }
 
-    public void setAnhoPublicacion(String anhoPublicacion) {
+    public void setAnhoPublicacion(int anhoPublicacion) {
         this.anhoPublicacion = anhoPublicacion;
     }
 

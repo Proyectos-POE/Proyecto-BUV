@@ -4,6 +4,8 @@
  */
 package vista;
 
+import com.toedter.calendar.JYearChooser;
+
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -3777,6 +3779,17 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnBorrarPrestamoE.addActionListener(listenControles);
         btnAgregarLibroE.addActionListener(listenControles);
     }
+    public void addBotonesLibroAdListener(ActionListener listenControles)
+    {
+        btnAgregarLibroA.addActionListener(listenControles);
+        btnModificarLibroA.addActionListener(listenControles);
+        btnEliminarLibroA.addActionListener(listenControles);
+    }
+
+    public void addBotonesLibroUListener(ActionListener listenControles)
+    {
+        btnDescargaLibroU.addActionListener(listenControles);
+    }
 
     public void limpiarSolicitudUsuario()
     {
@@ -4019,7 +4032,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 txtIsbnLibroA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
                 txtTituloLibroA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
                 txtEditorialLibroA.setText(String.valueOf(tabla.getValueAt(fila , 3)));
-                //jyAnoPublicLibroA.setYear((int)(tabla.getValueAt(fila , 4)));
+                jyAnoPublicLibroA.setYear((int)(tabla.getValueAt(fila , 4)));
                 txtIdiomaLibroA.setText(String.valueOf(tabla.getValueAt(fila , 5)));
                 txtNumPaginasLibroA.setText(String.valueOf(tabla.getValueAt(fila , 6)));
 
@@ -4468,6 +4481,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getAutorAdminTableModel(){return jtTablaAutorA.getModel();}
     public TableModel getEditorialAdminTableModel(){return jtTablaEditorialA.getModel();}
     public TableModel getSolicitudEmpTableModel(){return  jtTablaSolicitudE.getModel();}
+    public TableModel getLibroAdminTableModel(){return jtTablaLibroA.getModel();}
+    public TableModel getLibroUTableModel(){return jtTablaLibroU.getModel();}
+  
     public int getFilaSeleccionadaEmpleado()
     {
         return jtTablaEmpleadoA.getSelectedRow();
@@ -4546,6 +4562,54 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public void deseleccionarFilaTablaEditorial(){
         jtTablaEditorialA.getSelectionModel().clearSelection();
+    }
+
+    public String getTxtAutorLibroA() {
+        return txtAutorLibroA.getText();
+    }
+
+    public String getTxtEditorialLibroA() {
+        return txtEditorialLibroA.getText();
+    }
+
+    public String getTxtIdiomaLibroA() {
+        return txtIdiomaLibroA.getText();
+    }
+
+    public String getTxtIsbnLibroA() {
+        return txtIsbnLibroA.getText();
+    }
+
+    public String getTxtIsbnLibroU() {
+        return txtIsbnLibroU.getText();
+    }
+
+    public String getTxtNumPaginasLibroA() {
+        return txtNumPaginasLibroA.getText();
+    }
+
+    public String getTxtTituloLibroA() {
+        return txtTituloLibroA.getText();
+    }
+
+    public int getJyAnoPublicLibroA() {
+        return jyAnoPublicLibroA.getYear();
+    }
+
+    public int getFilaSeleccionadaLibroAd(){
+        return jtTablaLibroA.getSelectedRow();
+    }
+
+    public int getFilaSeleccionadaLibroU(){
+        return jtTablaLibroU.getSelectedRow();
+    }
+
+    public void deseleccionarFilaTablaLibroAd(){
+        jtTablaLibroA.getSelectionModel().clearSelection();
+    }
+
+    public void deseleccionarFilaTablaLibroU(){
+        jtTablaLibroU.getSelectionModel().clearSelection();
     }
 
     public void mostrarMensaje(String auxMensaje)
