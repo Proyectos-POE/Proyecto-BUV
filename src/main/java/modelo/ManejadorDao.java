@@ -45,6 +45,15 @@ public class ManejadorDao {
     public ManejadorDao(String nombre, Empleado empleado)
     {
         this.nombre = nombre;
+        this.daoProfesor = new DaoProfesor();
+        this.daoEstudiante = new DaoEstudiante();
+        this.daoEmpleado = new DaoEmpleado();
+        this.daoLibro = new DaoLibro();
+        this.daoEjemplar = new DaoEjemplar();
+        this.daoPrestamo = new DaoPrestamo();
+        this.daoSolicitud = new DaoSolicitud();
+        this.daoDigital = new DaoDigital();
+        this.daoAutor = new DaoAutor();
     }
 
     public ManejadorDao(String nombre)

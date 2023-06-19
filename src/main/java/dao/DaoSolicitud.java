@@ -74,7 +74,6 @@ public class DaoSolicitud {
                     arraySoli.add(soli);
                 }
             conn.close();
-            System.out.println("no se encontro nada");
             return arraySoli;
         }
         catch(SQLException e){ System.out.println(e); }
