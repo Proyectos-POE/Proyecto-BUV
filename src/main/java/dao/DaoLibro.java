@@ -1,5 +1,6 @@
 package dao;
 import java.sql.*;
+import java.time.Year;
 import java.util.ArrayList;
 import modelo.Libro;
 
@@ -17,8 +18,8 @@ public class DaoLibro
     {
         String sql_lb;
 
-        sql_lb = "INSERT INTO libro(isbn, codigo_ed, anho_publi, num_paginas, idioma) VALUES('"+ lb.getIsbn() + "', '" +
-                lb.getCodigoEditorial() + "', '" + lb.getAnhoPublicacion() + "', '" + lb.getNumPaginas() + "', '" +
+        sql_lb = "INSERT INTO libro(isbn, titulo, codigo_ed, anho_publi, num_paginas, idioma) VALUES('"+ lb.getIsbn() + "', '" +
+                lb.getTitulo() + "', '" + lb.getCodEditorial() + "', '" + lb.getAnhoPublicacion() + "', '" + lb.getNumPaginas() + "', '" +
                 lb.getIdioma() +"')";
 
         try{
@@ -37,7 +38,7 @@ public class DaoLibro
     {
         Libro lb = new Libro();
         String sql_select;
-        sql_select = "SELECT isbn, codigo_ed, anho_publi, num_paginas, idioma, titulo FROM libro WHERE isbn='" + isbn + "'";
+        sql_select = "SELECT isbn, titulo, codigo_ed, anho_publi, num_paginas, idioma FROM libro WHERE isbn='" + isbn + "'";
 
         try{
             Connection conn= fachada.openConnection();
@@ -48,11 +49,11 @@ public class DaoLibro
             while(tabla.next()){
 
                 lb.setIsbn(tabla.getString(1));
-                lb.setCodigoEditorial(tabla.getString(2));
-                lb.setAnhoPublicacion(tabla.getString(3));
-                lb.setNumPaginas(tabla.getString(4));
-                lb.setIdioma(tabla.getString(5));
-                lb.setTitulo(tabla.getString(6));
+                lb.setTitulo(tabla.getString(2));
+                lb.setCodEditorial(tabla.getInt(3));
+                lb.setAnhoPublicacion(tabla.getInt(4));
+                lb.setNumPaginas(tabla.getString(5));
+                lb.setIdioma(tabla.getString(6));
             }
             conn.close();
             return lb;
@@ -65,23 +66,26 @@ public class DaoLibro
     public ArrayList<Libro> listarLibro(){
         ArrayList<Libro> arrayLb = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT isbn, codigo_ed, anho_publi, num_paginas, idioma FROM  libro";
+        sql_select="SELECT isbn, titulo, codigo_ed, anho_publi, num_paginas, idioma FROM  libro";
         try{
 
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Libro lb = new Libro();
                 lb.setIsbn(tabla.getString(1));
-                lb.setCodigoEditorial(tabla.getString(2));
-                lb.setAnhoPublicacion(tabla.getString(3));
-                lb.setNumPaginas(tabla.getString(4));
-                lb.setIdioma(tabla.getString(5));
+                lb.setTitulo(tabla.getString(2));
+                lb.setCodEditorial(tabla.getInt(3));
+                lb.setAnhoPublicacion(tabla.getInt(4));
+                lb.setNumPaginas(tabla.getString(5));
+                lb.setIdioma(tabla.getString(6));
                 arrayLb.add(lb);
-            }while (tabla.next());
+            }
 
+            conn.close();
             return arrayLb;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -93,7 +97,7 @@ public class DaoLibro
     {
         String sql_lb;
 
-        sql_lb = "UPDATE libro" + " SET isbn = '" + lb.getIsbn() + "', codigo_ed = '"+ lb.getCodigoEditorial() + "', anho_publi = '" + lb.getAnhoPublicacion() + "', num_paginas = '" + lb.getNumPaginas() + "', idioma = '" + lb.getIdioma() + "' WHERE isbn = '" + lb.getIsbn() + "'";
+        sql_lb = "UPDATE libro" + " SET isbn = '" + lb.getIsbn() + "', titulo = '"+ lb.getTitulo() +"', codigo_ed = '"+ lb.getCodEditorial() + "', anho_publi = '" + lb.getAnhoPublicacion() + "', num_paginas = '" + lb.getNumPaginas() + "', idioma = '" + lb.getIdioma() + "' WHERE isbn = '" + lb.getIsbn() + "'";
 
         try{
             Connection conn= fachada.openConnection();
@@ -103,6 +107,23 @@ public class DaoLibro
             return true;
         }
 
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public boolean eliminarLibro(String isbn){
+        String sql_lb;
+
+        sql_lb = "DELETE FROM libro WHERE isbn = '" + isbn + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaLb = conn.createStatement();
+            sentenciaLb.executeUpdate(sql_lb);
+            conn.close();
+            return true;
+        }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return false;

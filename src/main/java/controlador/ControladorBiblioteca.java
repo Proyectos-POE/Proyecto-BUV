@@ -1,5 +1,6 @@
 package controlador;
 
+import dao.DaoEditorial;
 import dao.DaoEmpleado;
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
@@ -12,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Method;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -53,6 +56,7 @@ public class ControladorBiblioteca
         ventanaBiblioteca.addBotonesAreaAdminListener(new AreaConocimientoListener());
         ventanaBiblioteca.addBotonesAutorAdListener(new AutorListener());
         ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
+        ventanaBiblioteca.addBotonesLibroAdListener(new LibroListener());
     }
 
     private void cerrarSesion()
@@ -163,6 +167,10 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarEditoriales().isEmpty())
         {
             listarEditorialTablaAd();
+        }
+        if(!manejadorDao.listarLibros().isEmpty())
+        {
+            listarLibroTablaAd();
         }
     }
 
@@ -1106,8 +1114,8 @@ public class ControladorBiblioteca
     }
 
     /**************************************************************************
-     Controlador_AreaConocimiento
-     * AreaConocimiento - admin
+     Controlador_Editorial
+     * Editorial - admin
      *************************************************************************/
 
     class EditorialListener implements ActionListener
@@ -1310,6 +1318,246 @@ public class ControladorBiblioteca
         else
         {
             ventanaBiblioteca.mostrarMensajeError("No se encontró el editorial");
+        }
+    }
+
+    /**************************************************************************
+     Controlador_Libro
+     * Libro - admin
+     *************************************************************************/
+
+    class LibroListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("agregar"))
+            {
+                agregarLibro();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("modificar"))
+            {
+                editarLibro();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("eliminar"))
+            {
+                eliminarLibro();
+            }
+        }
+    }
+
+    public void listarLibroTablaAd()
+    {
+        ArrayList<Libro> arrayLibro;
+        arrayLibro = manejadorDao.listarLibros();
+        if(arrayLibro != null)
+        {
+            String isbn;
+            String titulo;
+            int codEditorial;
+            int anhoPublicacion;
+            String numPaginas;
+            String idioma;
+
+            for (Libro libro : arrayLibro) {
+                isbn = libro.getIsbn();
+                titulo = libro.getTitulo();
+                codEditorial = libro.getCodEditorial();
+                anhoPublicacion = libro.getAnhoPublicacion();
+                numPaginas = libro.getNumPaginas();
+                idioma = libro.getIdioma();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma});
+            }
+        }
+    }
+
+    public boolean comprobarCamposLibroA()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getTxtIsbnLibroA().isEmpty() && !ventanaBiblioteca.getTxtTituloLibroA().isEmpty() && !ventanaBiblioteca.getTxtEditorialLibroA().isEmpty() && !ventanaBiblioteca.getTxtNumPaginasLibroA().isEmpty() && !ventanaBiblioteca.getTxtIdiomaLibroA().isEmpty();
+        return valido;
+    }
+
+    public void listarLibroTablaAdAgregar(Libro libro)
+    {
+        if(libro != null)
+        {
+            String isbn;
+            String titulo;
+            int codEditorial;
+            int anhoPublicacion;
+            String numPaginas;
+            String idioma;
+
+            isbn = libro.getIsbn();
+            titulo = libro.getTitulo();
+            codEditorial = libro.getCodEditorial();
+            anhoPublicacion = libro.getAnhoPublicacion();
+            numPaginas = libro.getNumPaginas();
+            idioma = libro.getIdioma();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
+            auxModeloTabla.addRow(new Object[]{isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma});
+        }
+    }
+
+    public void agregarLibro()
+    {
+        Libro libro;
+        String isbn;
+        String titulo;
+        int codEditorial;
+        int anhoPublicacion;
+        String numPaginas;
+        String idioma;
+
+        isbn = ventanaBiblioteca.getTxtIsbnLibroA();
+        titulo = ventanaBiblioteca.getTxtTituloLibroA();
+        codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
+        anhoPublicacion = ventanaBiblioteca.getJyAnoPublicLibroA();
+        numPaginas = ventanaBiblioteca.getTxtNumPaginasLibroA();
+        idioma = ventanaBiblioteca.getTxtIdiomaLibroA();
+
+        if(comprobarCamposLibroA())
+        {
+            libro = new Libro(isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma);
+
+            if(anhoPublicacion < 2024)
+            {
+                if (manejadorDao.agregarLibro(libro) > 0)
+                {
+                    listarLibroTablaAdAgregar(libro);
+                    ventanaBiblioteca.mostrarMensaje("Libro agregado con exito");
+                    ventanaBiblioteca.limpiarLibroAdmin();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No se pudo crear el libro");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+        }
+    }
+
+    public void listarLibroTabAdEditar(Libro libro){
+        if(libro != null)
+        {
+            String isbn;
+            String titulo;
+            int codEditorial;
+            int anhoPublicacion;
+            String numPaginas;
+            String idioma;
+
+            isbn = libro.getIsbn();
+            titulo = libro.getTitulo();
+            codEditorial = libro.getCodEditorial();
+            anhoPublicacion = libro.getAnhoPublicacion();
+            numPaginas = libro.getNumPaginas();
+            idioma = libro.getIdioma();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
+            int auxFila = ventanaBiblioteca.getFilaSeleccionadaLibroAd();
+
+            auxModeloTabla.setValueAt(isbn, auxFila, 1);
+            auxModeloTabla.setValueAt(titulo, auxFila, 2);
+            auxModeloTabla.setValueAt(codEditorial, auxFila, 3);
+            auxModeloTabla.setValueAt(anhoPublicacion, auxFila, 4);
+            auxModeloTabla.setValueAt(numPaginas, auxFila, 5);
+            auxModeloTabla.setValueAt(idioma, auxFila, 6);
+        }
+    }
+
+    public void editarLibro()
+    {
+        Libro libro;
+        String isbn;
+        int anhoPublicacion;
+
+
+        isbn = ventanaBiblioteca.getTxtIsbnLibroA();
+        libro = manejadorDao.buscarLibro(isbn);
+
+        if(libro != null)
+        {
+            libro.setTitulo(ventanaBiblioteca.getTxtTituloLibroA());
+            libro.setCodEditorial(Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA()));
+            libro.setAnhoPublicacion(ventanaBiblioteca.getJyAnoPublicLibroA());
+            libro.setNumPaginas(ventanaBiblioteca.getTxtNumPaginasLibroA());
+            libro.setIdioma(ventanaBiblioteca.getTxtIdiomaLibroA());
+
+            if(comprobarCamposLibroA())
+            {
+                anhoPublicacion = ventanaBiblioteca.getJyAnoPublicLibroA();
+
+                if(anhoPublicacion < 2024)
+                {
+                    if (manejadorDao.editarLibro(libro))
+                    {
+                        ventanaBiblioteca.mostrarMensaje("Libro editado con exito");
+                        listarLibroTabAdEditar(libro);
+                        ventanaBiblioteca.deseleccionarFilaTablaLibroAd();
+                        ventanaBiblioteca.limpiarLibroAdmin();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("No se pudo editar el libro");
+                    }
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+        }
+    }
+
+    public void listarLibroTablaAdEliminar(Libro libro)
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaLibroAd();
+        auxModeloTabla.removeRow(auxFila);
+    }
+
+    public void eliminarLibro()
+    {
+        String isbn = ventanaBiblioteca.getTxtIsbnLibroA();
+        Libro libro = manejadorDao.buscarLibro(isbn);
+
+        if (libro != null)
+        {
+            if (manejadorDao.eliminarLibro(isbn))
+            {
+                ventanaBiblioteca.mostrarMensaje("Libro eliminado");
+                ventanaBiblioteca.limpiarLibroAdmin();
+                listarLibroTablaAdEliminar(libro);
+                ventanaBiblioteca.deseleccionarFilaTablaLibroAd();
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("No se encontró el libro");
         }
     }
 }

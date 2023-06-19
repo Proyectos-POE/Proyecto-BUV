@@ -38,7 +38,7 @@ public class DaoEditorial
     {
         Editorial ed = new Editorial();
         String sql_select;
-        sql_select = "SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM editorial WHERE codigo_ed='" + codEditorial + "'";
+        sql_select = "SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM editorial WHERE codigo_ed='" + codEditorial + "' GROUP BY codigo_ed '" + "'";
 
         try{
             Connection conn = fachada.openConnection();
@@ -114,8 +114,8 @@ public class DaoEditorial
 
         try{
             Connection conn= fachada.openConnection();
-            Statement sentenciaEmp = conn.createStatement();
-            sentenciaEmp.executeUpdate(sql_ed);
+            Statement sentenciaEd = conn.createStatement();
+            sentenciaEd.executeUpdate(sql_ed);
             conn.close();
             return true;
         }
