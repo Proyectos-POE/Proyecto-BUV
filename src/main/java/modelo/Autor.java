@@ -79,4 +79,6 @@ public class Autor
     {
         this.segundoApellido = segundoApellido;
     }
+
+    public String toString(){return primerNombre + " " + primerApellido;}
 }

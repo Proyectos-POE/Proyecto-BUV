@@ -19,6 +19,7 @@ public class ManejadorDao {
     private DaoMulta daoMulta;
     private DaoPrestamo daoPrestamo;
     private DaoSolicitud daoSolicitud;
+    private DaoAutorLibro daoAutorLibro;
 
     public ManejadorDao(String nombre, Estudiante estudiante)
     {
@@ -72,6 +73,7 @@ public class ManejadorDao {
         this.daoMulta = new DaoMulta();
         this.daoPrestamo = new DaoPrestamo();
         this.daoSolicitud = new DaoSolicitud();
+        this.daoAutorLibro = new DaoAutorLibro();
     }
 
     /*******
@@ -178,16 +180,7 @@ public class ManejadorDao {
     public boolean modificarAutor(Autor autor){return this.daoAutor.modificarAutor(autor);}
     public ArrayList<Autor> listarAutores(){return this.daoAutor.listarAutores();}
     public Autor ultimoAutor(){return this.daoAutor.consultarUltimoAutor();}
-
-    /*******
-     * Libro
-     */
-
-    public Libro buscarLibroIsbn(String isbn)
-    {
-        return this.daoLibro.consultarLibro(isbn);
-    }
-
+    public Autor consultarAutor(int cod){return this.daoAutor.consultarAutor(cod);}
     /*******
      * AreaConocimiento
      */
@@ -260,10 +253,10 @@ public class ManejadorDao {
 
     public boolean eliminarLibro(String isbn)
     {
-        return this.daoLibro.eliminarLibro(isbn);
+        return this.daoLibro.eliminarLibro(isbn) && this.daoAutorLibro.eliminarAutorLibro(isbn);
     }
 
-    public Libro buscarLibro(String isbn)
+    public Libro buscarLibroIsbn(String isbn)
     {
         return this.daoLibro.consultarLibro(isbn);
     }
@@ -271,5 +264,24 @@ public class ManejadorDao {
     public ArrayList<Libro> listarLibros()
     {
         return this.daoLibro.listarLibro();
+    }
+
+    /*******
+     * Autor_Libro
+     */
+
+    public int agregarAutorlibro(AutorLibro autorLibro)
+    {
+        return this.daoAutorLibro.insertAutor(autorLibro);
+    }
+
+    public boolean editarAutorLibro(AutorLibro autorLibro)
+    {
+        return this.daoAutorLibro.modificarAutorLibro(autorLibro);
+    }
+
+    public ArrayList<Integer> getCodigosAutoresLibro(String isbn)
+    {
+        return this.daoAutorLibro.consultarCodsAutores(isbn);
     }
 }
