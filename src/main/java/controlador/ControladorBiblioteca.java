@@ -36,7 +36,7 @@ public class ControladorBiblioteca
             ventanaBiblioteca.pantallaCompleta();
             listarTablasUsuarios(usuario.getId());
 
-            ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
+
             ventanaBiblioteca.addBotonesPerfilEsudianteListener(new EstudianteUListener());
             ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
             ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
@@ -60,6 +60,7 @@ public class ControladorBiblioteca
             ventanaBiblioteca.addBotonesLibroAdListener(new LibroListener());
             ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
         }
+        ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
     }
 
     private void cerrarSesion()
@@ -116,6 +117,10 @@ public class ControladorBiblioteca
                 {
                     ventanaBiblioteca.pagPerfilEstudiante();
                     perfilEstudiante();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No es posible para su perfil");
                 }
             }
         }
@@ -1462,24 +1467,31 @@ public class ControladorBiblioteca
 
         if(comprobarCamposLibroA())
         {
-            libro = new Libro(isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma);
-
-            if(anhoPublicacion < 2024)
+            if (manejadorDao.buscarEditorial(codEditorial) != null)
             {
-                if (manejadorDao.agregarLibro(libro) > 0)
+                libro = new Libro(isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma);
+
+                if (anhoPublicacion < 2024)
                 {
-                    listarLibroTablaAdAgregar(libro);
-                    ventanaBiblioteca.mostrarMensaje("Libro agregado con exito");
-                    ventanaBiblioteca.limpiarLibroAdmin();
+                    if (manejadorDao.agregarLibro(libro) > 0)
+                    {
+                        listarLibroTablaAdAgregar(libro);
+                        ventanaBiblioteca.mostrarMensaje("Libro agregado con exito");
+                        ventanaBiblioteca.limpiarLibroAdmin();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("No se pudo crear el libro");
+                    }
                 }
                 else
                 {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo crear el libro");
+                    ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
                 }
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
+                ventanaBiblioteca.mostrarMensajeError("No se encuentra una editorial con ese id");
             }
         }
         else
@@ -1537,30 +1549,37 @@ public class ControladorBiblioteca
 
             if(comprobarCamposLibroA())
             {
-                anhoPublicacion = ventanaBiblioteca.getJyAnoPublicLibroA();
-
-                if(anhoPublicacion < 2024)
+                if (manejadorDao.buscarEditorial(libro.getCodEditorial()) != null)
                 {
-                    if (manejadorDao.editarLibro(libro))
+                    anhoPublicacion = ventanaBiblioteca.getJyAnoPublicLibroA();
+
+                    if (anhoPublicacion < 2024)
                     {
-                        ventanaBiblioteca.mostrarMensaje("Libro editado con exito");
-                        listarLibroTabAdEditar(libro);
-                        ventanaBiblioteca.deseleccionarFilaTablaLibroAd();
-                        ventanaBiblioteca.limpiarLibroAdmin();
+                        if (manejadorDao.editarLibro(libro))
+                        {
+                            ventanaBiblioteca.mostrarMensaje("Libro editado con exito");
+                            listarLibroTabAdEditar(libro);
+                            ventanaBiblioteca.deseleccionarFilaTablaLibroAd();
+                            ventanaBiblioteca.limpiarLibroAdmin();
+                        }
+                        else
+                        {
+                            ventanaBiblioteca.mostrarMensajeError("No se pudo editar el libro");
+                        }
                     }
                     else
                     {
-                        ventanaBiblioteca.mostrarMensajeError("No se pudo editar el libro");
+                        ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
                     }
                 }
                 else
                 {
-                    ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
+                    ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
                 }
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+
             }
         }
         else
