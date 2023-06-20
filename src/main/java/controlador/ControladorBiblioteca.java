@@ -1,6 +1,5 @@
 package controlador;
 
-import dao.DaoEditorial;
 import dao.DaoEmpleado;
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
@@ -11,8 +10,6 @@ import vista.VentanaLogin;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Method;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -1399,6 +1396,9 @@ public class ControladorBiblioteca
         {
             String isbn;
             String titulo;
+            ArrayList<Integer> codAutores;
+            ArrayList<String> nombresAutores;
+            String autores;
             int codEditorial;
             int anhoPublicacion;
             String numPaginas;
@@ -1412,8 +1412,17 @@ public class ControladorBiblioteca
                 numPaginas = libro.getNumPaginas();
                 idioma = libro.getIdioma();
 
+                codAutores = new ArrayList<>();
+                nombresAutores = new ArrayList<>();
+                codAutores = (manejadorDao.getCodigosAutoresLibro(isbn));
+                for(int cod: codAutores)
+                {
+                    nombresAutores.add(manejadorDao.consultarAutor(cod).toString());
+                }
+                autores = String.join(", ", nombresAutores);
+
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma});
+                auxModeloTabla.addRow(new Object[]{isbn, titulo, autores, codEditorial, anhoPublicacion, idioma, numPaginas});
             }
         }
     }
@@ -1537,7 +1546,7 @@ public class ControladorBiblioteca
 
 
         isbn = ventanaBiblioteca.getTxtIsbnLibroA();
-        libro = manejadorDao.buscarLibro(isbn);
+        libro = manejadorDao.buscarLibroIsbn(isbn);
 
         if(libro != null)
         {
@@ -1598,7 +1607,7 @@ public class ControladorBiblioteca
     public void eliminarLibro()
     {
         String isbn = ventanaBiblioteca.getTxtIsbnLibroA();
-        Libro libro = manejadorDao.buscarLibro(isbn);
+        Libro libro = manejadorDao.buscarLibroIsbn(isbn);
 
         if (libro != null)
         {
