@@ -4032,7 +4032,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 txtIsbnLibroA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
                 txtTituloLibroA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
                 txtEditorialLibroA.setText(String.valueOf(tabla.getValueAt(fila , 3)));
-                jyAnoPublicLibroA.setYear((int)(tabla.getValueAt(fila , 4)));
+                jyAnoPublicLibroA.setYear((Integer.parseInt(String.valueOf(tabla.getValueAt(fila , 4)))));
                 txtIdiomaLibroA.setText(String.valueOf(tabla.getValueAt(fila , 5)));
                 txtNumPaginasLibroA.setText(String.valueOf(tabla.getValueAt(fila , 6)));
 
