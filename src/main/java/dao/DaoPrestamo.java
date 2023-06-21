@@ -1,6 +1,5 @@
 package dao;
 
-import modelo.Empleado;
 import modelo.Prestamo;
 
 import java.sql.Connection;
@@ -23,17 +22,14 @@ public class DaoPrestamo
         String sql_PresLib;
 
         sql_pres = "INSERT INTO prestamo(num_prestamo, id_usuario, id_empleado, fecha) VALUES ('" +
-                pres.getNumPrestamo() + "', '" + pres.getIdUsuario() +"', '" + pres.getIdEmpleado() +"', '" + pres.getFecha() +"')";
+                pres.getNumPrestamo() + "', '" + pres.getIdUsuario() +"', '" + pres.getIdEmpleado() +"', '" + pres.getFechaR() +"')";
 
-        sql_PresLib = "INSERT INTO prestamo_libro(num_prestamo, isbn, num_ejemplar, fecha_devolucion) VALUES ('" +
-                pres.getNumPrestamo() + "', '" + pres.getIsbn() +"', '" + pres.getNumEjemplar() +"', '" + pres.getFechaDevolucion() +"')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaPres = conn.createStatement();
             int numFilas1 = sentenciaPres.executeUpdate(sql_pres);
-            int numFilas2 = sentenciaPres.executeUpdate(sql_PresLib);
             conn.close();
-            return numFilas1 + numFilas2;
+            return numFilas1;
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
@@ -54,7 +50,7 @@ public class DaoPrestamo
                 pres.setNumPrestamo(tabla.getInt(1));
                 pres.setIdUsuario(tabla.getString(2));
                 pres.setIdEmpleado(tabla.getString(3));
-                pres.setFecha(tabla.getDate(4));
+                pres.setFechaR(tabla.getDate(4));
             }
             conn.close();
             return pres;
@@ -66,7 +62,7 @@ public class DaoPrestamo
     public ArrayList<Prestamo> listarPrestamos(){
         ArrayList<Prestamo> arrayPres = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha, isbn, num_ejemplar, fecha_devolucion FROM prestamo NATURAL JOIN prestamo_libro";
+        sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha FROM prestamo ORDER BY num_prestamo";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
@@ -78,10 +74,7 @@ public class DaoPrestamo
                 pres.setNumPrestamo(tabla.getInt(1));
                 pres.setIdUsuario(tabla.getString(2));
                 pres.setIdEmpleado(tabla.getString(3));
-                pres.setFecha(tabla.getDate(4));
-                pres.setIsbn(tabla.getString(5));
-                pres.setNumEjemplar(tabla.getInt(6));
-                pres.setFechaDevolucion(tabla.getDate(7));
+                pres.setFechaR(tabla.getDate(4));
                 arrayPres.add(pres);
             }
             conn.close();
@@ -95,7 +88,7 @@ public class DaoPrestamo
     public ArrayList<Prestamo> listarPrestamosU(String id){
         ArrayList<Prestamo> arrayPres = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha, isbn, num_ejemplar, fecha_devolucion FROM prestamo NATURAL JOIN prestamo_libro WHERE id_usuario='" + id + "'";
+        sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha FROM prestamo WHERE id_usuario='" + id + "'";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
@@ -107,10 +100,7 @@ public class DaoPrestamo
                 pres.setNumPrestamo(tabla.getInt(1));
                 pres.setIdUsuario(tabla.getString(2));
                 pres.setIdEmpleado(tabla.getString(3));
-                pres.setFecha(tabla.getDate(4));
-                pres.setIsbn(tabla.getString(5));
-                pres.setNumEjemplar(tabla.getInt(6));
-                pres.setFechaDevolucion(tabla.getDate(7));
+                pres.setFechaR(tabla.getDate(4));
                 arrayPres.add(pres);
             }
             conn.close();
@@ -124,7 +114,7 @@ public class DaoPrestamo
     public boolean modificarPrestamo(Prestamo pres){
         String sql_pres;
 
-        sql_pres = "UPDATE Prestamo" + " SET id_usuario = '" + pres.getIdUsuario() + "', id_empleado = '" + pres.getIdEmpleado() + "', fecha = '"  + pres.getFecha() +"'";
+        sql_pres = "UPDATE Prestamo" + " SET id_usuario = '" + pres.getIdUsuario() + "', id_empleado = '" + pres.getIdEmpleado() + "', fecha = '"  + pres.getFechaR() +"'";
 
         try{
             Connection conn= fachada.openConnection();

@@ -504,7 +504,9 @@ public class ControladorBiblioteca
     public void listarPrestamosTablaU(String id)
     {
         ArrayList<Prestamo> arrayPrestamo;
+        ArrayList<PrestamoLibro> arrayPrestamoLibros;
         arrayPrestamo = manejadorDao.listarPrestamosUsuario(id);
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoUTableModel();
         if(arrayPrestamo != null)
         {
             int num;
@@ -516,14 +518,18 @@ public class ControladorBiblioteca
 
             for (Prestamo prestamo : arrayPrestamo) {
                 num = prestamo.getNumPrestamo();
-                fecha = prestamo.getFecha();
-                isbn = prestamo.getIsbn();
-                numEje = prestamo.getNumEjemplar();
-                fechaD = prestamo.getFechaDevolucion();
+                fecha = prestamo.getFechaR();
                 nomE = manejadorDao.buscarNombreEmpleado(prestamo.getIdEmpleado());
 
-                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoUTableModel();
-                auxModeloTabla.addRow(new Object[]{num, fecha, isbn, numEje, fechaD, nomE});
+                arrayPrestamoLibros = manejadorDao.listarPrestamosLibros(num);
+
+                for(PrestamoLibro prestamoLibro: arrayPrestamoLibros)
+                {
+                    isbn = prestamoLibro.getIsbn();
+                    numEje = prestamoLibro.getNumEjemplar();
+                    fechaD = prestamoLibro.getFechaDev();
+                    auxModeloTabla.addRow(new Object[]{num, fecha, isbn, numEje, fechaD, nomE});
+                }
             }
         }
     }
@@ -535,6 +541,9 @@ public class ControladorBiblioteca
     {
         ArrayList<Prestamo> arrayPrestamo;
         arrayPrestamo = manejadorDao.listarPrestamos();
+
+        ArrayList<PrestamoLibro> arrayPrestamoLibros;
+
         if(arrayPrestamo != null)
         {
             int num;
@@ -546,18 +555,25 @@ public class ControladorBiblioteca
             String tituloL;
             String idUsu;
 
-            for (Prestamo prestamo : arrayPrestamo) {
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoAdminTableModel();
+
+            for (Prestamo prestamo : arrayPrestamo)
+            {
                 num = prestamo.getNumPrestamo();
-                fecha = prestamo.getFecha();
-                isbn = prestamo.getIsbn();
-                numEje = prestamo.getNumEjemplar();
-                fechaD = prestamo.getFechaDevolucion();
                 idUsu = prestamo.getIdUsuario();
-                tituloL = manejadorDao.buscarLibroIsbn(isbn).getTitulo();
+                fecha = prestamo.getFechaR();
                 nomE = manejadorDao.buscarNombreEmpleado(prestamo.getIdEmpleado());
 
-                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{num, isbn, numEje, tituloL, idUsu, nomE, fecha, fechaD});
+                arrayPrestamoLibros = manejadorDao.listarPrestamosLibros(num);
+
+                for (PrestamoLibro prestamoLibro : arrayPrestamoLibros)
+                {
+                    isbn = prestamoLibro.getIsbn();
+                    tituloL = manejadorDao.buscarLibroIsbn(isbn).getTitulo();
+                    numEje = prestamoLibro.getNumEjemplar();
+                    fechaD = prestamoLibro.getFechaDev();
+                    auxModeloTabla.addRow(new Object[]{num, isbn, numEje, tituloL, idUsu, nomE, fecha, fechaD});
+                }
             }
         }
     }

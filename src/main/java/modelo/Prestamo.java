@@ -7,24 +7,18 @@ public class Prestamo
  private int numPrestamo;
  private String idUsuario;
  private String idEmpleado;
- private Date fecha;
- private String isbn;
- private int numEjemplar;
- private Date fechaDevolucion;
+ private Date fechaR;
 
  public Prestamo()
  {
 
  }
 
- public Prestamo(int numPrestamo, String idUsuario, String idEmpleado, Date fecha, String isbn, int numEjemplar, Date fechaDevolucion) {
+ public Prestamo(int numPrestamo, String idUsuario, String idEmpleado, Date fechaR) {
   this.numPrestamo = numPrestamo;
   this.idUsuario = idUsuario;
   this.idEmpleado = idEmpleado;
-  this.fecha = fecha;
-  this.isbn = isbn;
-  this.numEjemplar = numEjemplar;
-  this.fechaDevolucion = fechaDevolucion;
+  this.fechaR = fechaR;
  }
 
  public int getNumPrestamo() {
@@ -51,41 +45,11 @@ public class Prestamo
   this.idEmpleado = idEmpleado;
  }
 
- public Date getFecha() {
-  return fecha;
+ public Date getFechaR() {
+  return fechaR;
  }
 
- public void setFecha(Date fecha) {
-  this.fecha = fecha;
- }
-
- public String getIsbn()
- {
-  return isbn;
- }
-
- public void setIsbn(String isbn)
- {
-  this.isbn = isbn;
- }
-
- public int getNumEjemplar()
- {
-  return numEjemplar;
- }
-
- public void setNumEjemplar(int numEjemplar)
- {
-  this.numEjemplar = numEjemplar;
- }
-
- public Date getFechaDevolucion()
- {
-  return fechaDevolucion;
- }
-
- public void setFechaDevolucion(Date fechaDevolucion)
- {
-  this.fechaDevolucion = fechaDevolucion;
+ public void setFechaR(Date fechaR) {
+  this.fechaR = fechaR;
  }
 }
