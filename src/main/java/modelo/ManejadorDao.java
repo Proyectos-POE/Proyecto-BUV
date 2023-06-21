@@ -20,6 +20,7 @@ public class ManejadorDao {
     private DaoPrestamo daoPrestamo;
     private DaoSolicitud daoSolicitud;
     private DaoAutorLibro daoAutorLibro;
+    private DaoPrestamoLibro daoPrestamoLibro;
 
     public ManejadorDao(String nombre, Estudiante estudiante)
     {
@@ -27,6 +28,7 @@ public class ManejadorDao {
         this.daoEstudiante = new DaoEstudiante();
         this.daoSolicitud = new DaoSolicitud();
         this.daoPrestamo = new DaoPrestamo();
+        this.daoPrestamoLibro = new DaoPrestamoLibro();
         this.daoMulta = new DaoMulta();
         this.daoLibro = new DaoLibro();
         this.daoEmpleado = new DaoEmpleado();
@@ -38,6 +40,7 @@ public class ManejadorDao {
         this.daoProfesor = new DaoProfesor();
         this.daoSolicitud = new DaoSolicitud();
         this.daoPrestamo = new DaoPrestamo();
+        this.daoPrestamoLibro = new DaoPrestamoLibro();
         this.daoMulta = new DaoMulta();
         this.daoLibro = new DaoLibro();
         this.daoEmpleado = new DaoEmpleado();
@@ -52,6 +55,7 @@ public class ManejadorDao {
         this.daoLibro = new DaoLibro();
         this.daoEjemplar = new DaoEjemplar();
         this.daoPrestamo = new DaoPrestamo();
+        this.daoPrestamoLibro = new DaoPrestamoLibro();
         this.daoSolicitud = new DaoSolicitud();
         this.daoDigital = new DaoDigital();
         this.daoAutor = new DaoAutor();
@@ -72,6 +76,7 @@ public class ManejadorDao {
         this.daoAreaConocimiento = new DaoAreaConocimiento();
         this.daoMulta = new DaoMulta();
         this.daoPrestamo = new DaoPrestamo();
+        this.daoPrestamoLibro = new DaoPrestamoLibro();
         this.daoSolicitud = new DaoSolicitud();
         this.daoAutorLibro = new DaoAutorLibro();
     }
@@ -139,6 +144,11 @@ public class ManejadorDao {
         return this.daoPrestamo.listarPrestamos();
     }
 
+
+    /*******
+     * PrestamoLibro
+     */
+    public ArrayList<PrestamoLibro> listarPrestamosLibros(int numero){return this.daoPrestamoLibro.consultarPrestamosLibros(numero);}
     /*******
      * Empleado
      */
