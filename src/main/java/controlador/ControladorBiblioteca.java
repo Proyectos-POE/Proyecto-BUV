@@ -56,6 +56,7 @@ public class ControladorBiblioteca
             ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
             ventanaBiblioteca.addBotonesLibroAdListener(new LibroListener());
             ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
+            ventanaBiblioteca.addBotonesEjemplarAdListener(new EjemplarListener());
         }
         ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
     }
@@ -179,6 +180,10 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarLibros().isEmpty())
         {
             listarLibroTablaAd();
+        }
+        if(!manejadorDao.listarEjemplares().isEmpty())
+        {
+            listarEjemplarTablaAd();
         }
     }
 
@@ -1604,7 +1609,7 @@ public class ControladorBiblioteca
             }
             else
             {
-
+                ventanaBiblioteca.mostrarMensajeError("No se encuentra una editorial con ese id");
             }
         }
         else
@@ -1642,6 +1647,256 @@ public class ControladorBiblioteca
         else
         {
             ventanaBiblioteca.mostrarMensajeError("No se encontró el libro");
+        }
+    }
+
+    /**************************************************************************
+     Controlador_Ejemplar
+     * Ejemplar - admin
+     *************************************************************************/
+
+    class EjemplarListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("agregar"))
+            {
+                agregarEjemplar();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("modificar"))
+            {
+                editarEjemplar();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("eliminar"))
+            {
+                eliminarEjemplar();
+            }
+        }
+    }
+
+    public void listarEjemplarTablaAd()
+    {
+        ArrayList<Ejemplar> arrayEjemplar;
+        arrayEjemplar = manejadorDao.listarEjemplares();
+        if(arrayEjemplar != null)
+        {
+            String isbn;
+            int numEjemplar;
+            int estante;
+            int numCajon;
+            String nomSala;
+            int numPasillo;
+
+            for (Ejemplar ejemplar : arrayEjemplar) {
+                isbn = ejemplar.getIsbn();
+                numEjemplar = ejemplar.getNumEjemplar();
+                estante = ejemplar.getEstante();
+                numCajon = ejemplar.getNumCajon();
+                nomSala = ejemplar.getNomSala();
+                numPasillo = ejemplar.getNumPasillo();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEjemplarAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{numEjemplar, isbn, estante, numCajon, nomSala, numPasillo});
+            }
+        }
+    }
+    public boolean comprobarCamposEjemplarAd()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getTxtIsbnEjemplarA().isEmpty() && !ventanaBiblioteca.getTxtEstanteEjemplarA().isEmpty() && !ventanaBiblioteca.getTxtNumCajonEjemplarA().isEmpty() && !ventanaBiblioteca.getTxtNomSalaEjemplarA().isEmpty() && !ventanaBiblioteca.getTxtNumPasilloEjemplarA().isEmpty();
+        return valido;
+    }
+
+    public void listarEjemplarTablaAdAgregar(Ejemplar ejemplar)
+    {
+        if(ejemplar != null)
+        {
+            String isbn;
+            int numEjemplar;
+            int estante;
+            int numCajon;
+            String nomSala;
+            int numPasillo;
+
+            isbn = ejemplar.getIsbn();
+            numEjemplar = ejemplar.getNumEjemplar();
+            estante = ejemplar.getEstante();
+            numCajon = ejemplar.getNumCajon();
+            nomSala = ejemplar.getNomSala();
+            numPasillo = ejemplar.getNumPasillo();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEjemplarAdminTableModel();
+            auxModeloTabla.addRow(new Object[]{numEjemplar, isbn, estante, numCajon, nomSala, numPasillo});
+        }
+    }
+
+    public void agregarEjemplar()
+    {
+        Ejemplar ejemplar;
+        String isbn;
+        int numEjemplar;
+        int estante;
+        int numCajon;
+        String nomSala;
+        int numPasillo;
+
+        numEjemplar = Integer.parseInt(ventanaBiblioteca.getTxtNumEjemplarA());
+
+        if(numEjemplar == 0)
+        {
+            if (comprobarCamposEjemplarAd())
+            {
+                isbn = ventanaBiblioteca.getTxtIsbnEjemplarA();
+                estante = Integer.parseInt(ventanaBiblioteca.getTxtEstanteEjemplarA());
+                numCajon = Integer.parseInt(ventanaBiblioteca.getTxtNumCajonEjemplarA());
+                nomSala = ventanaBiblioteca.getTxtNomSalaEjemplarA();
+                numPasillo = Integer.parseInt(ventanaBiblioteca.getTxtNumPasilloEjemplarA());
+
+                if (manejadorDao.buscarLibroIsbn(isbn) != null)
+                {
+                    ejemplar = new Ejemplar(isbn, estante, numCajon, nomSala, numPasillo);
+
+                    if (manejadorDao.agregarEjemplar(ejemplar) > 0)
+                    {
+                        listarEjemplarTablaAdAgregar(ejemplar);
+                        ventanaBiblioteca.mostrarMensaje("Ejemplar agregado con exito");
+                        ventanaBiblioteca.limpiarEjemplarAdmin();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("No se pudo crear el ejemplar");
+                    }
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No existe un libro con ese ISBN");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Deseleccione el ejemplar");
+        }
+    }
+
+    public void listarEjemplarTabAdEditar(Ejemplar ejemplar)
+    {
+        if(ejemplar != null)
+        {
+            String isbn;
+            int numEjemplar;
+            int estante;
+            int numCajon;
+            String nomSala;
+            int numPasillo;
+
+            isbn = ejemplar.getIsbn();
+            numEjemplar = ejemplar.getNumEjemplar();
+            estante = ejemplar.getEstante();
+            numCajon = ejemplar.getNumCajon();
+            nomSala = ejemplar.getNomSala();
+            numPasillo = ejemplar.getNumPasillo();
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEjemplarAdminTableModel();
+            int auxFila = ventanaBiblioteca.getFilaSeleccionadaEjemplarAd();
+
+            auxModeloTabla.setValueAt(numEjemplar, auxFila, 0);
+            auxModeloTabla.setValueAt(isbn, auxFila, 1);
+            auxModeloTabla.setValueAt(estante, auxFila, 2);
+            auxModeloTabla.setValueAt(numCajon, auxFila, 3);
+            auxModeloTabla.setValueAt(nomSala, auxFila, 4);
+            auxModeloTabla.setValueAt(numPasillo, auxFila, 5);
+        }
+    }
+
+    public void editarEjemplar()
+    {
+        Ejemplar ejemplar;
+        String isbn;
+        int numEjemplar;
+
+        isbn = ventanaBiblioteca.getTxtIsbnEjemplarA();
+        numEjemplar = Integer.parseInt(ventanaBiblioteca.getTxtNumEjemplarA());
+        ejemplar = manejadorDao.buscarEjemplar(isbn, numEjemplar);
+
+        if(ejemplar != null)
+        {
+            if(comprobarCamposEjemplarAd())
+            {
+                ejemplar.setEstante(Integer.parseInt(ventanaBiblioteca.getTxtEstanteEjemplarA()));
+                ejemplar.setNumCajon(Integer.parseInt(ventanaBiblioteca.getTxtNumCajonEjemplarA()));
+                ejemplar.setNomSala(ventanaBiblioteca.getTxtNomSalaEjemplarA());
+                ejemplar.setNumPasillo(Integer.parseInt(ventanaBiblioteca.getTxtNumPasilloEjemplarA()));
+
+                if(manejadorDao.buscarLibroIsbn(ejemplar.getIsbn()) != null)
+                {
+                    if (manejadorDao.editarEjemplar(ejemplar))
+                    {
+                        ventanaBiblioteca.mostrarMensaje("Ejemplar editado con exito");
+                        listarEjemplarTabAdEditar(ejemplar);
+                        ventanaBiblioteca.deseleccionarTablaFilaEjemplarAd();
+                        ventanaBiblioteca.limpiarEjemplarAdmin();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("No se pudo editar el ejemplar");
+                    }
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No existe un libro con ese ISBN");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+        }
+    }
+
+    public void listarEjemplarTablaAdEliminar(Ejemplar ejemplar)
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEjemplarAdminTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaEjemplarAd();
+        auxModeloTabla.removeRow(auxFila);
+    }
+
+    public void eliminarEjemplar()
+    {
+        Ejemplar ejemplar;
+        String isbn;
+        int numEjemplar;
+
+        isbn = ventanaBiblioteca.getTxtIsbnEjemplarA();
+        numEjemplar = Integer.parseInt(ventanaBiblioteca.getTxtNumEjemplarA());
+        ejemplar = manejadorDao.buscarEjemplar(isbn, numEjemplar);
+
+        if (ejemplar != null)
+        {
+            if (manejadorDao.eliminarEjemplar(isbn, numEjemplar))
+            {
+                ventanaBiblioteca.mostrarMensaje("Ejemplar eliminado");
+                ventanaBiblioteca.limpiarEjemplarAdmin();
+                listarEjemplarTablaAdEliminar(ejemplar);
+                ventanaBiblioteca.deseleccionarTablaFilaEjemplarAd();
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("No se encontró el ejemplar");
         }
     }
 }

@@ -294,4 +294,33 @@ public class ManejadorDao {
     {
         return this.daoAutorLibro.consultarCodsAutores(isbn);
     }
+
+    /*******
+     * Ejemplar
+     */
+
+    public int agregarEjemplar(Ejemplar ejemplar)
+    {
+        return this.daoEjemplar.insertEjemplar(ejemplar);
+    }
+
+    public boolean editarEjemplar(Ejemplar ejemplar)
+    {
+        return this.daoEjemplar.modificarEjemplar(ejemplar);
+    }
+
+    public boolean eliminarEjemplar(String isbn, int numEjemplar)
+    {
+        return this.daoEjemplar.eliminarEjemplar(isbn, numEjemplar);
+    }
+
+    public Ejemplar buscarEjemplar(String isbn, int numEjemplar)
+    {
+        return this.daoEjemplar.consultarEjemplar(isbn, numEjemplar);
+    }
+
+    public ArrayList<Ejemplar> listarEjemplares()
+    {
+        return this.daoEjemplar.listarEjemplar();
+    }
 }

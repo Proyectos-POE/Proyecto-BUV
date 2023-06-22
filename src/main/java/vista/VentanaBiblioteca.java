@@ -3791,6 +3791,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnDescargaLibroU.addActionListener(listenControles);
     }
 
+    public void addBotonesEjemplarAdListener(ActionListener listenControles)
+    {
+        btnAgregarEjemplarA.addActionListener(listenControles);
+        btnModificarEjemplarA.addActionListener(listenControles);
+        btnEliminarEjemplarA.addActionListener(listenControles);
+    }
+
     public void limpiarSolicitudUsuario()
     {
         txtIsbnSolicitudU.setText("");
@@ -3809,6 +3816,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public void limpiarEditorialAdmin()
     {
+        txtIdEditorialA.setText("0");
         txtNombreEditorialA.setText("");
         txtPaisEditorialA.setText("");
         txtPaginaWebEditorialA.setText("");
@@ -3872,6 +3880,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public void limpiarEjemplarAdmin()
     {
+        txtNumEjemplarA.setText("0");
         txtIsbnEjemplarA.setText("");
         txtEstanteEjemplarA.setText("");
         txtNumPasilloEjemplarA.setText("");
@@ -4483,7 +4492,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getSolicitudEmpTableModel(){return  jtTablaSolicitudE.getModel();}
     public TableModel getLibroAdminTableModel(){return jtTablaLibroA.getModel();}
     public TableModel getLibroUTableModel(){return jtTablaLibroU.getModel();}
-  
+    public TableModel getEjemplarAdminTableModel(){return jtTablaEjemplarA.getModel();}
+
     public int getFilaSeleccionadaEmpleado()
     {
         return jtTablaEmpleadoA.getSelectedRow();
@@ -4610,6 +4620,38 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public void deseleccionarFilaTablaLibroU(){
         jtTablaLibroU.getSelectionModel().clearSelection();
+    }
+
+    public String getTxtEstanteEjemplarA() {
+        return txtEstanteEjemplarA.getText();
+    }
+
+    public String getTxtIsbnEjemplarA() {
+        return txtIsbnEjemplarA.getText();
+    }
+
+    public String getTxtNomSalaEjemplarA() {
+        return txtNomSalaEjemplarA.getText();
+    }
+
+    public String getTxtNumCajonEjemplarA() {
+        return txtNumCajonEjemplarA.getText();
+    }
+
+    public String getTxtNumEjemplarA() {
+        return txtNumEjemplarA.getText();
+    }
+
+    public String getTxtNumPasilloEjemplarA() {
+        return txtNumPasilloEjemplarA.getText();
+    }
+
+    public int getFilaSeleccionadaEjemplarAd(){
+        return jtTablaEjemplarA.getSelectedRow();
+    }
+
+    public void deseleccionarTablaFilaEjemplarAd(){
+        jtTablaEjemplarA.getSelectionModel().clearSelection();
     }
 
     public void mostrarMensaje(String auxMensaje)

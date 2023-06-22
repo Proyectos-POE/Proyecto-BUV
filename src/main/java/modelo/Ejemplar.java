@@ -8,10 +8,9 @@ public class Ejemplar extends Libro
     private String nomSala;
     private int numPasillo;
 
-    public Ejemplar(String auxIsbn, int auxNumEjemplar, int auxEstante, int auxNumCajon, String auxNomSala, int auxNumPasillo)
+    public Ejemplar(String auxIsbn, int auxEstante, int auxNumCajon, String auxNomSala, int auxNumPasillo)
     {
         this.isbn = auxIsbn;
-        this.numEjemplar = auxNumEjemplar;
         this.estante = auxEstante;
         this.numCajon = auxNumCajon;
         this.nomSala = auxNomSala;

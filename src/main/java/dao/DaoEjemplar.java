@@ -18,9 +18,9 @@ public class DaoEjemplar
     {
         String sql_ej;
 
-        sql_ej = "INSERT INTO ejemplar(isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo) VALUES('"+ ej.getIsbn() + "', '" +
-                ej.getNumEjemplar() + "', '" + ej.getEstante() + "', '" + ej.getNumCajon() + "', '" +
-                ej.getNomSala() +"', '" + ej.getNumPasillo() +"')";
+        sql_ej = "INSERT INTO ejemplar(isbn, estante, num_cajon, nom_sala, num_pasillo) VALUES('"+ ej.getIsbn() +
+                "', '" + ej.getEstante() + "', '" + ej.getNumCajon() + "', '" + ej.getNomSala() +"', '"
+                + ej.getNumPasillo() +"')";
 
         try{
             Connection conn= fachada.openConnection();
@@ -38,12 +38,13 @@ public class DaoEjemplar
     {
         Ejemplar ej = new Ejemplar();
         String sql_select;
-        sql_select = "SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo FROM ejemplar WHERE isbn='" + isbn + "' AND num_ejemplar ='" + numEJemplar +"'";
+        sql_select = "SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo FROM ejemplar WHERE isbn='" + isbn + "' AND num_ejemplar ='" + numEJemplar +"' GROUP BY  isbn '" + "'";
 
         try{
 
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
@@ -56,6 +57,7 @@ public class DaoEjemplar
                 ej.setNumPasillo(tabla.getInt(6));
             }
 
+            conn.close();
             return ej;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -69,11 +71,12 @@ public class DaoEjemplar
         sql_select="SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo FROM  ejemplar";
         try{
 
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Ejemplar ej = new Ejemplar();
                 ej.setIsbn(tabla.getString(1));
                 ej.setNumEjemplar(tabla.getInt(2));
@@ -82,8 +85,9 @@ public class DaoEjemplar
                 ej.setNomSala(tabla.getString(5));
                 ej.setNumPasillo(tabla.getInt(6));
                 arrayEj.add(ej);
-            }while (tabla.next());
+            }
 
+            conn.close();
             return arrayEj;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -95,7 +99,25 @@ public class DaoEjemplar
     {
         String sql_ej;
 
-        sql_ej = "UPDATE ejemplar" + " SET isbn = '" + ej.getIsbn() + "', num_ejemplar = '"+ ej.getNumEjemplar() + "', estante = '" + ej.getEstante() + "', num_cajon = '" + ej.getNumCajon() + "', nom_sala = '" + ej.getNomSala() + "', num_pasillo = '" + ej.getNumPasillo() + "' WHERE isbn = '" + ej.getIsbn() + "' AND num_ejemplar = '" + ej.getNumEjemplar() + "'";
+        sql_ej = "UPDATE ejemplar" + " SET isbn = '" + ej.getIsbn() + "', estante = '" + ej.getEstante() + "', num_cajon = '" + ej.getNumCajon() + "', nom_sala = '" + ej.getNomSala() + "', num_pasillo = '" + ej.getNumPasillo() + "' WHERE isbn = '" + ej.getIsbn() + "' AND num_ejemplar = '" + ej.getNumEjemplar() + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaEj = conn.createStatement();
+            sentenciaEj.executeUpdate(sql_ej);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public boolean eliminarEjemplar(String isbn, int numEjemplar)
+    {
+        String sql_ej;
+
+        sql_ej = "DELETE FROM ejemplar WHERE isbn = '" + isbn + "' AND num_ejemplar = '" + numEjemplar + "'";
 
         try{
             Connection conn= fachada.openConnection();
