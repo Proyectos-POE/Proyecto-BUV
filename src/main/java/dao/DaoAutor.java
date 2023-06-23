@@ -62,6 +62,29 @@ public class DaoAutor
         return null;
     }
 
+    public String consultarNomAutor(int codAutor)
+    {
+        String nombreAutor = null;
+        String sql_select;
+        sql_select = "SELECT Concat(primer_nom, ' ', primer_apellido) FROM autor WHERE codigo_autor='" + codAutor + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next()){
+                nombreAutor = tabla.getString(1);
+            }
+            conn.close();
+            return nombreAutor;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
     public ArrayList<Autor> listarAutores(){
         ArrayList<Autor> arrayAt = new ArrayList<>();
         String sql_select;

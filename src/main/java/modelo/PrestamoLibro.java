@@ -8,6 +8,7 @@ public class PrestamoLibro
     private String isbn;
     private int numEjemplar;
     private Date fechaDev;
+    private boolean estado;
 
     public PrestamoLibro()
     {
@@ -20,7 +21,18 @@ public class PrestamoLibro
         this.isbn = auxIsbn;
         this.numEjemplar = auxNumE;
         this.fechaDev = auxfechaD;
+        this.estado = false;
     }
+
+    public PrestamoLibro(int auxNumero, String auxIsbn, int auxNumE, Date auxfechaD, boolean auxEstado)
+    {
+        this.numero = auxNumero;
+        this.isbn = auxIsbn;
+        this.numEjemplar = auxNumE;
+        this.fechaDev = auxfechaD;
+        this.estado = auxEstado;
+    }
+
 
     public int getNumero() {
         return numero;
@@ -52,5 +64,13 @@ public class PrestamoLibro
 
     public void setFechaDev(Date fechaDev) {
         this.fechaDev = fechaDev;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }
