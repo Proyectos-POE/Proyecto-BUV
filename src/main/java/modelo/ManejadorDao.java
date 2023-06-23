@@ -149,6 +149,7 @@ public class ManejadorDao {
      * PrestamoLibro
      */
     public ArrayList<PrestamoLibro> listarPrestamosLibros(int numero){return this.daoPrestamoLibro.consultarPrestamosLibros(numero);}
+    public ArrayList<PrestamoLibro> listarPrestamosActivos(int numero){return this.daoPrestamoLibro.consultarPrestamosActivos(numero);}
     /*******
      * Empleado
      */
@@ -190,6 +191,7 @@ public class ManejadorDao {
     public boolean modificarAutor(Autor autor){return this.daoAutor.modificarAutor(autor);}
     public ArrayList<Autor> listarAutores(){return this.daoAutor.listarAutores();}
     public Autor consultarAutor(int cod){return this.daoAutor.consultarAutor(cod);}
+    public String getNombreAutor(int cod){return this.daoAutor.consultarNomAutor(cod);}
     /*******
      * AreaConocimiento
      */

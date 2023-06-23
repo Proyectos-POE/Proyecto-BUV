@@ -212,6 +212,10 @@ public class ControladorBiblioteca
         {
             listarSolicitudesTablaE();
         }
+        if(!manejadorDao.listarPrestamos().isEmpty())
+        {
+            listarPrestamosTablaE();
+        }
     }
 
     /**************************************************************************
@@ -539,6 +543,7 @@ public class ControladorBiblioteca
             String isbn;
             int numEje;
             Date fechaD;
+            boolean estado;
 
             for (Prestamo prestamo : arrayPrestamo) {
                 num = prestamo.getNumPrestamo();
@@ -552,7 +557,8 @@ public class ControladorBiblioteca
                     isbn = prestamoLibro.getIsbn();
                     numEje = prestamoLibro.getNumEjemplar();
                     fechaD = prestamoLibro.getFechaDev();
-                    auxModeloTabla.addRow(new Object[]{num, fecha, isbn, numEje, fechaD, nomE});
+                    estado = prestamoLibro.getEstado();
+                    auxModeloTabla.addRow(new Object[]{num, fecha, isbn, numEje, fechaD, nomE, stringEstPres(estado)});
                 }
             }
         }
@@ -578,6 +584,7 @@ public class ControladorBiblioteca
             Date fechaD;
             String tituloL;
             String idUsu;
+            boolean estado;
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoAdminTableModel();
 
@@ -596,10 +603,69 @@ public class ControladorBiblioteca
                     tituloL = manejadorDao.buscarLibroIsbn(isbn).getTitulo();
                     numEje = prestamoLibro.getNumEjemplar();
                     fechaD = prestamoLibro.getFechaDev();
-                    auxModeloTabla.addRow(new Object[]{num, isbn, numEje, tituloL, idUsu, nomE, fecha, fechaD});
+                    estado = prestamoLibro.getEstado();
+                    auxModeloTabla.addRow(new Object[]{num, isbn, numEje, tituloL, idUsu, nomE, fecha, fechaD, stringEstPres(estado)});
                 }
             }
         }
+    }
+
+    /**************************************************************************
+     * Prestamo - Empleado
+     *************************************************************************/
+    public void listarPrestamosTablaE()
+    {
+        ArrayList<Prestamo> arrayPrestamo;
+        arrayPrestamo = manejadorDao.listarPrestamos();
+
+        ArrayList<PrestamoLibro> arrayPrestamoLibros;
+
+        if(arrayPrestamo != null)
+        {
+            int num;
+            String idE;
+            Date fecha;
+            String isbn;
+            int numEje;
+            Date fechaD;
+            String idUsu;
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getDevEmpTabMod();
+
+            for (Prestamo prestamo : arrayPrestamo)
+            {
+                num = prestamo.getNumPrestamo();
+                idUsu = prestamo.getIdUsuario();
+                fecha = prestamo.getFechaR();
+                idE = prestamo.getIdEmpleado();
+                if(!manejadorDao.listarPrestamosActivos(num).isEmpty())
+                {
+                    arrayPrestamoLibros = manejadorDao.listarPrestamosActivos(num);
+
+                    for (PrestamoLibro prestamoLibro : arrayPrestamoLibros)
+                    {
+                        isbn = prestamoLibro.getIsbn();
+                        numEje = prestamoLibro.getNumEjemplar();
+                        fechaD = prestamoLibro.getFechaDev();
+                        auxModeloTabla.addRow(new Object[]{num, isbn, numEje, idUsu, idE , fecha, fechaD});
+                    }
+                }
+            }
+        }
+    }
+
+    public String stringEstPres(boolean b)
+    {
+        String cadena;
+        if(!b)
+        {
+            cadena = "NO DEVUELTO";
+        }
+        else
+        {
+            cadena = "DEVUELTO";
+        }
+        return cadena;
     }
 
     /**************************************************************************
@@ -1459,7 +1525,7 @@ public class ControladorBiblioteca
                 codAutores = (manejadorDao.getCodigosAutoresLibro(isbn));
                 for(int cod: codAutores)
                 {
-                    nombresAutores.add(manejadorDao.consultarAutor(cod).toString());
+                    nombresAutores.add(manejadorDao.getNombreAutor(cod));
                 }
                 autores = String.join(", ", nombresAutores);
 
