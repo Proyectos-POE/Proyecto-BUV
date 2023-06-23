@@ -189,7 +189,6 @@ public class ManejadorDao {
     public int agregarAutor(Autor autor){return this.daoAutor.insertAutor(autor);}
     public boolean modificarAutor(Autor autor){return this.daoAutor.modificarAutor(autor);}
     public ArrayList<Autor> listarAutores(){return this.daoAutor.listarAutores();}
-    public Autor ultimoAutor(){return this.daoAutor.consultarUltimoAutor();}
     public Autor consultarAutor(int cod){return this.daoAutor.consultarAutor(cod);}
     /*******
      * AreaConocimiento

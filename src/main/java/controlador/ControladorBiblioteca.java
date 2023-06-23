@@ -1072,7 +1072,8 @@ public class ControladorBiblioteca
 
             if(manejadorDao.agregarAutor(autor) > 0)
             {
-                listarAutorAgregar(manejadorDao.ultimoAutor());
+                autor.setCodAutor(ventanaBiblioteca.getAutorAdminTableModel().getRowCount()+1);
+                listarAutorAgregar(autor);
                 ventanaBiblioteca.mostrarMensaje("Autor agregado con exito");
                 ventanaBiblioteca.limpiarAutorAdmin();
             }
@@ -1219,7 +1220,7 @@ public class ControladorBiblioteca
                 paisOrigen = editorial.getPaisOrigen();
 
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{codEditorial, nomEditorial, paginaWeb, paisOrigen});
+                auxModeloTabla.addRow(new Object[]{codEditorial, nomEditorial, paisOrigen, paginaWeb});
             }
         }
     }
@@ -1245,7 +1246,7 @@ public class ControladorBiblioteca
             paisOrigen = editorial.getPaisOrigen();
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
-            auxModeloTabla.addRow(new Object[]{codEditorial, nomEditorial, paginaWeb, paisOrigen});
+            auxModeloTabla.addRow(new Object[]{codEditorial, nomEditorial, paisOrigen, paginaWeb});
         }
     }
 
@@ -1421,6 +1422,7 @@ public class ControladorBiblioteca
             ArrayList<String> nombresAutores;
             String autores;
             int codEditorial;
+            String nomEditorial;
             int anhoPublicacion;
             String numPaginas;
             String idioma;
@@ -1429,11 +1431,11 @@ public class ControladorBiblioteca
                 isbn = libro.getIsbn();
                 titulo = libro.getTitulo();
                 codEditorial = libro.getCodEditorial();
+                nomEditorial = manejadorDao.buscarEditorial(codEditorial).getNomEditorial();
                 anhoPublicacion = libro.getAnhoPublicacion();
                 numPaginas = libro.getNumPaginas();
                 idioma = libro.getIdioma();
 
-                codAutores = new ArrayList<>();
                 nombresAutores = new ArrayList<>();
                 codAutores = (manejadorDao.getCodigosAutoresLibro(isbn));
                 for(int cod: codAutores)
@@ -1443,7 +1445,7 @@ public class ControladorBiblioteca
                 autores = String.join(", ", nombresAutores);
 
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{isbn, titulo, autores, codEditorial, anhoPublicacion, idioma, numPaginas});
+                auxModeloTabla.addRow(new Object[]{isbn, titulo, autores, nomEditorial, anhoPublicacion, idioma, numPaginas});
             }
         }
     }
@@ -1462,6 +1464,7 @@ public class ControladorBiblioteca
             String isbn;
             String titulo;
             int codEditorial;
+            String nomEditorial;
             int anhoPublicacion;
             String numPaginas;
             String idioma;
@@ -1469,12 +1472,13 @@ public class ControladorBiblioteca
             isbn = libro.getIsbn();
             titulo = libro.getTitulo();
             codEditorial = libro.getCodEditorial();
+            nomEditorial = manejadorDao.buscarEditorial(codEditorial).getNomEditorial();
             anhoPublicacion = libro.getAnhoPublicacion();
             numPaginas = libro.getNumPaginas();
             idioma = libro.getIdioma();
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
-            auxModeloTabla.addRow(new Object[]{isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma});
+            auxModeloTabla.addRow(new Object[]{isbn, titulo, nomEditorial, anhoPublicacion, numPaginas, idioma});
         }
     }
 

@@ -43,7 +43,7 @@ public class Libro
     }
 
     public void setCodEditorial(int codigoEditorial) {
-        this.codEditorial = codEditorial;
+        this.codEditorial = codigoEditorial;
     }
 
     public int getAnhoPublicacion()
