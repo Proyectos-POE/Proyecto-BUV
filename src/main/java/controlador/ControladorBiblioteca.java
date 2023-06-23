@@ -26,28 +26,46 @@ public class ControladorBiblioteca
         this.usuario = auxB;
         this.manejadorDao = manejadorDao;
 
-        if(usuario instanceof Profesor || usuario instanceof Estudiante)
+        ventanaBiblioteca.initEncabezado();
+
+        if(usuario instanceof Profesor)
         {
-            ventanaBiblioteca.menuUsuario();
-            ventanaBiblioteca.pagLibroUsuario();
-            ventanaBiblioteca.pantallaCompleta();
+            ventanaBiblioteca.initMenuU();
+            ventanaBiblioteca.initContU();
+            ventanaBiblioteca.initPerfilP();
+            ventanaBiblioteca.initListU();
+
             listarTablasUsuarios(usuario.getId());
 
+            ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
+            ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
+        }
+        if(usuario instanceof Estudiante)
+        {
+            ventanaBiblioteca.initMenuU();
+            ventanaBiblioteca.initContU();
+            ventanaBiblioteca.initPerfilE();
+            ventanaBiblioteca.initListU();
+
+            listarTablasUsuarios(usuario.getId());
 
             ventanaBiblioteca.addBotonesPerfilEsudianteListener(new EstudianteUListener());
-            ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
             ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
         }
         if(usuario instanceof Empleado)
         {
-            ventanaBiblioteca.pantallaCompleta();
+            ventanaBiblioteca.initMenuE();
+            ventanaBiblioteca.initContE();
+            ventanaBiblioteca.initListE();
+
             listarTablasEmpleado();
         }
         else if(usuario == null)
         {
-            ventanaBiblioteca.menuAdmin();
-            ventanaBiblioteca.pagAreaAdmin();
-            ventanaBiblioteca.pantallaCompleta();
+            ventanaBiblioteca.initMenuA();
+            ventanaBiblioteca.initContA();
+            ventanaBiblioteca.initListA();
+
             listarTablasAdmin();
 
             ventanaBiblioteca.addBotonesEmpleadoAdminListener(new EmpleadoListener());
@@ -59,6 +77,7 @@ public class ControladorBiblioteca
             ventanaBiblioteca.addBotonesEjemplarAdListener(new EjemplarListener());
         }
         ventanaBiblioteca.addBotonesEncabezadoListener(new EncabezadoListener());
+        ventanaBiblioteca.pantallaCompleta();
     }
 
     private void cerrarSesion()
