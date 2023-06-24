@@ -59,6 +59,8 @@ public class ControladorBiblioteca
             ventanaBiblioteca.initListE();
 
             listarTablasEmpleado();
+
+            ventanaBiblioteca.addBtnDevolucionListener(new DevolucionListener());
         }
         else if(usuario == null)
         {
@@ -615,9 +617,34 @@ public class ControladorBiblioteca
         }
     }
 
+    public String stringEstPres(boolean b)
+    {
+        String cadena;
+        if(!b)
+        {
+            cadena = "NO DEVUELTO";
+        }
+        else
+        {
+            cadena = "DEVUELTO";
+        }
+        return cadena;
+    }
     /**************************************************************************
-     * Prestamo - Empleado
+     * Devolucion - Empleado
      *************************************************************************/
+    class DevolucionListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("devolver"))
+            {
+                devolverLibro();
+            }
+        }
+    }
+
     public void listarPrestamosTablaE()
     {
         ArrayList<Prestamo> arrayPrestamo;
@@ -659,18 +686,74 @@ public class ControladorBiblioteca
         }
     }
 
-    public String stringEstPres(boolean b)
+    public void devolverLibro()
     {
-        String cadena;
-        if(!b)
+        if(validarCamposDevo())
         {
-            cadena = "NO DEVUELTO";
+            int numPres;
+            int numEjem;
+            String isbn;
+
+            try
+            {
+                numPres = ventanaBiblioteca.getNumPresDevEmp();
+                numEjem = ventanaBiblioteca.getNumEjemDevEmp();
+                isbn = ventanaBiblioteca.getIsbnDev();
+                Ejemplar ejemplar = manejadorDao.buscarEjemplar(isbn, numEjem);
+                PrestamoLibro presLb = manejadorDao.getPrestamoLib(numPres,isbn,numEjem);
+                if(ejemplar != null && presLb != null)
+                {
+                    if(!ejemplar.getEstado() && !presLb.getEstado())
+                    {
+                        if (cambiarEstadosDev(numPres, numEjem, isbn, true))
+                        {
+                            ventanaBiblioteca.mostrarMensaje("Libro devuelto con exito");
+                            ventanaBiblioteca.limpiarDevolucionEmpleado();
+                            ventanaBiblioteca.deseleccionarFilaDev();
+                        }
+                        else
+                        {
+                            ventanaBiblioteca.mostrarMensajeError("No se pudo devolver el libro");
+                        }
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("El ejemplar ya fue devuelto o ocurrio un error");
+                    }
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No existe el ejemplar y/o el prestamo");
+                }
+            }
+            catch (NumberFormatException ex)
+            {
+                ventanaBiblioteca.mostrarMensajeError("Digite numeros en los campos # prestamo y # ejemplar");
+            }
         }
         else
         {
-            cadena = "DEVUELTO";
+            ventanaBiblioteca.mostrarMensajeError("Rellene todos los campos");
         }
-        return cadena;
+
+    }
+
+    public boolean cambiarEstadosDev(int numPres, int numEjem, String isbn, boolean estado)
+    {
+        if(manejadorDao.modificarEstPresLib(numPres, numEjem, isbn, estado) && manejadorDao.modificarEstadoEjem(isbn, numEjem, estado))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public boolean validarCamposDevo()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getCedulaDevEmp().equals("") && !ventanaBiblioteca.getCedulaDevUsu().equals(" ") && !ventanaBiblioteca.getIsbnDev().equals("");
+        return valido;
     }
 
     /**************************************************************************
@@ -1521,7 +1604,7 @@ public class ControladorBiblioteca
                 isbn = libro.getIsbn();
                 titulo = libro.getTitulo();
                 codEditorial = libro.getCodEditorial();
-                nomEditorial = manejadorDao.buscarEditorial(codEditorial).getNomEditorial();
+                nomEditorial = manejadorDao.getNombreEditorial(codEditorial);
                 anhoPublicacion = libro.getAnhoPublicacion();
                 numPaginas = libro.getNumPaginas();
                 idioma = libro.getIdioma();
@@ -1562,7 +1645,7 @@ public class ControladorBiblioteca
             isbn = libro.getIsbn();
             titulo = libro.getTitulo();
             codEditorial = libro.getCodEditorial();
-            nomEditorial = manejadorDao.buscarEditorial(codEditorial).getNomEditorial();
+            nomEditorial = manejadorDao.getNombreEditorial(codEditorial);
             anhoPublicacion = libro.getAnhoPublicacion();
             numPaginas = libro.getNumPaginas();
             idioma = libro.getIdioma();
@@ -1781,6 +1864,7 @@ public class ControladorBiblioteca
             int numCajon;
             String nomSala;
             int numPasillo;
+            boolean estado;
 
             for (Ejemplar ejemplar : arrayEjemplar) {
                 isbn = ejemplar.getIsbn();
@@ -1789,9 +1873,10 @@ public class ControladorBiblioteca
                 numCajon = ejemplar.getNumCajon();
                 nomSala = ejemplar.getNomSala();
                 numPasillo = ejemplar.getNumPasillo();
+                estado = ejemplar.getEstado();
 
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEjemplarAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{numEjemplar, isbn, estante, numCajon, nomSala, numPasillo});
+                auxModeloTabla.addRow(new Object[]{numEjemplar, isbn, estante, numCajon, nomSala, numPasillo, stringEstEjem(estado)});
             }
         }
     }
@@ -1821,7 +1906,7 @@ public class ControladorBiblioteca
             numPasillo = ejemplar.getNumPasillo();
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEjemplarAdminTableModel();
-            auxModeloTabla.addRow(new Object[]{numEjemplar, isbn, estante, numCajon, nomSala, numPasillo});
+            auxModeloTabla.addRow(new Object[]{numEjemplar, isbn, estante, numCajon, nomSala, numPasillo, stringEstEjem(true)});
         }
     }
 
@@ -1994,6 +2079,20 @@ public class ControladorBiblioteca
         }
     }
 
+
+    public String stringEstEjem(boolean b)
+    {
+        String cadena;
+        if(!b)
+        {
+            cadena = "NO DISPONIBLE";
+        }
+        else
+        {
+            cadena = "DISPONIBLE";
+        }
+        return cadena;
+    }
     /**************************************************************************
      Controlador_Digital
      * Digital - admin

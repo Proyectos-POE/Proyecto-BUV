@@ -2786,7 +2786,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 new Object [][] {
                 },
                 new String [] {
-                        "# EJEMPLAR", "ISBN", "ESTANTE", "# CAJON", "NOMBRE SALA", "# PASILLO"
+                        "# EJEMPLAR", "ISBN", "ESTANTE", "# CAJON", "NOMBRE SALA", "# PASILLO", "ESTADO"
                 }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -7906,7 +7906,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     //tablas devoluciones-admin
     public TableModel getDevEmpTabMod(){return jtTablaDevolucionE.getModel();}
-
+    public int getFilaSeleccionadaDev(){return jtTablaDevolucionE.getSelectedRow();}
+    public void deseleccionarFilaDev(){jtTablaDevolucionE.getSelectionModel().clearSelection();}
     public String getTxtCodAreaA()
     {
         return txtIdAreaA.getText();
