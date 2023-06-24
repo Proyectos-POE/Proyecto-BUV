@@ -127,6 +127,32 @@ public class DaoAutorLibro {
         catch(Exception e){ System.out.println(e); }
         return false;
     }
+
+    public ArrayList<String> consultarNomsAutoresLibro(String isbn)
+    {
+        String nombreAutor;
+        ArrayList<String> Nombres;
+        String sql_select;
+        sql_select = "SELECT Concat(primer_nom, ' ', primer_apellido) FROM autor_libro INNER JOIN autor ON autor_libro.cod_autor = autor.codigo_autor  WHERE isbn='" + isbn + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            Nombres = new ArrayList<>();
+            while(tabla.next()){
+
+                nombreAutor =  tabla.getString(1);
+                Nombres.add(nombreAutor);
+            }
+            conn.close();
+            return Nombres;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
     }
 
 

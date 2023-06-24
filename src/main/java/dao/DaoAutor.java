@@ -2,6 +2,7 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import modelo.Autor;
+import modelo.Editorial;
 
 public class DaoAutor
 {
@@ -129,6 +130,48 @@ public class DaoAutor
         catch(Exception e){ System.out.println(e); }
         return false;
     }
+
+    public int consultarCodUltimoAutor()
+    {
+        int cod = -1;
+        String sql_select;
+        sql_select = "SELECT codigo_autor FROM autor WHERE codigo_autor = (SELECT MAX(codigo_autor) FROM autor)";
+
+        try{
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next()) {
+                cod = tabla.getInt(1);
+            }
+
+            return cod;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return cod;
+    }
+
+    public boolean eliminarAutor(int codAutor)
+    {
+        String sql_ed;
+
+        sql_ed = "DELETE FROM autor WHERE codigo_autor = " + codAutor + "";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaEd = conn.createStatement();
+            sentenciaEd.executeUpdate(sql_ed);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
 }
 
 

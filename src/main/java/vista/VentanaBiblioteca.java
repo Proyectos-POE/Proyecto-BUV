@@ -7148,6 +7148,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     {
         btnAgregarAutorA.addActionListener(listenControles);
         btnModificarAutorA.addActionListener(listenControles);
+        btnEliminarAutorA.addActionListener(listenControles);
     }
 
     public void addBotonesEditorialAdListener(ActionListener listenControles)

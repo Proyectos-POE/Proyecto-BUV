@@ -201,6 +201,10 @@ public class ManejadorDao {
     public ArrayList<Autor> listarAutores(){return this.daoAutor.listarAutores();}
     public Autor consultarAutor(int cod){return this.daoAutor.consultarAutor(cod);}
     public String getNombreAutor(int cod){return this.daoAutor.consultarNomAutor(cod);}
+    public int ultimoCodigoAutor(){return this.daoAutor.consultarCodUltimoAutor();}
+    public boolean eliminarAutor(int cod){return this.daoAutor.eliminarAutor(cod);}
+
+    public ArrayList<String> getNombresAutoresLibro(String isbn){return this.daoAutorLibro.consultarNomsAutoresLibro(isbn);}
     /*******
      * AreaConocimiento
      */
