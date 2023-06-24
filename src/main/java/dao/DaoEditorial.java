@@ -83,7 +83,7 @@ public class DaoEditorial
     public ArrayList<Editorial> listarEditorial(){
         ArrayList<Editorial> arrayEd = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM  editorial";
+        sql_select="SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM  editorial ORDER BY codigo_ed";
         try{
             Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
@@ -141,5 +141,33 @@ public class DaoEditorial
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return false;
+    }
+
+    public Editorial consultarUltimoEditorial()
+    {
+        Editorial ed = new Editorial();
+        String sql_select;
+        sql_select = "SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM editorial WHERE codigo_ed = (SELECT MAX(codigo_ed) FROM editorial)";
+
+
+        try{
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next()) {
+
+                ed.setCodEditorial(tabla.getInt(1));
+                ed.setNomEditorial(tabla.getString(2));
+                ed.setPaginaWeb(tabla.getString(3));
+                ed.setPaisOrigen(tabla.getString(4));
+            }
+
+            return ed;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
     }
 }

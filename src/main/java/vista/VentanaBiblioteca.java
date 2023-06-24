@@ -2148,7 +2148,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 180, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 140, 0, 0);
         jpFormularioEmpleadoA.add(lblCargoEmpleadoA, gridBagConstraints);
 
         txtCargoEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
@@ -2494,6 +2494,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
         jtTablaAutorLibroA.getTableHeader().setFont(new java.awt.Font("Montserrat",0, 12));
         jtTablaAutorLibroA.setDefaultEditor(Object.class, null);
+        jtTablaAutorA.setFont(new java.awt.Font("Montserrat", 0, 12));
         jtTablaAutorLibroA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null},
@@ -7235,6 +7236,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtDireccionEmpleadoA.setText("");
         txtTelefonoEmpleadoA.setText("");
         txtCargoEmpleadoA.setText("");
+        txtCedulaEmpleadoA.setEditable(true);
+        btnAgregarEmpleadoA.setEnabled(true);
     }
 
     public void limpiarLibroUsuario()

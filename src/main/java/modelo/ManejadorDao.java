@@ -264,7 +264,10 @@ public class ManejadorDao {
     {
         return this.daoEditorial.listarEditorial();
     }
-    public String getNombreEditorial(int cod){return this.daoEditorial.consultarNombreEditorial(cod);}
+
+    public String getNombreEditorial(int codEditorial){return this.daoEditorial.consultarNombreEditorial(codEditorial);}
+
+    public Editorial consultarUltimoEditorial() {return this.consultarUltimoEditorial();}
 
     /*******
      * Libro

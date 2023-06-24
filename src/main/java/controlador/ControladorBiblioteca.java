@@ -75,7 +75,6 @@ public class ControladorBiblioteca
             ventanaBiblioteca.addBotonesAutorAdListener(new AutorListener());
             ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
             ventanaBiblioteca.addBotonesLibroAdListener(new LibroListener());
-            ventanaBiblioteca.addBotonesEditorialAdListener(new EditorialListener());
             ventanaBiblioteca.addBotonesEjemplarAdListener(new EjemplarListener());
             ventanaBiblioteca.addBotonesDigitalAdListener(new DigitalListener());
         }
@@ -821,6 +820,7 @@ public class ControladorBiblioteca
         String correo;
         String telefono;
         String cargo;
+
         if(comprobarCamposEmpleadoA())
         {
             cedula = ventanaBiblioteca.getTxtCedulaEmpleadoA();
@@ -838,13 +838,17 @@ public class ControladorBiblioteca
                     ventanaBiblioteca.mostrarMensaje("Empleado agregado con exito");
                     ventanaBiblioteca.limpiarEmpleadoAdmin();
                 } else {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo crear el empleado");
+                    ventanaBiblioteca.mostrarMensajeError("Empleado agregado sin exito");
                 }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Ingrese un correo valido");
             }
         }
         else
         {
-                ventanaBiblioteca.mostrarMensajeError("Verifique que los campos hayan sido bien digitados");
+            ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
         }
     }
 
@@ -881,35 +885,54 @@ public class ControladorBiblioteca
 
         cedula = ventanaBiblioteca.getTxtCedulaEmpleadoA();
         empleado = manejadorDao.buscarEmpleado(cedula);
-        if(ventanaBiblioteca.getFilaSeleccionadaEmpleado() >-1) {
-            if (empleado != null) {
-                correo = ventanaBiblioteca.getTxtCorreoEmpleadoA();
-                if (comprobarCamposEmpleadoA() && comprobarCorreo(correo)) {
-                    empleado.setContrasena(ventanaBiblioteca.getTxtClaveEmpleadoA());
-                    empleado.setNombre(ventanaBiblioteca.getTxtNombreEmpleadoA());
-                    empleado.setEmail(ventanaBiblioteca.getTxtCorreoEmpleadoA());
-                    empleado.setDireccion(ventanaBiblioteca.getTxtDireccionEmpleadoA());
-                    empleado.setTelefono(ventanaBiblioteca.getTxtTelefonoEmpleadoA());
-                    empleado.setCargo(ventanaBiblioteca.getTxtCargoEmpleadoA());
 
-                    if (manejadorDao.editarEmpleado(empleado)) {
-                        ventanaBiblioteca.mostrarMensaje("Empleado editado con exito");
-                        listarEmpleadoTabAdEditar(empleado);
-                        ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
-                        ventanaBiblioteca.limpiarEmpleadoAdmin();
-                    } else {
-                        ventanaBiblioteca.mostrarMensajeError("No se pudo editar el empleado, puede que el correo ya este en uso");
+        if(ventanaBiblioteca.getFilaSeleccionadaEmpleado() > -1)
+        {
+            if (empleado != null)
+            {
+                correo = ventanaBiblioteca.getTxtCorreoEmpleadoA();
+                if (comprobarCamposEmpleadoA())
+                {
+                    if(comprobarCorreo(correo))
+                    {
+                        empleado.setContrasena(ventanaBiblioteca.getTxtClaveEmpleadoA());
+                        empleado.setNombre(ventanaBiblioteca.getTxtNombreEmpleadoA());
+                        empleado.setEmail(ventanaBiblioteca.getTxtCorreoEmpleadoA());
+                        empleado.setDireccion(ventanaBiblioteca.getTxtDireccionEmpleadoA());
+                        empleado.setTelefono(ventanaBiblioteca.getTxtTelefonoEmpleadoA());
+                        empleado.setCargo(ventanaBiblioteca.getTxtCargoEmpleadoA());
+
+                        if (manejadorDao.editarEmpleado(empleado))
+                        {
+                            ventanaBiblioteca.mostrarMensaje("Empleado editado con exito");
+                            listarEmpleadoTabAdEditar(empleado);
+                            ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
+                            ventanaBiblioteca.limpiarEmpleadoAdmin();
+                        }
+                        else
+                        {
+                            ventanaBiblioteca.mostrarMensajeError("Empleado editado sin exito");
+                        }
                     }
-                } else {
-                    ventanaBiblioteca.mostrarMensajeError("Digite bien los campos");
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("Ingrese un correo valido");
+                    }
+
                 }
-            } else {
-                ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No se encontro el empleado");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Seleccione la fila a editar");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un empleado");
         }
     }
 
@@ -947,24 +970,32 @@ public class ControladorBiblioteca
         String id = ventanaBiblioteca.getTxtCedulaEmpleadoA();
         Empleado empleado = manejadorDao.buscarEmpleado(id);
 
-        if(empleado != null)
+        if(ventanaBiblioteca.getFilaSeleccionadaEmpleado() > -1)
         {
-            if(manejadorDao.eliminarEmpleado(id))
+            if(empleado != null)
             {
-                ventanaBiblioteca.mostrarMensaje("Empleado eliminado");
-                ventanaBiblioteca.limpiarEmpleadoAdmin();
-                listarEmpleadoTabAdEliminar();
-                ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
+                if(manejadorDao.eliminarEmpleado(id))
+                {
+                    ventanaBiblioteca.mostrarMensaje("Empleado eliminado con exito");
+                    ventanaBiblioteca.limpiarEmpleadoAdmin();
+                    listarEmpleadoTabAdEliminar();
+                    ventanaBiblioteca.deseleccionarFilaTablaEmpleado();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Empleado eliminado sin exito");
+                }
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+                ventanaBiblioteca.mostrarMensajeError("No se encontro el empleado");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("No se encontro el empleado");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un empleado");
         }
+
     }
 
     public void listarEmpleadoTabAdEliminar()
@@ -1522,6 +1553,8 @@ public class ControladorBiblioteca
     {
         if(editorial != null)
         {
+            editorial = manejadorDao.consultarUltimoEditorial();
+
             int codEditorial;
             String nomEditorial;
             String paginaWeb;
@@ -1566,13 +1599,17 @@ public class ControladorBiblioteca
                     }
                     else
                     {
-                        ventanaBiblioteca.mostrarMensajeError("No se pudo crear la editorial");
+                        ventanaBiblioteca.mostrarMensajeError("Editorial agregada sin exito");
                     }
                 }
                 catch (NumberFormatException e)
                 {
                     ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
                 }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
             }
         }
         else
@@ -1609,7 +1646,7 @@ public class ControladorBiblioteca
         codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
         editorial = manejadorDao.buscarEditorial(codEditorial);
 
-        if(editorial != null)
+        if(codEditorial != 0)
         {
             if(comprobarCamposEditorialA())
             {
@@ -1626,7 +1663,7 @@ public class ControladorBiblioteca
                 }
                 else
                 {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar la editorial");
+                    ventanaBiblioteca.mostrarMensajeError("Editorial editada sin exito");
                 }
             }
             else
@@ -1636,7 +1673,7 @@ public class ControladorBiblioteca
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+            ventanaBiblioteca.mostrarMensajeError("Selecciones una editorial");
         }
     }
 
@@ -1649,26 +1686,29 @@ public class ControladorBiblioteca
 
     public void eliminarEditorial()
     {
-        int codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
-        Editorial editorial = manejadorDao.buscarEditorial(codEditorial);
+        Editorial editorial;
+        int codEditorial;
 
-        if (editorial != null)
+        codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
+        editorial = manejadorDao.buscarEditorial(codEditorial);
+
+        if (codEditorial != 0)
         {
             if (manejadorDao.eliminarEditorial(codEditorial))
             {
-                ventanaBiblioteca.mostrarMensaje("Editorial eliminada");
+                ventanaBiblioteca.mostrarMensaje("Editorial eliminada con exito");
                 ventanaBiblioteca.limpiarEditorialAdmin();
                 listarEditorialTablaAdEliminar(editorial);
                 ventanaBiblioteca.deseleccionarFilaTablaEditorial();
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+                ventanaBiblioteca.mostrarMensajeError("Editorial eliminada sin exito");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("No se encontró el editorial");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione una editorial");
         }
     }
 
