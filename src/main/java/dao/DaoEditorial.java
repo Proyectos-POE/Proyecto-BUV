@@ -72,8 +72,10 @@ public class DaoEditorial
             System.out.println("consultando en la bd");
             Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
-            nombre = tabla.getString(1);
-            return nombre;
+            while(tabla.next()) {
+                nombre = tabla.getString(1);
+                return nombre;
+            }
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }

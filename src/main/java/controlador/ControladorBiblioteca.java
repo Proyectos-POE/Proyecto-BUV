@@ -172,7 +172,8 @@ public class ControladorBiblioteca
         {
             listarEmpleadosTablaA();
         }
-        if(!manejadorDao.listarUsuarios().isEmpty()) {
+        if(!manejadorDao.listarUsuarios().isEmpty())
+        {
             listarUsuariosTablaA();
         }
         if(!manejadorDao.listarSolicitudes().isEmpty())
@@ -1344,6 +1345,10 @@ public class ControladorBiblioteca
             {
                 editarAutor();
             }
+            if (e.getActionCommand().equalsIgnoreCase("eliminar"))
+            {
+                eliminarAutor();
+            }
         }
     }
 
@@ -1380,29 +1385,36 @@ public class ControladorBiblioteca
         String segundoN;
         String primerA;
         String segundoA;
-        if(comprobarCamposAutor())
+        if(ventanaBiblioteca.getFilaSeleccionadaAutor() <1)
         {
-            primerN = ventanaBiblioteca.getTxtPrimerNomAu();
-            segundoN = ventanaBiblioteca.getTxtSegundoNomAu();
-            primerA = ventanaBiblioteca.getTxtPrimerApeAu();
-            segundoA = ventanaBiblioteca.getTxtSegundoApeAu();
-            autor = new Autor(primerN,segundoN,primerA,segundoA);
-
-            if(manejadorDao.agregarAutor(autor) > 0)
+            if (comprobarCamposAutor())
             {
-                autor.setCodAutor(ventanaBiblioteca.getAutorAdminTableModel().getRowCount()+1);
-                listarAutorAgregar(autor);
-                ventanaBiblioteca.mostrarMensaje("Autor agregado con exito");
-                ventanaBiblioteca.limpiarAutorAdmin();
+                primerN = ventanaBiblioteca.getTxtPrimerNomAu();
+                segundoN = ventanaBiblioteca.getTxtSegundoNomAu();
+                primerA = ventanaBiblioteca.getTxtPrimerApeAu();
+                segundoA = ventanaBiblioteca.getTxtSegundoApeAu();
+                autor = new Autor(primerN, segundoN, primerA, segundoA);
+
+                if (manejadorDao.agregarAutor(autor) > 0)
+                {
+                    autor.setCodAutor(manejadorDao.ultimoCodigoAutor());
+                    listarAutorAgregar(autor);
+                    ventanaBiblioteca.mostrarMensaje("Autor agregado con exito");
+                    ventanaBiblioteca.limpiarAutorAdmin();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No se pudo agregar el Autor");
+                }
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("No se pudo agregar el Autor");
+                ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor");
+            ventanaBiblioteca.mostrarMensajeError("Deseleccione la fila antes de agregar");
         }
     }
 
@@ -1486,6 +1498,37 @@ public class ControladorBiblioteca
             auxModeloTabla.setValueAt(primerA, auxFila, 3);
             auxModeloTabla.setValueAt(segundoA, auxFila, 4);
         }
+    }
+
+    public void eliminarAutor()
+    {
+        if(ventanaBiblioteca.getFilaSeleccionadaAutor() >0)
+        {
+            int codAutor;
+            codAutor = (int) ventanaBiblioteca.getAutorAdminTableModel().getValueAt(ventanaBiblioteca.getFilaSeleccionadaAutor(), 0);
+            if (manejadorDao.eliminarAutor(codAutor))
+            {
+                ventanaBiblioteca.mostrarMensaje("Autor eliminado con exito");
+                ventanaBiblioteca.limpiarAutorAdmin();
+                listarAutorEliminar();
+                ventanaBiblioteca.deseleccionarFilaTablaAutor();
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Autor eliminado sin exito, puede que el autor este asignado a un Libro");
+            }
+            }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Seleccione una fila");
+        }
+    }
+
+    public void listarAutorEliminar()
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorAdminTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaAutor();
+        auxModeloTabla.removeRow(auxFila);
     }
 
     public boolean comprobarCamposAutor()
@@ -1745,7 +1788,6 @@ public class ControladorBiblioteca
         {
             String isbn;
             String titulo;
-            ArrayList<Integer> codAutores;
             ArrayList<String> nombresAutores;
             String autores;
             int codEditorial;
@@ -1763,12 +1805,7 @@ public class ControladorBiblioteca
                 numPaginas = libro.getNumPaginas();
                 idioma = libro.getIdioma();
 
-                nombresAutores = new ArrayList<>();
-                codAutores = (manejadorDao.getCodigosAutoresLibro(isbn));
-                for(int cod: codAutores)
-                {
-                    nombresAutores.add(manejadorDao.getNombreAutor(cod));
-                }
+                nombresAutores = manejadorDao.getNombresAutoresLibro(isbn);
                 autores = String.join(", ", nombresAutores);
 
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
