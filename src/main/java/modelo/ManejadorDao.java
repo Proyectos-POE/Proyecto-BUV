@@ -22,6 +22,8 @@ public class ManejadorDao {
     private DaoAutorLibro daoAutorLibro;
     private DaoPrestamoLibro daoPrestamoLibro;
 
+    private DaoAreaConforma daoAreaConforma;
+
     public ManejadorDao(String nombre, Estudiante estudiante)
     {
         this.nombre = nombre;
@@ -79,6 +81,7 @@ public class ManejadorDao {
         this.daoPrestamoLibro = new DaoPrestamoLibro();
         this.daoSolicitud = new DaoSolicitud();
         this.daoAutorLibro = new DaoAutorLibro();
+        this.daoAreaConforma = new DaoAreaConforma();
     }
 
     /*******
@@ -199,23 +202,35 @@ public class ManejadorDao {
         return this.daoAreaConocimiento.insertAreaConocimiento(area);
     }
 
-    public boolean editarArea(AreaConocimiento area)
-    {
-        return this.daoAreaConocimiento.modificarAreaConocimiento(area);
-    }
+    public boolean editarArea(AreaConocimiento area) {return this.daoAreaConocimiento.modificarAreaConocimiento(area);}
 
-    public boolean eliminarArea(int codigoArea)
-    {
-        return this.daoAreaConocimiento.eliminarAreaConocimiento(codigoArea);
-    }
-    public AreaConocimiento buscarArea(int codigoArea)
-    {
-        return this.daoAreaConocimiento.consultarAreaConocimiento(codigoArea);
-    }
+    public boolean eliminarArea(int codigoArea) {return this.daoAreaConocimiento.eliminarAreaConocimiento(codigoArea);}
+
+    public AreaConocimiento buscarArea(int codigoArea) {return this.daoAreaConocimiento.consultarAreaConocimiento(codigoArea);}
+
+    public AreaConocimiento buscarUltimoArea() {return this.daoAreaConocimiento.consultarUltimoAreaConocimiento();}
+
     public ArrayList<AreaConocimiento> listarAreas()
     {
         return this.daoAreaConocimiento.listarAreasConocimientos();
     }
+
+    public boolean consultarAreaLibro(int codigoArea) {return this.daoAreaConocimiento.consultarAreaLibro(codigoArea);}
+
+    /*******
+     * AreaConforma
+     */
+    public boolean agregarAreaConforma(AreaConforma areaConf) {return this.daoAreaConforma.insertAreaConforma(areaConf);}
+
+    public ArrayList<Integer> listarCodAreasConforma(int codArea) {return this.daoAreaConforma.consultarCodAreasConforma(codArea);}
+
+    public ArrayList<Integer> listarCodAreasConforman(int codArea) {return this.daoAreaConforma.consultarCodAreasConforman(codArea);}
+
+    public String consultarCodAreasConformaString(int codArea) {return  this.daoAreaConforma.consultarCodAreasHijaString(codArea);}
+
+    public boolean eliminarAreasHija(int codArea) {return this.daoAreaConforma.eliminarAreasHija(codArea);}
+
+    public boolean eliminarAreasPadre(int codArea) {return this.daoAreaConforma.eliminarAreasPadre(codArea);}
 
     /*******
      * Editorial

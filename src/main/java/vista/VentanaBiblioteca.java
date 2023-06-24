@@ -6,7 +6,7 @@ package vista;
 
 import com.toedter.calendar.JYearChooser;
 
-import java.awt.CardLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
@@ -1536,6 +1537,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnRelacionarAreaA.setText("RELACIONAR");
         btnRelacionarAreaA.setBorderPainted(false);
         btnRelacionarAreaA.setFocusPainted(false);
+        btnRelacionarAreaA.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
@@ -1571,6 +1573,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaAreaA.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtTablaAreaA.getTableHeader().setResizingAllowed(false);
         jtTablaAreaA.getTableHeader().setReorderingAllowed(false);
+        //jtTablaAreaA.getColumnModel().getColumn(3).setCellRenderer(new JTableCeldaPersonalizada());
         jpsTablaAreaA.setViewportView(jtTablaAreaA);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -2614,6 +2617,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaLibroA.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtTablaLibroA.getTableHeader().setResizingAllowed(false);
         jtTablaLibroA.getTableHeader().setReorderingAllowed(false);
+        jtTablaLibroA.getColumnModel().getColumn(2).setCellRenderer(new JTableCeldaPersonalizada());
         jpsTablaLibroA.setViewportView(jtTablaLibroA);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -7196,6 +7200,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtCodigoArea1A.setText("");
         txtCodigoArea2A.setText("");
         txaDescripcionAreaA.setText("");
+        btnRelacionarAreaA.setEnabled(false);
     }
 
     public void limpiarEditorialAdmin()
@@ -7346,10 +7351,11 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             int fila = tabla.getSelectedRow();
             if(fila == -1)
             {
+                btnRelacionarAreaA.setEnabled(false);
+
                 txtIdAreaA.setText("0");
                 txtNombreAreaA.setText("");
                 txtCodigoArea1A.setText("");
-                txtCodigoArea2A.setText("");
                 txaDescripcionAreaA.setText("");
             }
             else
@@ -7359,7 +7365,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 txtCodigoArea1A.setText(String.valueOf(tabla.getValueAt(fila , 0)));
                 txtNombreAreaA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
                 txaDescripcionAreaA.setText(String.valueOf(tabla.getValueAt(fila , 2)));
-                txtCodigoArea2A.setText(String.valueOf(tabla.getValueAt(fila , 3)));
+
+                btnRelacionarAreaA.setEnabled(true);
             }
         }
     }
@@ -8046,6 +8053,30 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public void mostrarMensajeError(String auxMensaje)
     {
         JOptionPane.showMessageDialog(this, auxMensaje, "", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private static class JTableCeldaPersonalizada extends JTextArea implements TableCellRenderer
+    {
+        JTableCeldaPersonalizada()
+        {
+            setLineWrap(true);
+            setWrapStyleWord(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+        {
+            setText( (value == null) ? "" : value.toString() );
+            setSize(table.getColumnModel().getColumn(column).getWidth(), table.getRowHeight(row));
+
+            int preferredHeight = getPreferredSize().height;
+
+            if (table.getRowHeight(row) != preferredHeight)
+            {
+                table.setRowHeight(row, preferredHeight);
+            }
+
+            return this;
+        }
     }
 
     // Variables declaration - do not modify

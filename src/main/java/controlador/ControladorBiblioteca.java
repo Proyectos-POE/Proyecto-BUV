@@ -181,13 +181,10 @@ public class ControladorBiblioteca
         {
             listarPrestamosTablaA();
         }
-        /*
         if(!manejadorDao.listarAreas().isEmpty())
         {
             listarAreasTablaA();
         }
-
-         */
         if(!manejadorDao.listarAutores().isEmpty())
         {
             listarAutorTablaAd();
@@ -845,28 +842,34 @@ public class ControladorBiblioteca
             {
                 eliminarArea();
             }
+            if (e.getActionCommand().equalsIgnoreCase("RELACIONAR"))
+            {
+                relacionarArea();
+            }
         }
     }
       
-      public void listarAreasTablaA()
+    public void listarAreasTablaA()
     {
         ArrayList<AreaConocimiento> arrayArea;
         arrayArea = manejadorDao.listarAreas();
         if(arrayArea != null)
         {
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+
             int codArea;
             String nomArea;
             String descripcion;
-            String areaHija;
+            String nomAreasHija;
 
-            for (AreaConocimiento area : arrayArea) {
+            for (AreaConocimiento area : arrayArea)
+            {
                 codArea = area.getCodigoArea();
                 nomArea = area.getNomArea();
                 descripcion = area.getDescripcion();
-                areaHija = area.getAreaHija();
+                nomAreasHija = manejadorDao.consultarCodAreasConformaString(codArea);
 
-                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{codArea, nomArea, descripcion, areaHija});
+                auxModeloTabla.addRow(new Object[]{codArea, nomArea, descripcion, nomAreasHija});
             }
         }
     }
@@ -881,6 +884,8 @@ public class ControladorBiblioteca
     {
         if(area != null)
         {
+            area = manejadorDao.buscarUltimoArea();
+
             int codArea;
             String nomArea;
             String descripcion;
@@ -893,6 +898,57 @@ public class ControladorBiblioteca
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
             auxModeloTabla.addRow(new Object[]{codArea, nomArea, descripcion, areaHija});
+        }
+    }
+
+    public void relacionarArea()
+    {
+        AreaConocimiento areaConocimiento1;
+        AreaConocimiento areaConocimiento2;
+        AreaConforma areaConforma;
+
+        int codArea1;
+        int codArea2;
+
+        try
+        {
+            codArea1 = Integer.parseInt(ventanaBiblioteca.getTxtCodigoArea1A());
+            codArea2 = Integer.parseInt(ventanaBiblioteca.getTxtCodigoArea2A());
+
+            if(codArea2 != -1)
+            {
+                areaConocimiento1 = manejadorDao.buscarArea(codArea1);
+                areaConocimiento2 = manejadorDao.buscarArea(codArea2);
+
+                if(areaConocimiento1 != null && areaConocimiento2 != null)
+                {
+                    areaConforma = new AreaConforma(codArea1, codArea2);
+
+                    if(codArea1 == codArea2)
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("No se puede relacionar la area consigo misma");
+                    }
+                    else if(manejadorDao.agregarAreaConforma(areaConforma))
+                    {
+                        listarAreaTabAdEditar(areaConocimiento1);
+                        ventanaBiblioteca.mostrarMensaje("Areas relacionadas con exito");
+                        ventanaBiblioteca.deseleccionarFilaTablaArea();
+                        ventanaBiblioteca.limpiarAreaAdmin();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("Area relacionada sin exito");
+                    }
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Area relacionada sin exito");
+                }
+            }
+        }
+        catch (NumberFormatException e)
+        {
+            ventanaBiblioteca.mostrarMensajeError("Ingrese un codigo de area valido");
         }
     }
 
@@ -931,6 +987,10 @@ public class ControladorBiblioteca
                     ventanaBiblioteca.mostrarMensajeError("Llene el campo del nombre");
                 }
             }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene el campo del nombre");
+            }
         }
         else
         {
@@ -941,20 +1001,22 @@ public class ControladorBiblioteca
     public void listarAreaTabAdEditar(AreaConocimiento area){
         if(area != null)
         {
+            int codArea;
             String nomArea;
             String descripcion;
-            String areaHija;
+            String nomAreasHija;
 
+            codArea = area.getCodigoArea();
             nomArea = area.getNomArea();
             descripcion = area.getDescripcion();
-            areaHija = area.getAreaHija();
+            nomAreasHija = manejadorDao.consultarCodAreasConformaString(codArea);
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
             int auxFila = ventanaBiblioteca.getFilaSeleccionadaArea();
 
             auxModeloTabla.setValueAt(nomArea, auxFila, 1);
             auxModeloTabla.setValueAt(descripcion, auxFila, 2);
-            auxModeloTabla.setValueAt(areaHija, auxFila, 3);
+            auxModeloTabla.setValueAt(nomAreasHija, auxFila, 3);
         }
     }
 
@@ -966,7 +1028,7 @@ public class ControladorBiblioteca
         codArea = Integer.parseInt(ventanaBiblioteca.getTxtCodAreaA());
         area = manejadorDao.buscarArea(codArea);
 
-        if(area != null)
+        if(codArea != 0)
         {
             if(comprobarCamposAreaA())
             {
@@ -975,14 +1037,16 @@ public class ControladorBiblioteca
 
                 if(manejadorDao.editarArea(area))
                 {
-                    ventanaBiblioteca.mostrarMensaje("Area editado con exito");
                     listarAreaTabAdEditar(area);
+                    editarAreaHija(area);
+
+                    ventanaBiblioteca.mostrarMensaje("Area editado con exito");
                     ventanaBiblioteca.deseleccionarFilaTablaArea();
                     ventanaBiblioteca.limpiarAreaAdmin();
                 }
                 else
                 {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar el area");
+                    ventanaBiblioteca.mostrarMensajeError("Area editada sin exito");
                 }
             }
             else
@@ -992,7 +1056,7 @@ public class ControladorBiblioteca
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un area");
         }
     }
 
@@ -1008,24 +1072,74 @@ public class ControladorBiblioteca
         int codArea = Integer.parseInt(ventanaBiblioteca.getTxtCodAreaA());
         AreaConocimiento area = manejadorDao.buscarArea(codArea);
 
-        if (area != null)
+        if (codArea != 0)
         {
+            if(!manejadorDao.consultarAreaLibro(codArea))
+            {
+                eliminarAreaHija(area);
+                manejadorDao.eliminarAreasPadre(codArea);
+            }
+
            if (manejadorDao.eliminarArea(codArea))
            {
-               ventanaBiblioteca.mostrarMensaje("Area eliminada");
-               ventanaBiblioteca.limpiarAreaAdmin();
                listarAreaTablaAdEliminar(area);
+
+               ventanaBiblioteca.mostrarMensaje("Area eliminada");
                ventanaBiblioteca.deseleccionarFilaTablaArea();
+               ventanaBiblioteca.limpiarAreaAdmin();
            }
            else
            {
-               ventanaBiblioteca.mostrarMensajeError("No se pudo realizar la acción");
+               ventanaBiblioteca.mostrarMensajeError("Area eliminada sin exito");
            }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("No se encontró el area");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un area");
         }
+    }
+
+    public void editarAreaHija(AreaConocimiento area)
+    {
+        ArrayList<Integer> codAreasConformadas = manejadorDao.listarCodAreasConforman(area.getCodigoArea());
+        if(!codAreasConformadas.isEmpty())
+        {
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+
+            for(int auxCodArea: codAreasConformadas)
+            {
+                String nomAreasHijas = manejadorDao.consultarCodAreasConformaString(auxCodArea);
+                auxModeloTabla.setValueAt(nomAreasHijas, indexId(auxCodArea), 3);
+            }
+        }
+    }
+
+    public void eliminarAreaHija(AreaConocimiento area)
+    {
+        ArrayList<Integer> codAreasConformadas = manejadorDao.listarCodAreasConforman(area.getCodigoArea());
+        if(!codAreasConformadas.isEmpty())
+        {
+            manejadorDao.eliminarAreasHija(area.getCodigoArea());
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+
+            for(int auxCodArea: codAreasConformadas)
+            {
+                String nomAreasHijas = manejadorDao.consultarCodAreasConformaString(auxCodArea);
+                auxModeloTabla.setValueAt(nomAreasHijas, indexId(auxCodArea), 3);
+            }
+        }
+    }
+
+    public int indexId(int codArea)
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
+        ArrayList<Integer> index = new ArrayList<>();
+
+        for(int i = 0; i<auxModeloTabla.getRowCount();i++)
+        {
+            index.add((int)auxModeloTabla.getValueAt(i,0)); //get the all row values at column index 0
+        }
+        return index.indexOf(codArea);
     }
 
     /**************************************************************************

@@ -37,7 +37,7 @@ public class DaoAreaConocimiento
     {
         AreaConocimiento ac = new AreaConocimiento();
         String sql_select;
-        sql_select = "SELECT cod_area, nom_area, descripcion FROM area_conocimiento WHERE cod_area='" + codigoArea + "' GROUP BY cod_area '" + "'";
+        sql_select = "SELECT cod_area, nom_area, descripcion FROM area_conocimiento WHERE cod_area ='" + codigoArea + "'";
 
         try{
             Connection conn = fachada.openConnection();
@@ -62,7 +62,7 @@ public class DaoAreaConocimiento
     public ArrayList<AreaConocimiento> listarAreasConocimientos(){
         ArrayList<AreaConocimiento> arrayAc = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT cod_area, nom_area, descripcion FROM area_conocimiento";
+        sql_select="SELECT cod_area, nom_area, descripcion FROM area_conocimiento ORDER BY cod_area";
         try{
             Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
@@ -115,6 +115,50 @@ public class DaoAreaConocimiento
             sentenciaAc.executeUpdate(sql_ac);
             conn.close();
             return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public AreaConocimiento consultarUltimoAreaConocimiento()
+    {
+        AreaConocimiento ac = new AreaConocimiento();
+        String sql_select;
+        sql_select = "SELECT cod_area, nom_area, descripcion FROM area_conocimiento WHERE cod_area = (SELECT MAX(cod_area) FROM area_conocimiento)";
+
+        try{
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next()) {
+
+                ac.setCodigoArea(tabla.getInt(1));
+                ac.setNomArea(tabla.getString(2));
+                ac.setDescripcion(tabla.getString(3));
+            }
+
+            return ac;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public boolean consultarAreaLibro(int codigoArea)
+    {
+        String sql_select;
+        sql_select = "SELECT isbn FROM libro WHERE cod_area ='" + codigoArea + "'";
+
+        try{
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            return !tabla.isBeforeFirst() && tabla.getRow() == 0;
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
