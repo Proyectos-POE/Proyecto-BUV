@@ -2,6 +2,7 @@ package modelo;
 
 public class Digital extends Libro
 {
+    private int numDigital;
     private String url;
     private String formato;
     private String bytes;
@@ -15,6 +16,16 @@ public class Digital extends Libro
     }
 
     public Digital(){}
+
+    public int getNumDigital()
+    {
+        return numDigital;
+    }
+
+    public void setNumDigital(int numDigital)
+    {
+        this.numDigital = numDigital;
+    }
 
     public String getUrl()
     {

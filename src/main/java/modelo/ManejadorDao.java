@@ -329,4 +329,32 @@ public class ManejadorDao {
     }
 
     public boolean modificarEstadoEjem(String isbn, int numero, boolean estado){return this.daoEjemplar.modificarEstadoEjemplar(isbn, numero , estado);}
+    /*******
+     * Digital
+     */
+
+    public int agregarDigital(Digital digital)
+    {
+        return this.daoDigital.insertLibroDigital(digital);
+    }
+
+    public boolean editarDigital(Digital digital)
+    {
+        return this.daoDigital.modificarLibroDigital(digital);
+    }
+
+    public boolean eliminarDigital(String isbn, String url)
+    {
+        return this.daoDigital.eliminarDigital(isbn, url);
+    }
+
+    public Digital buscarDigital(String isbn, String url)
+    {
+        return this.daoDigital.consultarLibroDigital(isbn, url);
+    }
+
+    public ArrayList<Digital> listarDigitales()
+    {
+        return this.daoDigital.listarDigital();
+    }
 }
