@@ -2790,7 +2790,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 new Object [][] {
                 },
                 new String [] {
-                        "# EJEMPLAR", "ISBN", "ESTANTE", "# CAJON", "NOMBRE SALA", "# PASILLO"
+                        "# EJEMPLAR", "ISBN", "ESTANTE", "# CAJON", "NOMBRE SALA", "# PASILLO", "ESTADO"
                 }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -7186,6 +7186,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnEliminarEjemplarA.addActionListener(listenControles);
     }
 
+    public void addBotonesDigitalAdListener(ActionListener listenControles)
+    {
+        btnAgregarDigitalA.addActionListener(listenControles);
+        btnModificarDigitalA.addActionListener(listenControles);
+        btnEliminarDigitalA.addActionListener(listenControles);
+    }
+
     public void limpiarSolicitudUsuario()
     {
         txtIsbnSolicitudU.setText("");
@@ -7884,6 +7891,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getLibroAdminTableModel(){return jtTablaLibroA.getModel();}
     public TableModel getLibroUTableModel(){return jtTablaLibroU.getModel();}
     public TableModel getEjemplarAdminTableModel(){return jtTablaEjemplarA.getModel();}
+    public TableModel getDigitalAdminTableModel(){return jtTablaDigitalA.getModel();}
 
     public int getFilaSeleccionadaEmpleado()
     {
@@ -7905,7 +7913,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     //tablas devoluciones-admin
     public TableModel getDevEmpTabMod(){return jtTablaDevolucionE.getModel();}
-
+    public int getFilaSeleccionadaDev(){return jtTablaDevolucionE.getSelectedRow();}
+    public void deseleccionarFilaDev(){jtTablaDevolucionE.getSelectionModel().clearSelection();}
     public String getTxtCodAreaA()
     {
         return txtIdAreaA.getText();
@@ -8043,6 +8052,36 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public void deseleccionarTablaFilaEjemplarAd(){
         jtTablaEjemplarA.getSelectionModel().clearSelection();
+    }
+
+    public String getTxtBytesDigitalA() {
+        return txtBytesDigitalA.getText();
+    }
+
+    public String getTxtFormatoDigitalA() {
+        return txtFormatoDigitalA.getText();
+    }
+
+    public String getTxtIsbnDigitalA() {
+        return txtIsbnDigitalA.getText();
+    }
+
+    public String getTxtNumDigitalA() {
+        return txtNumDigitalA.getText();
+    }
+
+    public String getTxtUrlDigitalA() {
+        return txtUrlDigitalA.getText();
+    }
+
+    public int getFilaSeleccionadaDigitalAd()
+    {
+        return jtTablaDigitalA.getSelectedRow();
+    }
+
+    public void deseleccionarFilaTablaDigitalAd()
+    {
+        jtTablaDigitalA.getSelectionModel().clearSelection();
     }
 
     public void mostrarMensaje(String auxMensaje)

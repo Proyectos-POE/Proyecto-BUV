@@ -20,7 +20,7 @@ public class DaoDigital
     {
         String sql_dgt;
 
-        sql_dgt = "INSERT INTO digital(isbn, url, formato, bytes, ) VALUES('"+ dgt.getIsbn() + "', '" +
+        sql_dgt = "INSERT INTO digital(isbn, url, formato, bytes) VALUES('"+ dgt.getIsbn() + "', '" +
                 dgt.getUrl() + "', '" + dgt.getFormato() + "', '" + dgt.getBytes() + "')";
 
         try{
@@ -39,20 +39,22 @@ public class DaoDigital
     {
         Digital dgt = new Digital();
         String sql_select;
-        sql_select = "SELECT isbn, url, formato, bytes FROM digital WHERE isbn='" + isbn + "' AND url ='" + url +"'";
+        sql_select = "SELECT num_digital, isbn, url, formato, bytes FROM digital WHERE isbn='" + isbn + "' AND url ='" + url + "'";
 
         try{
 
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
 
-                dgt.setIsbn(tabla.getString(1));
-                dgt.setUrl(tabla.getString(2));;
-                dgt.setFormato(tabla.getString(3));
-                dgt.setBytes(tabla.getString(4));
+                dgt.setNumDigital(tabla.getInt(1));
+                dgt.setIsbn(tabla.getString(2));
+                dgt.setUrl(tabla.getString(3));;
+                dgt.setFormato(tabla.getString(4));
+                dgt.setBytes(tabla.getString(5));
             }
 
             return dgt;
@@ -65,22 +67,25 @@ public class DaoDigital
     public ArrayList<Digital> listarDigital(){
         ArrayList<Digital> arrayDgt = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT isbn, url, formato, bytes FROM  digital";
+        sql_select="SELECT num_digital, isbn, url, formato, bytes FROM  digital";
         try{
 
+            Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            do{
+            while (tabla.next()){
                 Digital dgt = new Digital();
-                dgt.setIsbn(tabla.getString(1));
-                dgt.setUrl(tabla.getString(2));
-                dgt.setFormato(tabla.getString(3));
-                dgt.setBytes(tabla.getString(4));
+                dgt.setNumDigital(tabla.getInt(1));
+                dgt.setIsbn(tabla.getString(2));
+                dgt.setUrl(tabla.getString(3));
+                dgt.setFormato(tabla.getString(4));
+                dgt.setBytes(tabla.getString(5));
                 arrayDgt.add(dgt);
-            }while (tabla.next());
+            }
 
+            conn.close();
             return arrayDgt;
         }
         catch(SQLException e){ System.out.println(e); }
@@ -93,6 +98,24 @@ public class DaoDigital
         String sql_dgt;
 
         sql_dgt = "UPDATE digital" + " SET isbn = '" + dgt.getIsbn() + "', url = '"+ dgt.getUrl() + "', formato = '" + dgt.getFormato() + "', bytes = '" + dgt.getBytes() + "' WHERE isbn = '" + dgt.getIsbn() + "' AND url = '" + dgt.getUrl() + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaDgt = conn.createStatement();
+            sentenciaDgt.executeUpdate(sql_dgt);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public boolean eliminarDigital(String isbn, String url)
+    {
+        String sql_dgt;
+
+        sql_dgt = "DELETE FROM digital WHERE isbn = '" + isbn + "' AND url = '" + url + "'";
 
         try{
             Connection conn= fachada.openConnection();

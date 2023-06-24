@@ -7,6 +7,7 @@ public class Ejemplar extends Libro
     private int numCajon;
     private String nomSala;
     private int numPasillo;
+    private boolean estado;
 
     public Ejemplar(String auxIsbn, int auxEstante, int auxNumCajon, String auxNomSala, int auxNumPasillo)
     {
@@ -15,6 +16,17 @@ public class Ejemplar extends Libro
         this.numCajon = auxNumCajon;
         this.nomSala = auxNomSala;
         this.numPasillo = auxNumPasillo;
+        this.estado = true;
+    }
+
+    public Ejemplar(String auxIsbn, int auxEstante, int auxNumCajon, String auxNomSala, int auxNumPasillo, boolean auxEstado)
+    {
+        this.isbn = auxIsbn;
+        this.estante = auxEstante;
+        this.numCajon = auxNumCajon;
+        this.nomSala = auxNomSala;
+        this.numPasillo = auxNumPasillo;
+        this.estado = auxEstado;
     }
 
     public Ejemplar(){}
@@ -67,5 +79,13 @@ public class Ejemplar extends Libro
     public void setNumPasillo(int numPasillo)
     {
         this.numPasillo = numPasillo;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }

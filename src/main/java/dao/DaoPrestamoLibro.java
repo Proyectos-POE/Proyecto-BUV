@@ -22,8 +22,8 @@ public class DaoPrestamoLibro
     public int insertPrestamoLibro(PrestamoLibro presLib){
         String sql_pres;
         String sql_PresLib;
-        sql_pres = "INSERT INTO prestamo_libro(num_prestamo, isbn, num_ejemplar, fecha_devolucion) VALUES ('" +
-                presLib.getNumero() + "', '" + presLib.getIsbn() +"', '" + presLib.getNumEjemplar() +"', '" + presLib.getFechaDev() +"')";
+        sql_pres = "INSERT INTO prestamo_libro(num_prestamo, isbn, num_ejemplar, fecha_devolucion, estado) VALUES ('" +
+                presLib.getNumero() + "', '" + presLib.getIsbn() +"', '" + presLib.getNumEjemplar() +"', '" + presLib.getFechaDev() + "', '" + false + "')";
         try{
             Connection conn= fachada.openConnection();
             Statement sentenciaPres = conn.createStatement();
@@ -40,7 +40,7 @@ public class DaoPrestamoLibro
             PrestamoLibro prestamoLibro;
             ArrayList<PrestamoLibro> prestamos = new ArrayList<>();
             String sql_select;
-            sql_select="SELECT num_prestamo, isbn, num_ejemplar, fecha_devolucion FROM prestamo_libro WHERE num_prestamo=" + numero +  "";
+            sql_select="SELECT num_prestamo, isbn, num_ejemplar, fecha_devolucion, entregado FROM prestamo_libro WHERE num_prestamo=" + numero +  "";
             try{
                 Connection conn= fachada.openConnection();
                 System.out.println("consultando en la bd");
@@ -53,6 +53,7 @@ public class DaoPrestamoLibro
                     prestamoLibro.setIsbn(tabla.getString(2));
                     prestamoLibro.setNumEjemplar(tabla.getInt(3));
                     prestamoLibro.setFechaDev(tabla.getDate(4));
+                    prestamoLibro.setEstado(tabla.getBoolean(5));
                     prestamos.add(prestamoLibro);
                 }
                 conn.close();
@@ -62,76 +63,76 @@ public class DaoPrestamoLibro
             catch(Exception e){ System.out.println(e); }
             return null;
         }
-        /*
-        public ArrayList<Prestamo> listarPrestamos(){
-            ArrayList<Prestamo> arrayPres = new ArrayList<>();
-            String sql_select;
-            sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha, isbn, num_ejemplar, fecha_devolucion FROM prestamo NATURAL JOIN prestamo_libro";
-            try{
-                Connection conn= fachada.openConnection();
-                System.out.println("consultando en la bd");
-                Statement sentencia = conn.createStatement();
-                ResultSet tabla = sentencia.executeQuery(sql_select);
 
-                while (tabla.next()){
-                    Prestamo pres = new Prestamo();
-                    pres.setNumPrestamo(tabla.getInt(1));
-                    pres.setIdUsuario(tabla.getString(2));
-                    pres.setIdEmpleado(tabla.getString(3));
-                    pres.setFechaR(tabla.getDate(4));
-                    arrayPres.add(pres);
-                }
-                conn.close();
-                return arrayPres;
+    public ArrayList<PrestamoLibro> consultarPrestamosActivos(int numero){
+        PrestamoLibro prestamoLibro;
+        ArrayList<PrestamoLibro> prestamos = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT num_prestamo, isbn, num_ejemplar, fecha_devolucion, entregado FROM prestamo_libro WHERE num_prestamo=" + numero + "AND entregado = " + false + "";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next()){
+                prestamoLibro = new PrestamoLibro();
+                prestamoLibro.setNumero(tabla.getInt(1));
+                prestamoLibro.setIsbn(tabla.getString(2));
+                prestamoLibro.setNumEjemplar(tabla.getInt(3));
+                prestamoLibro.setFechaDev(tabla.getDate(4));
+                prestamoLibro.setEstado(tabla.getBoolean(5));
+                prestamos.add(prestamoLibro);
             }
-            catch(SQLException e){ System.out.println(e); }
-            catch(Exception e){ System.out.println(e); }
-            return null;
+            conn.close();
+            return prestamos;
         }
-
-        public ArrayList<Prestamo> listarPrestamosU(String id){
-            ArrayList<Prestamo> arrayPres = new ArrayList<>();
-            String sql_select;
-            sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha, isbn, num_ejemplar, fecha_devolucion FROM prestamo WHERE id_usuario='" + id + "'";
-            try{
-                Connection conn= fachada.openConnection();
-                System.out.println("consultando en la bd");
-                Statement sentencia = conn.createStatement();
-                ResultSet tabla = sentencia.executeQuery(sql_select);
-
-                while (tabla.next()){
-                    Prestamo pres = new Prestamo();
-                    pres.setNumPrestamo(tabla.getInt(1));
-                    pres.setIdUsuario(tabla.getString(2));
-                    pres.setIdEmpleado(tabla.getString(3));
-                    pres.setFechaR(tabla.getDate(4));
-                    arrayPres.add(pres);
-                }
-                conn.close();
-                return arrayPres;
-            }
-            catch(SQLException e){ System.out.println(e); }
-            catch(Exception e){ System.out.println(e); }
-            return null;
-        }
-        public boolean modificarPrestamo(Prestamo pres)
-        {
-            String sql_pres;
-
-            sql_pres = "UPDATE Prestamo" + " SET id_usuario = '" + pres.getIdUsuario() + "', id_empleado = '" + pres.getIdEmpleado() + "', fecha = '"  + pres.getFechaR() +"'";
-
-            try{
-                Connection conn= fachada.openConnection();
-                Statement sentenciaPres = conn.createStatement();
-                sentenciaPres.executeUpdate(sql_pres);
-                conn.close();
-                return true;
-            }
-            catch(SQLException e){ System.out.println(e); }
-            catch(Exception e){ System.out.println(e); }
-            return false;
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
     }
 
-         */
+    public boolean modificarEstado(int numeroPres, String isbn, int numEjem, boolean estado)
+    {
+        String sql_ej;
+
+        sql_ej = "UPDATE prestamo_libro" + " SET entregado = '" + estado +  "' WHERE isbn = '" + isbn + "' AND num_prestamo = '" + numeroPres + "'AND num_ejemplar = '" + numEjem + "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaEj = conn.createStatement();
+            sentenciaEj.executeUpdate(sql_ej);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public PrestamoLibro getPl(int numeroPres, String isbn, int numEjem)
+    {
+        PrestamoLibro pres = new PrestamoLibro();
+        String sql_select;
+        sql_select="SELECT num_prestamo, isbn, num_ejemplar, fecha_devolucion, entregado FROM prestamo_libro WHERE isbn = '" + isbn + "' AND num_prestamo = '" + numeroPres + "' AND num_ejemplar = " + numEjem + "";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            while(tabla.next()){
+                pres.setNumero(tabla.getInt(1));
+                pres.setIsbn(tabla.getString(2));
+                pres.setNumEjemplar(tabla.getInt(3));
+                pres.setFechaDev(tabla.getDate(4));
+                pres.setEstado(tabla.getBoolean(5));
+            }
+            conn.close();
+            return pres;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
 }
 

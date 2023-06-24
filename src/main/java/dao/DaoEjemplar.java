@@ -18,9 +18,10 @@ public class DaoEjemplar
     {
         String sql_ej;
 
-        sql_ej = "INSERT INTO ejemplar(isbn, estante, num_cajon, nom_sala, num_pasillo) VALUES('"+ ej.getIsbn() +
+        sql_ej = "INSERT INTO ejemplar(isbn, estante, num_cajon, nom_sala, num_pasillo, disponible) VALUES('"+ ej.getIsbn() +
                 "', '" + ej.getEstante() + "', '" + ej.getNumCajon() + "', '" + ej.getNomSala() +"', '"
-                + ej.getNumPasillo() +"')";
+                + ej.getNumPasillo() + "', '"
+                + true +"')";
 
         try{
             Connection conn= fachada.openConnection();
@@ -38,7 +39,7 @@ public class DaoEjemplar
     {
         Ejemplar ej = new Ejemplar();
         String sql_select;
-        sql_select = "SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo FROM ejemplar WHERE isbn='" + isbn + "' AND num_ejemplar ='" + numEJemplar +"' GROUP BY  isbn '" + "'";
+        sql_select = "SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo, disponible FROM ejemplar WHERE isbn='" + isbn + "' AND num_ejemplar =" + numEJemplar +"";
 
         try{
 
@@ -55,6 +56,7 @@ public class DaoEjemplar
                 ej.setNumCajon(tabla.getInt(4));
                 ej.setNomSala(tabla.getString(5));
                 ej.setNumPasillo(tabla.getInt(6));
+                ej.setEstado(tabla.getBoolean(7));
             }
 
             conn.close();
@@ -68,7 +70,7 @@ public class DaoEjemplar
     public ArrayList<Ejemplar> listarEjemplar(){
         ArrayList<Ejemplar> arrayEj = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo FROM  ejemplar";
+        sql_select="SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo, disponible FROM  ejemplar";
         try{
 
             Connection conn = fachada.openConnection();
@@ -84,6 +86,7 @@ public class DaoEjemplar
                 ej.setNumCajon(tabla.getInt(4));
                 ej.setNomSala(tabla.getString(5));
                 ej.setNumPasillo(tabla.getInt(6));
+                ej.setEstado(tabla.getBoolean(7));
                 arrayEj.add(ej);
             }
 
@@ -112,6 +115,25 @@ public class DaoEjemplar
         catch(Exception e){ System.out.println(e); }
         return false;
     }
+
+    public boolean modificarEstadoEjemplar(String isbn, int numero, boolean estado)
+    {
+        String sql_ej;
+
+        sql_ej = "UPDATE ejemplar" + " SET disponible = '" + estado +  "' WHERE isbn = '" + isbn + "' AND num_ejemplar = '" + numero+ "'";
+
+        try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaEj = conn.createStatement();
+            sentenciaEj.executeUpdate(sql_ej);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
 
     public boolean eliminarEjemplar(String isbn, int numEjemplar)
     {

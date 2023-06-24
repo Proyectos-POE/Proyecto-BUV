@@ -152,6 +152,9 @@ public class ManejadorDao {
      * PrestamoLibro
      */
     public ArrayList<PrestamoLibro> listarPrestamosLibros(int numero){return this.daoPrestamoLibro.consultarPrestamosLibros(numero);}
+    public ArrayList<PrestamoLibro> listarPrestamosActivos(int numero){return this.daoPrestamoLibro.consultarPrestamosActivos(numero);}
+    public boolean modificarEstPresLib(int numPres, int numEjem, String isbn, boolean estado){return this.daoPrestamoLibro.modificarEstado(numPres, isbn, numEjem, estado);}
+    public PrestamoLibro getPrestamoLib(int numeroPres, String isbn, int numEjem){return this.daoPrestamoLibro.getPl(numeroPres, isbn, numEjem);}
     /*******
      * Empleado
      */
@@ -193,6 +196,7 @@ public class ManejadorDao {
     public boolean modificarAutor(Autor autor){return this.daoAutor.modificarAutor(autor);}
     public ArrayList<Autor> listarAutores(){return this.daoAutor.listarAutores();}
     public Autor consultarAutor(int cod){return this.daoAutor.consultarAutor(cod);}
+    public String getNombreAutor(int cod){return this.daoAutor.consultarNomAutor(cod);}
     /*******
      * AreaConocimiento
      */
@@ -260,6 +264,7 @@ public class ManejadorDao {
     {
         return this.daoEditorial.listarEditorial();
     }
+    public String getNombreEditorial(int cod){return this.daoEditorial.consultarNombreEditorial(cod);}
 
     /*******
      * Libro
@@ -336,5 +341,35 @@ public class ManejadorDao {
     public ArrayList<Ejemplar> listarEjemplares()
     {
         return this.daoEjemplar.listarEjemplar();
+    }
+
+    public boolean modificarEstadoEjem(String isbn, int numero, boolean estado){return this.daoEjemplar.modificarEstadoEjemplar(isbn, numero , estado);}
+    /*******
+     * Digital
+     */
+
+    public int agregarDigital(Digital digital)
+    {
+        return this.daoDigital.insertLibroDigital(digital);
+    }
+
+    public boolean editarDigital(Digital digital)
+    {
+        return this.daoDigital.modificarLibroDigital(digital);
+    }
+
+    public boolean eliminarDigital(String isbn, String url)
+    {
+        return this.daoDigital.eliminarDigital(isbn, url);
+    }
+
+    public Digital buscarDigital(String isbn, String url)
+    {
+        return this.daoDigital.consultarLibroDigital(isbn, url);
+    }
+
+    public ArrayList<Digital> listarDigitales()
+    {
+        return this.daoDigital.listarDigital();
     }
 }
