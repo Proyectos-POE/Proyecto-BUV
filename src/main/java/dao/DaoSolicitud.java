@@ -37,7 +37,7 @@ public class DaoSolicitud {
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
-            Statement sentencia = this.conn.createStatement();
+            Statement sentencia = conn.createStatement();
             ResultSet tabla = sentencia.executeQuery(sql_select);
 
             while(tabla.next()){
@@ -58,7 +58,7 @@ public class DaoSolicitud {
     public ArrayList<Solicitud> listarAllSolicitudes(){
         ArrayList<Solicitud> arraySoli = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM solicitud";
+        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM solicitud ORDER BY num_solicitud";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
@@ -84,7 +84,7 @@ public class DaoSolicitud {
     public ArrayList<Solicitud> listarSolicitudesUsuario(String id){
         ArrayList<Solicitud> arraySoli = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM solicitud WHERE id_usuario = '" + id +  "'";
+        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM solicitud WHERE id_usuario = '" + id +  "' ORDER BY num_solicitud";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
@@ -122,5 +122,34 @@ public class DaoSolicitud {
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return false;
+    }
+
+    public Solicitud consultarUltimaSolicitud(int codUsuario){
+        Solicitud soli = new Solicitud();
+        String sql_select;
+        sql_select="SELECT num_solicitud, id_usuario, isbn, titulo, descripcion FROM solicitud WHERE num_solicitud = (SELECT MAX(num_solicitud) FROM solicitud WHERE id_usuario ='" + codUsuario + "')";
+        System.out.println(sql_select);
+
+        try
+        {
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next())
+            {
+                soli.setNumero(tabla.getInt(1));
+                soli.setIdUsuario(tabla.getString(2));
+                soli.setIsbnLibro(tabla.getString(3));
+                soli.setTitulo(tabla.getString(4));
+                soli.setDescripcion(tabla.getString(5));
+            }
+            conn.close();
+            return soli;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
     }
 }

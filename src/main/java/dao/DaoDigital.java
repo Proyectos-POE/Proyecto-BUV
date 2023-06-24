@@ -35,11 +35,11 @@ public class DaoDigital
         return -1;
     }
 
-    public Digital consultarLibroDigital(String isbn, String url)
+    public Digital consultarLibroDigital(String isbn)
     {
         Digital dgt = new Digital();
         String sql_select;
-        sql_select = "SELECT num_digital, isbn, url, formato, bytes FROM digital WHERE isbn='" + isbn + "' AND url ='" + url + "'";
+        sql_select = "SELECT num_digital, isbn, url, formato, bytes FROM digital WHERE isbn='" + isbn + "'";
 
         try{
 
@@ -111,11 +111,11 @@ public class DaoDigital
         return false;
     }
 
-    public boolean eliminarDigital(String isbn, String url)
+    public boolean eliminarDigital(String isbn)
     {
         String sql_dgt;
 
-        sql_dgt = "DELETE FROM digital WHERE isbn = '" + isbn + "' AND url = '" + url + "'";
+        sql_dgt = "DELETE FROM digital WHERE isbn = '" + isbn + "'";
 
         try{
             Connection conn= fachada.openConnection();
@@ -128,4 +128,26 @@ public class DaoDigital
         catch(Exception e){ System.out.println(e); }
         return false;
     }
+
+    public boolean consultarLibroDigitalU(String isbn)
+    {
+        Digital dgt = new Digital();
+        String sql_select;
+        sql_select = "SELECT num_digital, isbn, url, formato, bytes FROM digital WHERE isbn='" + isbn + "'";
+        System.out.println(sql_select);
+
+        try{
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            return !tabla.isBeforeFirst() && tabla.getRow() == 0;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
 }

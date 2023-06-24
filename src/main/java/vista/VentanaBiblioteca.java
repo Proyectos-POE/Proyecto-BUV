@@ -7886,6 +7886,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getEmpleadoTableModel(){return  jtTablaEmpleadoA.getModel();}
     public TableModel getUsuarioAdminTableModel(){return jtTablaUsuarioA.getModel();}
     public TableModel getSolicitudAdminTableModel(){return jtTablaSolicitudA.getModel();}
+    public TableModel getDescargaAdminTableModel(){return jtTablaDescargaA.getModel();}
     public TableModel getPrestamoAdminTableModel(){return jtTablaPrestamoA.getModel();}
     public TableModel getAreaAdminTableModel(){return jtTablaAreaA.getModel();}
     public TableModel getAutorAdminTableModel(){return jtTablaAutorA.getModel();}

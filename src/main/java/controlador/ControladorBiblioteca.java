@@ -10,8 +10,16 @@ import vista.VentanaLogin;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class ControladorBiblioteca
@@ -39,6 +47,7 @@ public class ControladorBiblioteca
 
             ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
             ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
+            ventanaBiblioteca.addBotonesLibroUListener(new DescargaUListener());
         }
         if(usuario instanceof Estudiante)
         {
@@ -206,6 +215,10 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarDigitales().isEmpty())
         {
             listarDigitalTablaAd();
+        }
+        if(!manejadorDao.listarDescargas().isEmpty())
+        {
+            listarDescargasTablaA();
         }
     }
 
@@ -419,12 +432,12 @@ public class ControladorBiblioteca
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("No se pudo crear la solicitud");
+                ventanaBiblioteca.mostrarMensajeError("Solicitud realizada sin exito");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Verifique los campos isbn y titulo");
+            ventanaBiblioteca.mostrarMensajeError("Llene los campos ISBN y Titulo");
         }
     }
 
@@ -455,6 +468,8 @@ public class ControladorBiblioteca
     {
         if(solicitud != null)
         {
+            solicitud = manejadorDao.consultarUltimaSolicitud(Integer.parseInt(usuario.getId()));
+
             int auxId;
             String auxIsbn;
             String auxTitulo;
@@ -475,6 +490,125 @@ public class ControladorBiblioteca
         boolean valido;
         valido = !ventanaBiblioteca.getTxtIsbnSolicitudU().isEmpty() && !ventanaBiblioteca.getTxtTituloSolicitudU().isEmpty();
         return valido;
+    }
+
+    /**************************************************************************
+     * Descarga - Usuario
+     *************************************************************************/
+
+    class DescargaUListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("descargar"))
+            {
+                agregarDescarga();
+            }
+        }
+    }
+
+    public void agregarDescarga() {
+
+        Descarga descarga;
+        String auxIsbn;
+        String auxUrl;
+        String auxIdUsuario;
+        String auxFechaDescarga;
+        String auxHoraDescarga;
+        String auxIp;
+
+        if(comprobarCamposLibrodU())
+        {
+            auxIsbn = ventanaBiblioteca.getTxtIsbnLibroU();
+            auxUrl = manejadorDao.buscarDigital(auxIsbn).getUrl();
+
+            if(auxUrl != null)
+            {
+                auxIdUsuario = usuario.getId();
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+                Date fecha = new Date();
+                auxFechaDescarga = formatoFecha.format(fecha);
+                auxHoraDescarga = formatoHora.format(fecha);
+
+                try
+                {
+                    auxIp = String.valueOf(InetAddress.getLocalHost().getHostAddress());
+                }
+                catch (UnknownHostException e)
+                {
+                    auxIp = "0.0.0.0";
+                }
+
+                descarga = new Descarga(auxIsbn, auxUrl, auxIdUsuario, auxFechaDescarga, auxHoraDescarga, auxIp);
+                Archivo archivo = new Archivo(new File(manejadorDao.buscarLibroIsbn(auxIsbn).getTitulo()));
+
+                if(archivo.descargarArchivo(auxUrl))
+                {
+                    if(manejadorDao.agregarDescarga(descarga) > 0)
+                    {
+                        ventanaBiblioteca.mostrarMensaje("Descarga realizada con exito");
+                        ventanaBiblioteca.limpiarLibroUsuario();
+                    }
+                    else
+                    {
+                        ventanaBiblioteca.mostrarMensajeError("Descarga realizada sin exito");
+                    }
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Descarga realizada sin exito. La URL no existe");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("El libro no tiene version digital");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Llene el campo ISBN");
+        }
+    }
+
+    public boolean comprobarCamposLibrodU()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getTxtIsbnLibroU().isEmpty();
+        return valido;
+    }
+
+    /**************************************************************************
+     * Descarga - Admin
+     *************************************************************************/
+    public void listarDescargasTablaA()
+    {
+        ArrayList<Descarga> arrayDe;
+        arrayDe = manejadorDao.listarDescargas();
+        if(arrayDe != null)
+        {
+            String auxIsbn;
+            String auxTitulo;
+            String auxUrl;
+            String auxIdUsuario;
+            String auxFechaDescarga;
+            String auxHoraDescarga;
+            String auxIp;
+
+            for (Descarga descarga : arrayDe) {
+                auxIsbn = descarga.getIsbn();
+                auxTitulo = manejadorDao.buscarLibroIsbn(auxIsbn).getTitulo();
+                auxUrl = descarga.getUrl();
+                auxIdUsuario = descarga.getIdUsuario();
+                auxFechaDescarga = descarga.getFechaDescarga();
+                auxHoraDescarga = descarga.getHoraDescarga();
+                auxIp = descarga.getIp();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getDescargaAdminTableModel();
+                auxModeloTabla.addRow(new Object[]{auxIsbn, auxTitulo, auxIdUsuario, auxIp, auxFechaDescarga, auxHoraDescarga});
+            }
+        }
     }
 
     /**************************************************************************
@@ -2409,7 +2543,7 @@ public class ControladorBiblioteca
 
         isbn = ventanaBiblioteca.getTxtIsbnDigitalA();
         url = ventanaBiblioteca.getTxtUrlDigitalA();
-        digital = manejadorDao.buscarDigital(isbn, url);
+        digital = manejadorDao.buscarDigital(isbn);
 
         if(digital != null)
         {
@@ -2463,11 +2597,11 @@ public class ControladorBiblioteca
 
         isbn = ventanaBiblioteca.getTxtIsbnDigitalA();
         url = ventanaBiblioteca.getTxtUrlDigitalA();
-        digital = manejadorDao.buscarDigital(isbn, url);
+        digital = manejadorDao.buscarDigital(isbn);
 
         if (digital != null)
         {
-            if (manejadorDao.eliminarDigital(isbn, url))
+            if (manejadorDao.eliminarDigital(isbn))
             {
                 ventanaBiblioteca.mostrarMensaje("Libro digital eliminado");
                 ventanaBiblioteca.limpiarDigitalAdmin();

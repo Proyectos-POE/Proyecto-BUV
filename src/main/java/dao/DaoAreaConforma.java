@@ -108,44 +108,6 @@ public class DaoAreaConforma
         return null;
     }
 
-    public boolean eliminarAreaConforma(int codArea1, int codArea2)
-    {
-        AreaConforma areaConforma;
-        ArrayList<Integer> codAreas = new ArrayList<Integer>();
-        String sql_select;
-        sql_select = "DELETE FROM area_conforma WHERE cod_area2 =" + codArea2 + " AND cod_area = " + codArea1 + "";
-
-        try{
-            Connection conn= fachada.openConnection();
-            Statement sentenciaAc = conn.createStatement();
-            sentenciaAc.executeUpdate(sql_select);
-            conn.close();
-            return true;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return false;
-    }
-
-    public boolean eliminarAreaConforma(int codArea)
-    {
-        AreaConforma areaConforma;
-        ArrayList<Integer> codAreas = new ArrayList<Integer>();
-        String sql_select;
-        sql_select = "DELETE FROM area_conforma WHERE cod_area2 =" + codArea + "";
-
-        try{
-            Connection conn= fachada.openConnection();
-            Statement sentenciaAc = conn.createStatement();
-            sentenciaAc.executeUpdate(sql_select);
-            conn.close();
-            return true;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return false;
-    }
-
     public String consultarCodAreasHijaString(int codArea)
     {
         String nom_areas = "";

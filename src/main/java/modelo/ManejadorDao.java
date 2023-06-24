@@ -21,8 +21,8 @@ public class ManejadorDao {
     private DaoSolicitud daoSolicitud;
     private DaoAutorLibro daoAutorLibro;
     private DaoPrestamoLibro daoPrestamoLibro;
-
     private DaoAreaConforma daoAreaConforma;
+    private DaoDescarga daoDescarga;
 
     public ManejadorDao(String nombre, Estudiante estudiante)
     {
@@ -34,6 +34,8 @@ public class ManejadorDao {
         this.daoMulta = new DaoMulta();
         this.daoLibro = new DaoLibro();
         this.daoEmpleado = new DaoEmpleado();
+        this.daoDescarga = new DaoDescarga();
+        this.daoDigital = new DaoDigital();
     }
 
     public ManejadorDao(String nombre, Profesor profesor)
@@ -46,6 +48,8 @@ public class ManejadorDao {
         this.daoMulta = new DaoMulta();
         this.daoLibro = new DaoLibro();
         this.daoEmpleado = new DaoEmpleado();
+        this.daoDescarga = new DaoDescarga();
+        this.daoDigital = new DaoDigital();
     }
 
     public ManejadorDao(String nombre, Empleado empleado)
@@ -82,6 +86,7 @@ public class ManejadorDao {
         this.daoSolicitud = new DaoSolicitud();
         this.daoAutorLibro = new DaoAutorLibro();
         this.daoAreaConforma = new DaoAreaConforma();
+        this.daoDescarga = new DaoDescarga();
     }
 
     /*******
@@ -124,15 +129,15 @@ public class ManejadorDao {
     {
         return this.daoSolicitud.insertSolicitud(soli);
     }
+
     public ArrayList<Solicitud> listarSolicitudes()
     {
         return this.daoSolicitud.listarAllSolicitudes();
     }
-    public ArrayList<Solicitud> listarSolicitudesUsuario(String id)
-    {
-        return this.daoSolicitud.listarSolicitudesUsuario(id);
-    }
 
+    public ArrayList<Solicitud> listarSolicitudesUsuario(String id) {return this.daoSolicitud.listarSolicitudesUsuario(id);}
+
+    public Solicitud consultarUltimaSolicitud(int codUsuario){ return this.daoSolicitud.consultarUltimaSolicitud(codUsuario);}
 
     /*******
      * Prestamo
@@ -146,7 +151,6 @@ public class ManejadorDao {
     {
         return this.daoPrestamo.listarPrestamos();
     }
-
 
     /*******
      * PrestamoLibro
@@ -356,23 +360,18 @@ public class ManejadorDao {
         return this.daoDigital.insertLibroDigital(digital);
     }
 
-    public boolean editarDigital(Digital digital)
-    {
-        return this.daoDigital.modificarLibroDigital(digital);
-    }
+    public boolean editarDigital(Digital digital) {return this.daoDigital.modificarLibroDigital(digital);}
 
-    public boolean eliminarDigital(String isbn, String url)
-    {
-        return this.daoDigital.eliminarDigital(isbn, url);
-    }
+    public boolean eliminarDigital(String isbn) {return this.daoDigital.eliminarDigital(isbn);}
 
-    public Digital buscarDigital(String isbn, String url)
-    {
-        return this.daoDigital.consultarLibroDigital(isbn, url);
-    }
+    public Digital buscarDigital(String isbn) {return this.daoDigital.consultarLibroDigital(isbn);}
 
-    public ArrayList<Digital> listarDigitales()
-    {
-        return this.daoDigital.listarDigital();
-    }
+    public ArrayList<Digital> listarDigitales() {return this.daoDigital.listarDigital();}
+
+    /*******
+     * Descarga
+     */
+    public int agregarDescarga(Descarga de) {return this.daoDescarga.insertDescarga(de);}
+
+    public ArrayList<Descarga> listarDescargas() {return this.daoDescarga.listarDescargas();}
 }
