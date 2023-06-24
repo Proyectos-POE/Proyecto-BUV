@@ -61,6 +61,25 @@ public class DaoEditorial
         return null;
     }
 
+    public String consultarNombreEditorial(int codEditorial)
+    {
+        String nombre;
+        String sql_select;
+        sql_select = "SELECT nom_ed FROM editorial WHERE codigo_ed='" + codEditorial + "'";
+
+        try{
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            nombre = tabla.getString(1);
+            return nombre;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
     public ArrayList<Editorial> listarEditorial(){
         ArrayList<Editorial> arrayEd = new ArrayList<>();
         String sql_select;

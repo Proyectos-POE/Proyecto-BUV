@@ -150,6 +150,8 @@ public class ManejadorDao {
      */
     public ArrayList<PrestamoLibro> listarPrestamosLibros(int numero){return this.daoPrestamoLibro.consultarPrestamosLibros(numero);}
     public ArrayList<PrestamoLibro> listarPrestamosActivos(int numero){return this.daoPrestamoLibro.consultarPrestamosActivos(numero);}
+    public boolean modificarEstPresLib(int numPres, int numEjem, String isbn, boolean estado){return this.daoPrestamoLibro.modificarEstado(numPres, isbn, numEjem, estado);}
+    public PrestamoLibro getPrestamoLib(int numeroPres, String isbn, int numEjem){return this.daoPrestamoLibro.getPl(numeroPres, isbn, numEjem);}
     /*******
      * Empleado
      */
@@ -247,6 +249,7 @@ public class ManejadorDao {
     {
         return this.daoEditorial.listarEditorial();
     }
+    public String getNombreEditorial(int cod){return this.daoEditorial.consultarNombreEditorial(cod);}
 
     /*******
      * Libro
@@ -324,4 +327,6 @@ public class ManejadorDao {
     {
         return this.daoEjemplar.listarEjemplar();
     }
+
+    public boolean modificarEstadoEjem(String isbn, int numero, boolean estado){return this.daoEjemplar.modificarEstadoEjemplar(isbn, numero , estado);}
 }
