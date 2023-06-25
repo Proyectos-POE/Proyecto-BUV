@@ -128,4 +128,83 @@ public class DaoLibro
         catch(Exception e){ System.out.println(e); }
         return false;
     }
+
+    public ArrayList<Libro> listarLibroED()
+    {
+        ArrayList<Libro> arrayLb = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT isbn, titulo, codigo_ed, cod_area, anho_publi, num_paginas, idioma FROM  libro";
+        try
+        {
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while (tabla.next())
+            {
+                Libro lb = new Libro();
+                lb.setIsbn(tabla.getString(1));
+                lb.setTitulo(tabla.getString(2));
+                lb.setCodEditorial(tabla.getInt(3));
+                lb.setAnhoPublicacion(tabla.getInt(4));
+                lb.setNumPaginas(tabla.getString(5));
+                lb.setIdioma(tabla.getString(6));
+                arrayLb.add(lb);
+            }
+
+            conn.close();
+            return arrayLb;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public int numeroEjemplaresLibro(String isbn)
+    {
+        int numeroEjemplares = 0;
+        String sql_select;
+        sql_select="SELECT COUNT(*) FROM ejemplar WHERE isbn = '" + isbn + "'";
+        try
+        {
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while (tabla.next())
+            {
+                numeroEjemplares = tabla.getInt(1);
+            }
+
+            conn.close();
+            return numeroEjemplares;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return 0;
+    }
+
+    public boolean existeDigitalLibro(String isbn)
+    {
+        String sql_select;
+        sql_select="SELECT num_digital FROM digital WHERE isbn = '" + isbn + "'";
+        try
+        {
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            conn.close();
+
+            return !tabla.isBeforeFirst() && tabla.getRow() == 0;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
 }

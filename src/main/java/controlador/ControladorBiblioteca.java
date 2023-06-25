@@ -7,9 +7,12 @@ import modelo.*;
 import vista.VentanaBiblioteca;
 import vista.VentanaLogin;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -2828,6 +2831,82 @@ public class ControladorBiblioteca
             {
                 eliminarMulta();
             }
+        }
+    }
+
+
+    class TablaLibroAUListener extends MouseAdapter
+    {
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            JTable tabla = (JTable)e.getSource();
+            int fila = tabla.getSelectedRow();
+            if(fila == -1)
+            {
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorLibroTableModelA();
+                auxModeloTabla.setNumRows(0);
+            }
+            else
+            {
+                String isbn = ventanaBiblioteca.getTxtIsbnLibroA();
+                ArrayList<Integer> codsAutores = manejadorDao.getCodigosAutoresLibro(isbn);
+
+                for(int codAutor: codsAutores)
+                {
+                    Autor autor = manejadorDao.consultarAutor(codAutor);
+
+                    DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorLibroTableModelA();
+                    auxModeloTabla.addRow(new Object[]{autor.getCodAutor(), autor.getPrimerNombre() + " " + autor.getPrimerApellido()});
+                }
+            }
+        }
+    }
+
+    public void agregarAutorLibro()
+    {
+        Autor autor;
+        AutorLibro autorLibro;
+        int codAutor;
+        String codIsbn;
+
+        codAutor = Integer.parseInt(ventanaBiblioteca.getTxtAutorLibroA());
+        autor = manejadorDao.consultarAutor(codAutor);
+
+        if(autor.getPrimerNombre() != null)
+        {
+            codIsbn = ventanaBiblioteca.getTxtIsbnLibroA();
+            autorLibro = new AutorLibro(codAutor, codIsbn);
+
+            if(manejadorDao.agregarAutorlibro(autorLibro) > 0)
+            {
+                ventanaBiblioteca.mostrarMensaje("Autor relacionado con exito");
+                listarAutorLibroAgregar(autorLibro);
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Autor relacionado sin exito");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("El autor no existe");
+        }
+    }
+
+    public void listarAutorLibroAgregar(AutorLibro autorLibro)
+    {
+        if(autorLibro != null)
+        {
+            int codAutor;
+            String isbn;
+            String nombre;
+
+            codAutor = autorLibro.getCodAutor();
+            nombre = manejadorDao.getNombreAutor(codAutor);
+
+            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAutorLibroTableModelA();
+            auxModeloTabla.addRow(new Object[]{codAutor, nombre});
         }
     }
 }

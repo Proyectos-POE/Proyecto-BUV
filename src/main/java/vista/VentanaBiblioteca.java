@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
@@ -4145,6 +4146,9 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             int fila = tabla.getSelectedRow();
             if(fila == -1)
             {
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) getAutorLibroTableModelA();
+                auxModeloTabla.setNumRows(0);
+
                 txtIsbnLibroA.setEditable(true);
                 btnAgregarLibroA.setEnabled(true);
 
@@ -4631,6 +4635,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getMultaUTableModel(){return jtTablaMultaU.getModel();}
     public TableModel getEjemplarAdminTableModel(){return jtTablaEjemplarA.getModel();}
     public TableModel getDigitalAdminTableModel(){return jtTablaDigitalA.getModel();}
+    public TableModel getAutorLibroTableModelA(){return jtTablaAutorLibroA.getModel();}
 
     public int getFilaSeleccionadaEmpleado()
     {
