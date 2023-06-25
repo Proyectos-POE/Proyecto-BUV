@@ -46,4 +46,28 @@ public class DaoUsuario
         catch(Exception e){ System.out.println(e); }
         return null;
     }
+
+    public Usuario usariosMenosEmpleados(String id)
+    {
+        Usuario usuario;
+        String sql_select;
+        sql_select="SELECT id_usuario, nombre FROM usuario WHERE id_usuario ='" + id + "' AND id_usuario NOT IN(SELECT id_empleado FROM empleado)";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            usuario = new Usuario();
+            while (tabla.next()){
+
+                usuario.setId(tabla.getString(1));
+                usuario.setNombre(tabla.getString(2));
+            }
+            conn.close();
+            return usuario;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
 }

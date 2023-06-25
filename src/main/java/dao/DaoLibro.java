@@ -176,4 +176,35 @@ public class DaoLibro
         catch(Exception e){ System.out.println(e); }
         return false;
     }
+
+    public ArrayList<Libro> listarLibrosEjemplaresDisp()
+    {
+        ArrayList<Libro> arrayLb = new ArrayList<>();
+        String sql_select;
+        sql_select="SELECT DISTINCT isbn, titulo, codigo_ed, anho_publi, num_paginas, idioma FROM  libro NATURAL JOIN ejemplar WHERE disponible = true";
+        try{
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while (tabla.next()){
+                Libro lb = new Libro();
+                lb.setIsbn(tabla.getString(1));
+                lb.setTitulo(tabla.getString(2));
+                lb.setCodEditorial(tabla.getInt(3));
+                lb.setAnhoPublicacion(tabla.getInt(4));
+                lb.setNumPaginas(tabla.getString(5));
+                lb.setIdioma(tabla.getString(6));
+                arrayLb.add(lb);
+            }
+
+            conn.close();
+            return arrayLb;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
 }
