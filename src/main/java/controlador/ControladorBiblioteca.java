@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.Instant;
@@ -1135,7 +1136,7 @@ public class ControladorBiblioteca
             int numEjem;
             String isbn;
             String cedula;
-            Date fechaDevolucion;
+            String fechaDevolucion;
             try
             {
                 numPres = ventanaBiblioteca.getNumPresDevEmp();
@@ -1159,7 +1160,9 @@ public class ControladorBiblioteca
                             auxModeloTabla.removeRow(fila);
                             listarEjemplaresDevueltos(isbn, numEjem);
                             ventanaBiblioteca.deseleccionarFilaDev();
-                            agregarMulta(cedula, isbn, numEjem, fechaDevolucion);
+                            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                            Date date = formatoFecha.parse(fechaDevolucion);
+                            agregarMulta(cedula, isbn, numEjem, date);
                         }
                         else
                         {
@@ -1179,13 +1182,14 @@ public class ControladorBiblioteca
             catch (NumberFormatException ex)
             {
                 ventanaBiblioteca.mostrarMensajeError("Digite numeros en los campos # prestamo y # ejemplar");
+            } catch (ParseException e) {
+                ventanaBiblioteca.mostrarMensajeError("Ocurrio un error relacionado con la fecha");
             }
         }
         else
         {
             ventanaBiblioteca.mostrarMensajeError("Seleccione una fila");
         }
-
     }
 
     public void listarEjemplaresDevueltos(String isbn, int ejemplar)

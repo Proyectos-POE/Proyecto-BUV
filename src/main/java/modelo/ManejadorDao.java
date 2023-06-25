@@ -158,11 +158,6 @@ public class ManejadorDao {
     public int agregarPrestamo(Prestamo prestamo) {return this.daoPrestamo.insertPrestamo(prestamo);}
     public int listarUltimoPres(){return this.daoPrestamo.consultarUltimoPrestamo();}
     public Prestamo consultarPrestamo(int cod){return this.daoPrestamo.consultarPrestamo(cod);}
-    public ArrayList<Prestamo> listarPrestamos()
-    {
-        return this.daoPrestamo.listarPrestamos();
-    }
-    public Prestamo consultarPrestamo(String numero) { return this.daoPrestamo.consultarPrestamo(numero);}
     /*******
      * PrestamoLibro
      */
