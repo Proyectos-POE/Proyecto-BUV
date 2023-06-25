@@ -18,9 +18,9 @@ public class DaoLibro
     {
         String sql_lb;
 
-        sql_lb = "INSERT INTO libro(isbn, titulo, codigo_ed, anho_publi, num_paginas, idioma) VALUES('"+ lb.getIsbn() + "', '" +
-                lb.getTitulo() + "', '" + lb.getCodEditorial() + "', '" + lb.getAnhoPublicacion() + "', '" + lb.getNumPaginas() + "', '" +
-                lb.getIdioma() +"')";
+        sql_lb = "INSERT INTO libro(isbn, titulo, codigo_ed, cod_area, anho_publi, num_paginas, idioma) VALUES('"+ lb.getIsbn() + "', '" +
+                lb.getTitulo() + "', '" + lb.getCodEditorial() + "', '" + lb.getCodArea() + "', '" + lb.getAnhoPublicacion() + "', '" + lb.getNumPaginas() + "', '" +
+                lb.getIdioma() + "')";
 
         try{
             Connection conn= fachada.openConnection();
@@ -38,7 +38,7 @@ public class DaoLibro
     {
         Libro lb = new Libro();
         String sql_select;
-        sql_select = "SELECT isbn, titulo, codigo_ed, anho_publi, num_paginas, idioma FROM libro WHERE isbn='" + isbn + "'";
+        sql_select = "SELECT isbn, titulo, codigo_ed, cod_area, anho_publi, num_paginas, idioma FROM libro WHERE isbn='" + isbn + "'";
 
         try{
             Connection conn= fachada.openConnection();
@@ -51,9 +51,10 @@ public class DaoLibro
                 lb.setIsbn(tabla.getString(1));
                 lb.setTitulo(tabla.getString(2));
                 lb.setCodEditorial(tabla.getInt(3));
-                lb.setAnhoPublicacion(tabla.getInt(4));
-                lb.setNumPaginas(tabla.getString(5));
-                lb.setIdioma(tabla.getString(6));
+                lb.setCodArea(tabla.getInt(4));
+                lb.setAnhoPublicacion(tabla.getInt(5));
+                lb.setNumPaginas(tabla.getString(6));
+                lb.setIdioma(tabla.getString(7));
             }
             conn.close();
             return lb;
@@ -63,10 +64,56 @@ public class DaoLibro
         return null;
     }
 
+    public int numeroEjemplaresLibro(String isbn)
+    {
+        int numeroEjemplares = 0;
+        String sql_select;
+        sql_select="SELECT COUNT(*) FROM ejemplar WHERE isbn = '" + isbn + "' AND disponible = '" + true + "'";
+        try
+        {
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while (tabla.next())
+            {
+                numeroEjemplares = tabla.getInt(1);
+            }
+
+            conn.close();
+            return numeroEjemplares;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return 0;
+    }
+
+    public boolean existeDigitalLibro(String isbn)
+    {
+        String sql_select;
+        sql_select="SELECT num_digital FROM digital WHERE isbn = '" + isbn + "'";
+        try
+        {
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            conn.close();
+
+            return !tabla.isBeforeFirst() && tabla.getRow() == 0;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
     public ArrayList<Libro> listarLibro(){
         ArrayList<Libro> arrayLb = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT isbn, titulo, codigo_ed, anho_publi, num_paginas, idioma FROM  libro";
+        sql_select="SELECT isbn, titulo, codigo_ed, cod_area, anho_publi, num_paginas, idioma FROM  libro";
         try{
 
             Connection conn = fachada.openConnection();
@@ -79,9 +126,10 @@ public class DaoLibro
                 lb.setIsbn(tabla.getString(1));
                 lb.setTitulo(tabla.getString(2));
                 lb.setCodEditorial(tabla.getInt(3));
-                lb.setAnhoPublicacion(tabla.getInt(4));
-                lb.setNumPaginas(tabla.getString(5));
-                lb.setIdioma(tabla.getString(6));
+                lb.setCodArea(tabla.getInt(4));
+                lb.setAnhoPublicacion(tabla.getInt(5));
+                lb.setNumPaginas(tabla.getString(6));
+                lb.setIdioma(tabla.getString(7));
                 arrayLb.add(lb);
             }
 
@@ -97,7 +145,7 @@ public class DaoLibro
     {
         String sql_lb;
 
-        sql_lb = "UPDATE libro" + " SET isbn = '" + lb.getIsbn() + "', titulo = '"+ lb.getTitulo() +"', codigo_ed = '"+ lb.getCodEditorial() + "', anho_publi = '" + lb.getAnhoPublicacion() + "', num_paginas = '" + lb.getNumPaginas() + "', idioma = '" + lb.getIdioma() + "' WHERE isbn = '" + lb.getIsbn() + "'";
+        sql_lb = "UPDATE libro" + " SET isbn = '" + lb.getIsbn() + "', titulo = '"+ lb.getTitulo() +"', codigo_ed = '"+ lb.getCodEditorial() + "', cod_area = '"+ lb.getCodArea() + "', anho_publi = '" + lb.getAnhoPublicacion() + "', num_paginas = '" + lb.getNumPaginas() + "', idioma = '" + lb.getIdioma() + "' WHERE isbn = '" + lb.getIsbn() + "'";
 
         try{
             Connection conn= fachada.openConnection();

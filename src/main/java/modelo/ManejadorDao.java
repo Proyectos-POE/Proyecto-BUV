@@ -36,6 +36,7 @@ public class ManejadorDao {
         this.daoEmpleado = new DaoEmpleado();
         this.daoDescarga = new DaoDescarga();
         this.daoDigital = new DaoDigital();
+        this.daoAutorLibro = new DaoAutorLibro();
     }
 
     public ManejadorDao(String nombre, Profesor profesor)
@@ -50,6 +51,7 @@ public class ManejadorDao {
         this.daoEmpleado = new DaoEmpleado();
         this.daoDescarga = new DaoDescarga();
         this.daoDigital = new DaoDigital();
+        this.daoAutorLibro = new DaoAutorLibro();
     }
 
     public ManejadorDao(String nombre, Empleado empleado)
@@ -68,6 +70,7 @@ public class ManejadorDao {
         this.daoEditorial = new DaoEditorial();
         this.daoAutorLibro = new DaoAutorLibro();
         this.daoUsuario = new DaoUsuario();
+        this.daoMulta = new DaoMulta();
     }
 
     public ManejadorDao(String nombre)
@@ -155,6 +158,11 @@ public class ManejadorDao {
     public int agregarPrestamo(Prestamo prestamo) {return this.daoPrestamo.insertPrestamo(prestamo);}
     public int listarUltimoPres(){return this.daoPrestamo.consultarUltimoPrestamo();}
     public Prestamo consultarPrestamo(int cod){return this.daoPrestamo.consultarPrestamo(cod);}
+    public ArrayList<Prestamo> listarPrestamos()
+    {
+        return this.daoPrestamo.listarPrestamos();
+    }
+    public Prestamo consultarPrestamo(String numero) { return this.daoPrestamo.consultarPrestamo(numero);}
     /*******
      * PrestamoLibro
      */
@@ -279,7 +287,7 @@ public class ManejadorDao {
 
     public String getNombreEditorial(int codEditorial){return this.daoEditorial.consultarNombreEditorial(codEditorial);}
 
-    public Editorial consultarUltimoEditorial() {return this.consultarUltimoEditorial();}
+    public Editorial consultarUltimoEditorial() {return this.daoEditorial.consultarUltimoEditorial();}
 
     /*******
      * Libro
@@ -310,6 +318,16 @@ public class ManejadorDao {
         return this.daoLibro.listarLibro();
     }
     public ArrayList<Libro> getLibrosEjemDisp(){return this.daoLibro.listarLibrosEjemplaresDisp();}
+
+    public int numeroEjemplares(String isbn)
+    {
+        return this.daoLibro.numeroEjemplaresLibro(isbn);
+    }
+
+    public boolean existeDigital(String isbn)
+    {
+        return this.daoLibro.existeDigitalLibro(isbn);
+    }
 
     /*******
      * Autor_Libro
@@ -385,4 +403,13 @@ public class ManejadorDao {
     public int agregarDescarga(Descarga de) {return this.daoDescarga.insertDescarga(de);}
 
     public ArrayList<Descarga> listarDescargas() {return this.daoDescarga.listarDescargas();}
+
+    /*******
+     * Multa
+     */
+    public int agregarMulta(Multa multa) {return this.daoMulta.insertMulta(multa);}
+    public ArrayList<Multa> listarMultasA() {return this.daoMulta.listarMultasA();}
+    public ArrayList<Multa> listarMultasU(String cedula) {return this.daoMulta.listarMultasU(cedula);}
+
+    public boolean eliminarMulta(String cedula, String isbn, int numEjemplar, String fecha) {return this.daoMulta.eliminarMulta(cedula, isbn, numEjemplar, fecha);}
 }

@@ -12,16 +12,15 @@ import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 public class ControladorBiblioteca
@@ -38,6 +37,8 @@ public class ControladorBiblioteca
 
         ventanaBiblioteca.initEncabezado();
 
+        //validarCalculoPrestamoMulta();
+
         if(usuario instanceof Profesor)
         {
             ventanaBiblioteca.initMenuU();
@@ -50,6 +51,7 @@ public class ControladorBiblioteca
             ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
             ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
             ventanaBiblioteca.addBotonesLibroUListener(new DescargaUListener());
+            ventanaBiblioteca.addBotonesMultaUListener(new MultaListener());
         }
         if(usuario instanceof Estudiante)
         {
@@ -62,6 +64,8 @@ public class ControladorBiblioteca
 
             ventanaBiblioteca.addBotonesPerfilEsudianteListener(new EstudianteUListener());
             ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
+            ventanaBiblioteca.addBotonesLibroUListener(new DescargaUListener());
+            ventanaBiblioteca.addBotonesMultaUListener(new MultaListener());
         }
         if(usuario instanceof Empleado)
         {
@@ -170,11 +174,19 @@ public class ControladorBiblioteca
     {
         if(!manejadorDao.listarSolicitudesUsuario(id).isEmpty())
         {
-            listarSolicitudesTablaU(usuario.getId());
+            listarSolicitudesTablaU(id);
         }
         if(!manejadorDao.listarPrestamosUsuario(id).isEmpty())
         {
-            listarPrestamosTablaU(usuario.getId());
+            listarPrestamosTablaU(id);
+        }
+        if(!manejadorDao.listarMultasU(id).isEmpty())
+        {
+            listarMultasTablaU(id);
+        }
+        if(!manejadorDao.listarLibros().isEmpty())
+        {
+            listarLibroTablaU();
         }
     }
 
@@ -223,6 +235,10 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarDescargas().isEmpty())
         {
             listarDescargasTablaA();
+        }
+        if(!manejadorDao.listarMultasA().isEmpty())
+        {
+            listarMultasTablaA();
         }
     }
 
@@ -1118,13 +1134,19 @@ public class ControladorBiblioteca
             int numPres;
             int numEjem;
             String isbn;
+            String cedula;
+            Date fechaDevolucion;
             try
             {
                 numPres = ventanaBiblioteca.getNumPresDevEmp();
                 numEjem = ventanaBiblioteca.getNumEjemDevEmp();
                 isbn = ventanaBiblioteca.getIsbnDev();
+                cedula = ventanaBiblioteca.getCedulaDevUsu();
+
                 Ejemplar ejemplar = manejadorDao.buscarEjemplar(isbn, numEjem);
                 PrestamoLibro presLb = manejadorDao.getPrestamoLib(numPres,isbn,numEjem);
+                fechaDevolucion = presLb.getFechaDev();
+
                 if(ejemplar != null && presLb != null)
                 {
                     if(!ejemplar.getEstado() && !presLb.getEstado())
@@ -1137,6 +1159,7 @@ public class ControladorBiblioteca
                             auxModeloTabla.removeRow(fila);
                             listarEjemplaresDevueltos(isbn, numEjem);
                             ventanaBiblioteca.deseleccionarFilaDev();
+                            agregarMulta(cedula, isbn, numEjem, fechaDevolucion);
                         }
                         else
                         {
@@ -1850,17 +1873,17 @@ public class ControladorBiblioteca
                 }
                 else
                 {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo agregar el Autor");
+                    ventanaBiblioteca.mostrarMensajeError("Autor agregado sin exito");
                 }
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor");
+                ventanaBiblioteca.mostrarMensajeError("Llene el campo de primer nombre y primer apellido");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Deseleccione la fila antes de agregar");
+            ventanaBiblioteca.mostrarMensajeError("Deseleccione al autor");
         }
     }
 
@@ -1910,15 +1933,15 @@ public class ControladorBiblioteca
                     ventanaBiblioteca.limpiarAutorAdmin();
                     ventanaBiblioteca.deseleccionarFilaTablaAutor();
                 } else {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar el Autor");
+                    ventanaBiblioteca.mostrarMensajeError("Autor editado sin exito");
                 }
             } else {
-                ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor a editar");
+                ventanaBiblioteca.mostrarMensajeError("Llene el campo de primer nombre y primer apellido");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Seleccione la fila a editar");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un autor");
         }
     }
 
@@ -1961,12 +1984,12 @@ public class ControladorBiblioteca
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("Autor eliminado sin exito, puede que el autor este asignado a un Libro");
+                ventanaBiblioteca.mostrarMensajeError("Autor eliminado sin exito");
             }
-            }
+        }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Seleccione una fila");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un autor");
         }
     }
 
@@ -1980,7 +2003,7 @@ public class ControladorBiblioteca
     public boolean comprobarCamposAutor()
     {
         boolean valido;
-        valido = !ventanaBiblioteca.getTxtPrimerNomAu().isEmpty() && !ventanaBiblioteca.getTxtPrimerApeAu().isEmpty() && !ventanaBiblioteca.getTxtSegundoApeAu().isEmpty();
+        valido = !ventanaBiblioteca.getTxtPrimerNomAu().isEmpty() && !ventanaBiblioteca.getTxtPrimerApeAu().isEmpty();
         return valido;
     }
 
@@ -2237,16 +2260,18 @@ public class ControladorBiblioteca
             ArrayList<String> nombresAutores;
             String autores;
             int codEditorial;
-            String nomEditorial;
+            int codArea;
             int anhoPublicacion;
             String numPaginas;
             String idioma;
+            int numEjemplares;
+            boolean existeDigital;
 
             for (Libro libro : arrayLibro) {
                 isbn = libro.getIsbn();
                 titulo = libro.getTitulo();
                 codEditorial = libro.getCodEditorial();
-                nomEditorial = manejadorDao.getNombreEditorial(codEditorial);
+                codArea = libro.getCodArea();
                 anhoPublicacion = libro.getAnhoPublicacion();
                 numPaginas = libro.getNumPaginas();
                 idioma = libro.getIdioma();
@@ -2254,8 +2279,11 @@ public class ControladorBiblioteca
                 nombresAutores = manejadorDao.getNombresAutoresLibro(isbn);
                 autores = String.join(", ", nombresAutores);
 
+                numEjemplares = manejadorDao.numeroEjemplares(isbn);
+                existeDigital = manejadorDao.existeDigital(isbn);
+
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
-                auxModeloTabla.addRow(new Object[]{isbn, titulo, autores, nomEditorial, anhoPublicacion, idioma, numPaginas});
+                auxModeloTabla.addRow(new Object[]{isbn, titulo, autores, codEditorial, codArea, anhoPublicacion, idioma, numPaginas, numEjemplares, textoDigital(existeDigital)});
             }
         }
     }
@@ -2263,8 +2291,24 @@ public class ControladorBiblioteca
     public boolean comprobarCamposLibroA()
     {
         boolean valido;
-        valido = !ventanaBiblioteca.getTxtIsbnLibroA().isEmpty() && !ventanaBiblioteca.getTxtTituloLibroA().isEmpty() && !ventanaBiblioteca.getTxtEditorialLibroA().isEmpty() && !ventanaBiblioteca.getTxtNumPaginasLibroA().isEmpty() && !ventanaBiblioteca.getTxtIdiomaLibroA().isEmpty();
+        valido = !ventanaBiblioteca.getTxtIsbnLibroA().isEmpty() && !ventanaBiblioteca.getTxtTituloLibroA().isEmpty() && !ventanaBiblioteca.getTxtEditorialLibroA().isEmpty() && !ventanaBiblioteca.getTxtNumPaginasLibroA().isEmpty() && !ventanaBiblioteca.getTxtIdiomaLibroA().isEmpty() && !ventanaBiblioteca.getTxtCodAreaA().isEmpty();
         return valido;
+    }
+
+    public String textoDigital(boolean existeDigital)
+    {
+        String cadena;
+
+        if(!existeDigital)
+        {
+            cadena = "NO";
+        }
+        else
+        {
+            cadena = "SI";
+        }
+
+        return cadena;
     }
 
     public void listarLibroTablaAdAgregar(Libro libro)
@@ -2274,7 +2318,7 @@ public class ControladorBiblioteca
             String isbn;
             String titulo;
             int codEditorial;
-            String nomEditorial;
+            int codArea;
             int anhoPublicacion;
             String numPaginas;
             String idioma;
@@ -2282,13 +2326,13 @@ public class ControladorBiblioteca
             isbn = libro.getIsbn();
             titulo = libro.getTitulo();
             codEditorial = libro.getCodEditorial();
-            nomEditorial = manejadorDao.getNombreEditorial(codEditorial);
+            codArea = libro.getCodArea();
             anhoPublicacion = libro.getAnhoPublicacion();
             numPaginas = libro.getNumPaginas();
             idioma = libro.getIdioma();
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getEditorialAdminTableModel();
-            auxModeloTabla.addRow(new Object[]{isbn, titulo, nomEditorial, anhoPublicacion, numPaginas, idioma});
+            auxModeloTabla.addRow(new Object[]{isbn, titulo, codEditorial, codArea, anhoPublicacion, numPaginas, idioma});
         }
     }
 
@@ -2298,13 +2342,15 @@ public class ControladorBiblioteca
         String isbn;
         String titulo;
         int codEditorial;
+        int codArea;
         int anhoPublicacion;
         String numPaginas;
         String idioma;
 
         isbn = ventanaBiblioteca.getTxtIsbnLibroA();
         titulo = ventanaBiblioteca.getTxtTituloLibroA();
-        codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA());
+        codEditorial = Integer.parseInt(ventanaBiblioteca.getTxtEditorialLibroA());
+        codArea = Integer.parseInt(ventanaBiblioteca.getAreaLibroA());
         anhoPublicacion = ventanaBiblioteca.getJyAnoPublicLibroA();
         numPaginas = ventanaBiblioteca.getTxtNumPaginasLibroA();
         idioma = ventanaBiblioteca.getTxtIdiomaLibroA();
@@ -2313,24 +2359,30 @@ public class ControladorBiblioteca
         {
             if (manejadorDao.buscarEditorial(codEditorial) != null)
             {
-                libro = new Libro(isbn, titulo, codEditorial, anhoPublicacion, numPaginas, idioma);
-
-                if (anhoPublicacion < 2024)
+                if(manejadorDao.buscarArea(codArea) != null)
                 {
-                    if (manejadorDao.agregarLibro(libro) > 0)
+                    libro = new Libro(isbn, titulo, codEditorial, codArea, anhoPublicacion, numPaginas, idioma);
+
+                    if (anhoPublicacion < 2024)
                     {
-                        listarLibroTablaAdAgregar(libro);
-                        ventanaBiblioteca.mostrarMensaje("Libro agregado con exito");
-                        ventanaBiblioteca.limpiarLibroAdmin();
-                    }
-                    else
+                        if (manejadorDao.agregarLibro(libro) > 0)
+                        {
+                            listarLibroTablaAdAgregar(libro);
+                            ventanaBiblioteca.mostrarMensaje("Libro agregado con exito");
+                            ventanaBiblioteca.limpiarLibroAdmin();
+                        }
+                        else
+                        {
+                            ventanaBiblioteca.mostrarMensajeError("No se pudo crear el libro");
+                        }
+                    } else
                     {
-                        ventanaBiblioteca.mostrarMensajeError("No se pudo crear el libro");
+                        ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
                     }
                 }
                 else
                 {
-                    ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
+                    ventanaBiblioteca.mostrarMensajeError("No se encuentra un area con ese id");
                 }
             }
             else
@@ -2350,6 +2402,7 @@ public class ControladorBiblioteca
             String isbn;
             String titulo;
             int codEditorial;
+            int codArea;
             int anhoPublicacion;
             String numPaginas;
             String idioma;
@@ -2357,6 +2410,7 @@ public class ControladorBiblioteca
             isbn = libro.getIsbn();
             titulo = libro.getTitulo();
             codEditorial = libro.getCodEditorial();
+            codArea = libro.getCodArea();
             anhoPublicacion = libro.getAnhoPublicacion();
             numPaginas = libro.getNumPaginas();
             idioma = libro.getIdioma();
@@ -2364,12 +2418,13 @@ public class ControladorBiblioteca
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroAdminTableModel();
             int auxFila = ventanaBiblioteca.getFilaSeleccionadaLibroAd();
 
-            auxModeloTabla.setValueAt(isbn, auxFila, 1);
-            auxModeloTabla.setValueAt(titulo, auxFila, 2);
+            auxModeloTabla.setValueAt(isbn, auxFila, 0);
+            auxModeloTabla.setValueAt(titulo, auxFila, 1);
             auxModeloTabla.setValueAt(codEditorial, auxFila, 3);
-            auxModeloTabla.setValueAt(anhoPublicacion, auxFila, 4);
-            auxModeloTabla.setValueAt(numPaginas, auxFila, 5);
+            auxModeloTabla.setValueAt(codArea, auxFila, 4);
+            auxModeloTabla.setValueAt(anhoPublicacion, auxFila, 5);
             auxModeloTabla.setValueAt(idioma, auxFila, 6);
+            auxModeloTabla.setValueAt(numPaginas, auxFila, 7);
         }
     }
 
@@ -2386,7 +2441,8 @@ public class ControladorBiblioteca
         if(libro != null)
         {
             libro.setTitulo(ventanaBiblioteca.getTxtTituloLibroA());
-            libro.setCodEditorial(Integer.parseInt(ventanaBiblioteca.getTxtIdEditorialA()));
+            libro.setCodEditorial(Integer.parseInt(ventanaBiblioteca.getTxtEditorialLibroA()));
+            libro.setCodArea(Integer.parseInt(ventanaBiblioteca.getAreaLibroA()));
             libro.setAnhoPublicacion(ventanaBiblioteca.getJyAnoPublicLibroA());
             libro.setNumPaginas(ventanaBiblioteca.getTxtNumPaginasLibroA());
             libro.setIdioma(ventanaBiblioteca.getTxtIdiomaLibroA());
@@ -2395,25 +2451,32 @@ public class ControladorBiblioteca
             {
                 if (manejadorDao.buscarEditorial(libro.getCodEditorial()) != null)
                 {
-                    anhoPublicacion = ventanaBiblioteca.getJyAnoPublicLibroA();
-
-                    if (anhoPublicacion < 2024)
+                    if(manejadorDao.buscarArea(libro.getCodArea())!= null)
                     {
-                        if (manejadorDao.editarLibro(libro))
+                        anhoPublicacion = ventanaBiblioteca.getJyAnoPublicLibroA();
+
+                        if (anhoPublicacion < 2024)
                         {
-                            ventanaBiblioteca.mostrarMensaje("Libro editado con exito");
-                            listarLibroTabAdEditar(libro);
-                            ventanaBiblioteca.deseleccionarFilaTablaLibroAd();
-                            ventanaBiblioteca.limpiarLibroAdmin();
+                            if (manejadorDao.editarLibro(libro))
+                            {
+                                ventanaBiblioteca.mostrarMensaje("Libro editado con exito");
+                                listarLibroTabAdEditar(libro);
+                                ventanaBiblioteca.deseleccionarFilaTablaLibroAd();
+                                ventanaBiblioteca.limpiarLibroAdmin();
+                            }
+                            else
+                            {
+                                ventanaBiblioteca.mostrarMensajeError("No se pudo editar el libro");
+                            }
                         }
                         else
                         {
-                            ventanaBiblioteca.mostrarMensajeError("No se pudo editar el libro");
+                            ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
                         }
                     }
                     else
                     {
-                        ventanaBiblioteca.mostrarMensajeError("Digite una fecha correcta");
+                        ventanaBiblioteca.mostrarMensajeError("No se encuentra una area con ese id");
                     }
                 }
                 else
@@ -2464,6 +2527,49 @@ public class ControladorBiblioteca
         }
     }
 
+    /**************************************************************************
+     Controlador_Libro
+     * Libro - usuario
+     *************************************************************************/
+
+    public void listarLibroTablaU()
+    {
+        ArrayList<Libro> arrayLibro;
+        arrayLibro = manejadorDao.listarLibros();
+        if(arrayLibro != null)
+        {
+            String isbn;
+            String titulo;
+            ArrayList<String> nombresAutores;
+            String autores;
+            int codEditorial;
+            int codArea;
+            int anhoPublicacion;
+            String numPaginas;
+            String idioma;
+            int numEjemplares;
+            boolean existeDigital;
+
+            for (Libro libro : arrayLibro) {
+                isbn = libro.getIsbn();
+                titulo = libro.getTitulo();
+                codEditorial = libro.getCodEditorial();
+                codArea = libro.getCodArea();
+                anhoPublicacion = libro.getAnhoPublicacion();
+                numPaginas = libro.getNumPaginas();
+                idioma = libro.getIdioma();
+
+                nombresAutores = manejadorDao.getNombresAutoresLibro(isbn);
+                autores = String.join(", ", nombresAutores);
+
+                numEjemplares = manejadorDao.numeroEjemplares(isbn);
+                existeDigital = manejadorDao.existeDigital(isbn);
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibroUTableModel();
+                auxModeloTabla.addRow(new Object[]{isbn, titulo, autores, codEditorial, codArea, anhoPublicacion, idioma, numPaginas, numEjemplares, textoDigital(existeDigital)});
+            }
+        }
+    }
     /**************************************************************************
      Controlador_Ejemplar
      * Ejemplar - admin
@@ -2965,6 +3071,162 @@ public class ControladorBiblioteca
         else
         {
             ventanaBiblioteca.mostrarMensajeError("No se encontró el libro digital");
+        }
+    }
+
+    /**************************************************************************
+     * Multa
+     *************************************************************************/
+    public void listarMultasTablaA()
+    {
+        ArrayList<Multa> arrayMulta;
+        arrayMulta = manejadorDao.listarMultasA();
+        if(arrayMulta != null)
+        {
+            String auxCedula;
+            String auxIsbn;
+            int auxNumeroEjemplar;
+            String auxFechaMulta;
+            int auxValor;
+            String auxDescripcion;
+
+            for (Multa multa : arrayMulta) {
+                auxCedula = multa.getIdUsuario();
+                auxIsbn = multa.getIsbn();
+                auxNumeroEjemplar = multa.getNumEjemplar();
+                auxFechaMulta = multa.getFechaMulta();
+                auxValor = multa.getValor();
+                auxDescripcion = multa.getDescripcion();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getMultaATableModel();
+                auxModeloTabla.addRow(new Object[]{auxNumeroEjemplar, auxIsbn, manejadorDao.buscarLibroIsbn(auxIsbn).getTitulo(), auxCedula, auxValor, auxDescripcion, auxFechaMulta});
+            }
+        }
+    }
+
+    public void eliminarMulta()
+    {
+        String auxCedula;
+        String auxIsbn;
+        int auxNumeroEjemplar;
+        String auxFechaMulta;
+
+        auxCedula = usuario.getId();
+        auxIsbn = ventanaBiblioteca.getIsbnMultaU();
+        auxNumeroEjemplar = Integer.parseInt(ventanaBiblioteca.getNumeEjemMultaU());
+        auxFechaMulta = ventanaBiblioteca.getFechaMultaU();
+
+        if(ventanaBiblioteca.getFilaSeleccionadaMultaU() >= 0)
+        {
+            if(comprobarCamposMulta())
+            {
+                if(manejadorDao.eliminarMulta(auxCedula, auxIsbn, auxNumeroEjemplar, auxFechaMulta))
+                {
+                    ventanaBiblioteca.mostrarMensaje("Multa pagada con exito");
+                    listarAreaTablaUMulta();
+                    ventanaBiblioteca.deseleccionarFilaMultaU();
+                    ventanaBiblioteca.limpiarMultaUsuario();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Multa pagada sin exito");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Seleccione una multa");
+        }
+    }
+
+    public void listarMultasTablaU(String cedula)
+    {
+        ArrayList<Multa> arrayMulta;
+        arrayMulta = manejadorDao.listarMultasU(cedula);
+        if(arrayMulta != null)
+        {
+            String auxCedula;
+            String auxIsbn;
+            int auxNumeroEjemplar;
+            String auxFechaMulta;
+            int auxValor;
+            String auxDescripcion;
+
+            for (Multa multa : arrayMulta) {
+                auxCedula = multa.getIdUsuario();
+                auxIsbn = multa.getIsbn();
+                auxNumeroEjemplar = multa.getNumEjemplar();
+                auxFechaMulta = multa.getFechaMulta();
+                auxValor = multa.getValor();
+                auxDescripcion = multa.getDescripcion();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getMultaUTableModel();
+                auxModeloTabla.addRow(new Object[]{auxNumeroEjemplar, auxIsbn, manejadorDao.buscarLibroIsbn(auxIsbn).getTitulo(), auxValor, auxDescripcion, auxFechaMulta});
+            }
+        }
+    }
+
+    public void agregarMulta(String auxCedula, String auxIsbn, int auxNumEjemplar, Date fechaDevolucion)
+    {
+        Multa multa;
+        Date fechaActual = new Date();
+
+        if(fechaDevolucion.before(fechaActual))
+        {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            long dias = calcularDias(fechaDevolucion, fechaActual);
+            String descripcion = "Multa por "+dias+" dias";
+            multa = new Multa(auxCedula, auxIsbn, auxNumEjemplar, formatoFecha.format(fechaActual), (int)dias*2000, descripcion,  true);
+
+            if(manejadorDao.agregarMulta(multa) < 0)
+            {
+                System.out.println("Ha ocurrido un error creando las multas");
+            }
+            else
+            {
+                System.out.println("Se genero multa");
+            }
+        }
+        else
+        {
+            System.out.println("No se genero multa");
+        }
+    }
+
+    public boolean comprobarCamposMulta()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getIsbnMultaU().isEmpty() && !ventanaBiblioteca.getNumeEjemMultaU().isEmpty() && !ventanaBiblioteca.getFechaMultaU().isEmpty();
+        return valido;
+    }
+
+    public long calcularDias(Date auxFechaDevolucion, Date auxFechaActual)
+    {
+        long dias = Math.abs(ChronoUnit.DAYS.between(Instant.ofEpochMilli(auxFechaActual.getTime()).atZone(ZoneId.systemDefault()).toLocalDate(),
+                Instant.ofEpochMilli(auxFechaDevolucion.getTime()).atZone(ZoneId.systemDefault()).toLocalDate()));
+        return dias;
+    }
+
+    public void listarAreaTablaUMulta()
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getMultaUTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaMultaU();
+        auxModeloTabla.removeRow(auxFila);
+    }
+
+    class MultaListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("pagar"))
+            {
+                eliminarMulta();
+            }
         }
     }
 }

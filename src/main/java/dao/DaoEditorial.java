@@ -151,7 +151,6 @@ public class DaoEditorial
         String sql_select;
         sql_select = "SELECT codigo_ed, nom_ed, pagina_web, pais_origen FROM editorial WHERE codigo_ed = (SELECT MAX(codigo_ed) FROM editorial)";
 
-
         try{
             Connection conn = fachada.openConnection();
             System.out.println("consultando en la bd");

@@ -1,6 +1,5 @@
 package dao;
 
-import modelo.Prestamo;
 import modelo.PrestamoLibro;
 
 import java.sql.Connection;
@@ -68,7 +67,7 @@ public class DaoPrestamoLibro
         PrestamoLibro prestamoLibro;
         ArrayList<PrestamoLibro> prestamos = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT num_prestamo, isbn, num_ejemplar, fecha_devolucion, entregado FROM prestamo_libro WHERE num_prestamo=" + numero + "AND entregado = " + false + "";
+        sql_select="SELECT num_prestamo, isbn, num_ejemplar, fecha_devolucion, entregado FROM prestamo_libro WHERE num_prestamo=" + numero + " AND entregado = " + false + "";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
