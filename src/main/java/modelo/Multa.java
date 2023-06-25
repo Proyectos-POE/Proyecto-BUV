@@ -7,11 +7,12 @@ public class Multa
     private String idUsuario;
     private String isbn;
     private int numEjemplar;
-    private Date fechaMulta;
+    private String fechaMulta;
     private int valor;
     private String descripcion;
+    private boolean devuelto;
 
-    public Multa (String auxIdUsuario, String auxIsbn, int auxNumEjemplar, Date auxFechaMulta, int auxValor, String auxDescripcion)
+    public Multa (String auxIdUsuario, String auxIsbn, int auxNumEjemplar, String auxFechaMulta, int auxValor, String auxDescripcion, boolean auxDevuelto)
     {
         this.idUsuario = auxIdUsuario;
         this.isbn = auxIsbn;
@@ -19,6 +20,7 @@ public class Multa
         this.fechaMulta = auxFechaMulta;
         this.valor = auxValor;
         this.descripcion = auxDescripcion;
+        this.devuelto = auxDevuelto;
     }
 
     public Multa() {}
@@ -53,12 +55,12 @@ public class Multa
         this.numEjemplar = numEjemplar;
     }
 
-    public Date getFechaMulta()
+    public String getFechaMulta()
     {
         return fechaMulta;
     }
 
-    public void setFechaMulta(Date fechaMulta)
+    public void setFechaMulta(String fechaMulta)
     {
         this.fechaMulta = fechaMulta;
     }
@@ -81,5 +83,11 @@ public class Multa
     public void setDescripcion(String descripcion)
     {
         this.descripcion = descripcion;
+    }
+    public boolean isDevuelto() {
+        return devuelto;
+    }
+    public void setDevuelto(boolean devuelto) {
+        this.devuelto = devuelto;
     }
 }

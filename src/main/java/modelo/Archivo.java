@@ -16,21 +16,21 @@ public class Archivo
 
     public boolean descargarArchivo(String auxUrl)
     {
-        System.out.println("opening connection");
+        System.out.println("Conexion abierta");
         try {
             URL url = new URL(auxUrl);
             InputStream in = url.openStream();
             FileOutputStream fos = new FileOutputStream(archivo);
 
-            System.out.println("reading from resource and writing to file...");
+            System.out.println("Leyendo y escrbiendo archivo");
             int length = -1;
-            byte[] buffer = new byte[1024];// buffer for portion of data from connection
+            byte[] buffer = new byte[1024];
             while ((length = in.read(buffer)) > -1) {
                 fos.write(buffer, 0, length);
             }
             fos.close();
             in.close();
-            System.out.println("File downloaded");
+            System.out.println("Archivo descargado");
             return true;
         } catch (MalformedURLException e) {
             System.out.println(e);

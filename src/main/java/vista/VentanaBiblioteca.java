@@ -426,9 +426,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpMultaUsuario = new javax.swing.JPanel();
         jpFormularioMultaU = new javax.swing.JPanel();
         lblMultasTitulo = new javax.swing.JLabel();
-        lblNumeroMultaU = new javax.swing.JLabel();
-        txtNumeroMultaU = new javax.swing.JTextField();
+        lblNumEjemMultaU = new javax.swing.JLabel();
+        txtNumEjemMultaU = new javax.swing.JTextField();
         btnPagarMultaU = new javax.swing.JButton();
+        lblIsbnMultaU = new javax.swing.JLabel();
+        txtIsbnMultaU = new javax.swing.JTextField();
+        lblFechaMultaU = new javax.swing.JLabel();
+        txtFechaMultaU = new javax.swing.JTextField();
         jpTablaMultaU = new javax.swing.JPanel();
         jpsTablaMultaU = new javax.swing.JScrollPane();
         jtTablaMultaU = new javax.swing.JTable();
@@ -588,25 +592,28 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         lblMultasTitulo.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
         lblMultasTitulo.setText("MULTAS");
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 10, 0);
         jpFormularioMultaU.add(lblMultasTitulo, gridBagConstraints);
 
-        lblNumeroMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        lblNumeroMultaU.setText("# MULTA");
+        lblNumEjemMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblNumEjemMultaU.setText("# EJEMPLAR");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 5, 0);
-        jpFormularioMultaU.add(lblNumeroMultaU, gridBagConstraints);
+        jpFormularioMultaU.add(lblNumEjemMultaU, gridBagConstraints);
 
-        txtNumeroMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNumEjemMultaU.setColumns(5);
+        txtNumEjemMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 200;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
-        jpFormularioMultaU.add(txtNumeroMultaU, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 10);
+        jpFormularioMultaU.add(txtNumEjemMultaU, gridBagConstraints);
 
         btnPagarMultaU.setBackground(new java.awt.Color(255, 0, 0));
         btnPagarMultaU.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
@@ -614,11 +621,48 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnPagarMultaU.setText("PAGAR");
         btnPagarMultaU.setBorderPainted(false);
         btnPagarMultaU.setFocusPainted(false);
+        btnPagarMultaU.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 50;
         jpFormularioMultaU.add(btnPagarMultaU, gridBagConstraints);
+
+        lblIsbnMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblIsbnMultaU.setText("ISBN");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 5, 0);
+        jpFormularioMultaU.add(lblIsbnMultaU, gridBagConstraints);
+
+        txtIsbnMultaU.setColumns(5);
+        txtIsbnMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 20, 10);
+        jpFormularioMultaU.add(txtIsbnMultaU, gridBagConstraints);
+
+        lblFechaMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblFechaMultaU.setText("FECHA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 5, 0);
+        jpFormularioMultaU.add(lblFechaMultaU, gridBagConstraints);
+
+        txtFechaMultaU.setColumns(5);
+        txtFechaMultaU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 20, 0);
+        jpFormularioMultaU.add(txtFechaMultaU, gridBagConstraints);
 
         jpMultaUsuario.add(jpFormularioMultaU, java.awt.BorderLayout.PAGE_START);
 
@@ -632,7 +676,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 new Object [][] {
                 },
                 new String [] {
-                        "# MULTA", "ISBN", "# EJEMPLAR", "FECHA MULTA", "VALOR", "DESCRIPCION"
+                        "# EJEMPLAR", "ISBN", "TITULO", "VALOR", "DESCRIPCION", "FECHA MULTA"
                 }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -7195,6 +7239,11 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnEliminarDigitalA.addActionListener(listenControles);
     }
 
+    public void addBotonesMultaUListener(ActionListener listenControles)
+    {
+        btnPagarMultaU.addActionListener(listenControles);
+    }
+
     public void limpiarSolicitudUsuario()
     {
         txtIsbnSolicitudU.setText("");
@@ -7248,7 +7297,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public void limpiarMultaUsuario()
     {
-        txtNumeroMultaU.setText("");
+        txtNumEjemMultaU.setText("");
+        txtIsbnMultaU.setText("");
+        txtFechaMultaU.setText("");
+        btnPagarMultaU.setEnabled(false);
     }
 
     public void limpiarPrestamoEmpleado()
@@ -7557,12 +7609,20 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             int fila = tabla.getSelectedRow();
             if(fila == -1)
             {
-                txtNumeroMultaU.setText("");
+                btnPagarMultaU.setEnabled(false);
+
+                txtNumEjemMultaU.setText("");
+                txtIsbnMultaU.setText("");
+                txtFechaMultaU.setText("");
             }
             else
             {
                 limpiarMultaUsuario();
-                txtNumeroMultaU.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+                txtNumEjemMultaU.setText(String.valueOf(tabla.getValueAt(fila , 0)));
+                txtIsbnMultaU.setText(String.valueOf(tabla.getValueAt(fila , 1)));
+                txtFechaMultaU.setText(String.valueOf(tabla.getValueAt(fila , 5)));
+
+                btnPagarMultaU.setEnabled(true);
             }
         }
     }
@@ -7878,6 +7938,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public int getNumEjemDevEmp(){return Integer.parseInt(txtNumeroEjemplarDevE.getText());}
     public String getCedulaDevUsu(){return txtCedulaUDevolucionE.getText();}
     public String getIsbnDev(){return txtIsbnDevolucionE.getText();}
+
+    public String getNumeEjemMultaU(){return txtNumEjemMultaU.getText();}
+    public String getIsbnMultaU(){return txtIsbnMultaU.getText();}
+    public String getFechaMultaU(){return txtFechaMultaU.getText();}
     /**************************************************************************
      * TableModel's
      *************************************************************************/
@@ -7895,6 +7959,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public TableModel getSolicitudEmpTableModel(){return  jtTablaSolicitudE.getModel();}
     public TableModel getLibroAdminTableModel(){return jtTablaLibroA.getModel();}
     public TableModel getLibroUTableModel(){return jtTablaLibroU.getModel();}
+    public TableModel getMultaATableModel(){return jtTablaMultaA.getModel();}
+    public TableModel getMultaUTableModel(){return jtTablaMultaU.getModel();}
     public TableModel getEjemplarAdminTableModel(){return jtTablaEjemplarA.getModel();}
     public TableModel getDigitalAdminTableModel(){return jtTablaDigitalA.getModel();}
 
@@ -7908,6 +7974,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaEmpleadoA.getSelectionModel().clearSelection();
     }
     public int getFilaSeleccionadaAutor(){return jtTablaAutorA.getSelectedRow();}
+    public int getFilaSeleccionadaMultaU() {return jtTablaMultaU.getSelectedRow();}
+    public void deseleccionarFilaMultaU() {jtTablaMultaU.getSelectionModel().clearSelection();}
     public void deseleccionarFilaTablaAutor(){jtTablaAutorA.getSelectionModel().clearSelection();}
 
     //tablas prestamos-admin
@@ -8322,6 +8390,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblEditorialLibroA;
     private javax.swing.JLabel lblEstanteEjemplarA;
     private javax.swing.JLabel lblFechaDPrestamoE;
+    private javax.swing.JLabel lblFechaMultaU;
     private javax.swing.JLabel lblFechaRPrestamoE;
     private javax.swing.JLabel lblFormatoDigitalA;
     private javax.swing.JLabel lblIcono;
@@ -8331,6 +8400,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblIsbnEjemplarA;
     private javax.swing.JLabel lblIsbnLibroA;
     private javax.swing.JLabel lblIsbnLibroU;
+    private javax.swing.JLabel lblIsbnMultaU;
     private javax.swing.JLabel lblIsbnPrestamoE;
     private javax.swing.JLabel lblIsbnSolicitudU;
     private javax.swing.JLabel lblMultasTitulo;
@@ -8343,11 +8413,11 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreEstudianteP;
     private javax.swing.JLabel lblNombreProfesorP;
     private javax.swing.JLabel lblNumCajonEjemplarA;
+    private javax.swing.JLabel lblNumEjemMultaU;
     private javax.swing.JLabel lblNumPaginasLibroA;
     private javax.swing.JLabel lblNumPasilloEjemplarA;
     private javax.swing.JLabel lblNumeroEjemplarDevE;
     private javax.swing.JLabel lblNumeroEjemplarPreE;
-    private javax.swing.JLabel lblNumeroMultaU;
     private javax.swing.JLabel lblNumeroPrestamoDevE;
     private javax.swing.JLabel lblPaginaWebEditorialA;
     private javax.swing.JLabel lblPaisEditorialA;
@@ -8409,6 +8479,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTextField txtDireccionProfesorP;
     private javax.swing.JTextField txtEditorialLibroA;
     private javax.swing.JTextField txtEstanteEjemplarA;
+    private javax.swing.JTextField txtFechaMultaU;
     private javax.swing.JTextField txtFormatoDigitalA;
     private javax.swing.JTextField txtIdAreaA;
     private javax.swing.JTextField txtIdAutorA;
@@ -8419,6 +8490,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTextField txtIsbnEjemplarA;
     private javax.swing.JTextField txtIsbnLibroA;
     private javax.swing.JTextField txtIsbnLibroU;
+    private javax.swing.JTextField txtIsbnMultaU;
     private javax.swing.JTextField txtIsbnPrestamoE;
     private javax.swing.JTextField txtIsbnSolicitudU;
     private javax.swing.JTextField txtNomSalaEjemplarA;
@@ -8431,12 +8503,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreProfesorP;
     private javax.swing.JTextField txtNumCajonEjemplarA;
     private javax.swing.JTextField txtNumDigitalA;
+    private javax.swing.JTextField txtNumEjemMultaU;
     private javax.swing.JTextField txtNumEjemplarA;
     private javax.swing.JTextField txtNumPaginasLibroA;
     private javax.swing.JTextField txtNumPasilloEjemplarA;
     private javax.swing.JTextField txtNumeroEjemplarDevE;
     private javax.swing.JTextField txtNumeroEjemplarPreE;
-    private javax.swing.JTextField txtNumeroMultaU;
     private javax.swing.JTextField txtNumeroPrestamoDevE;
     private javax.swing.JTextField txtPaginaWebEditorialA;
     private javax.swing.JTextField txtPaisEditorialA;

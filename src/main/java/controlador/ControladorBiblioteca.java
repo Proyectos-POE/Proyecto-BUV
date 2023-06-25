@@ -11,15 +11,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 public class ControladorBiblioteca
@@ -36,6 +35,8 @@ public class ControladorBiblioteca
 
         ventanaBiblioteca.initEncabezado();
 
+        //validarCalculoPrestamoMulta();
+
         if(usuario instanceof Profesor)
         {
             ventanaBiblioteca.initMenuU();
@@ -48,6 +49,7 @@ public class ControladorBiblioteca
             ventanaBiblioteca.addBotonesPerfilProfesorListener(new ProfesorUListener());
             ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
             ventanaBiblioteca.addBotonesLibroUListener(new DescargaUListener());
+            ventanaBiblioteca.addBotonesMultaUListener(new MultaListener());
         }
         if(usuario instanceof Estudiante)
         {
@@ -60,6 +62,8 @@ public class ControladorBiblioteca
 
             ventanaBiblioteca.addBotonesPerfilEsudianteListener(new EstudianteUListener());
             ventanaBiblioteca.addBotonAgregarSolicitud(new SolicitudUListener());
+            ventanaBiblioteca.addBotonesLibroUListener(new DescargaUListener());
+            ventanaBiblioteca.addBotonesMultaUListener(new MultaListener());
         }
         if(usuario instanceof Empleado)
         {
@@ -167,11 +171,15 @@ public class ControladorBiblioteca
     {
         if(!manejadorDao.listarSolicitudesUsuario(id).isEmpty())
         {
-            listarSolicitudesTablaU(usuario.getId());
+            listarSolicitudesTablaU(id);
         }
         if(!manejadorDao.listarPrestamosUsuario(id).isEmpty())
         {
-            listarPrestamosTablaU(usuario.getId());
+            listarPrestamosTablaU(id);
+        }
+        if(!manejadorDao.listarMultasU(id).isEmpty())
+        {
+            listarMultasTablaU(id);
         }
     }
 
@@ -220,6 +228,10 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarDescargas().isEmpty())
         {
             listarDescargasTablaA();
+        }
+        if(!manejadorDao.listarMultasA().isEmpty())
+        {
+            listarMultasTablaA();
         }
     }
 
@@ -824,14 +836,20 @@ public class ControladorBiblioteca
             int numPres;
             int numEjem;
             String isbn;
+            String cedula;
+            Date fechaDevolucion;
 
             try
             {
                 numPres = ventanaBiblioteca.getNumPresDevEmp();
                 numEjem = ventanaBiblioteca.getNumEjemDevEmp();
                 isbn = ventanaBiblioteca.getIsbnDev();
+                cedula = ventanaBiblioteca.getCedulaDevUsu();
+
                 Ejemplar ejemplar = manejadorDao.buscarEjemplar(isbn, numEjem);
                 PrestamoLibro presLb = manejadorDao.getPrestamoLib(numPres,isbn,numEjem);
+                fechaDevolucion = presLb.getFechaDev();
+
                 if(ejemplar != null && presLb != null)
                 {
                     if(!ejemplar.getEstado() && !presLb.getEstado())
@@ -841,6 +859,7 @@ public class ControladorBiblioteca
                             ventanaBiblioteca.mostrarMensaje("Libro devuelto con exito");
                             ventanaBiblioteca.limpiarDevolucionEmpleado();
                             ventanaBiblioteca.deseleccionarFilaDev();
+                            agregarMulta(cedula, isbn, numEjem, fechaDevolucion);
                         }
                         else
                         {
@@ -2653,6 +2672,162 @@ public class ControladorBiblioteca
         else
         {
             ventanaBiblioteca.mostrarMensajeError("No se encontró el libro digital");
+        }
+    }
+
+    /**************************************************************************
+     * Multa
+     *************************************************************************/
+    public void listarMultasTablaA()
+    {
+        ArrayList<Multa> arrayMulta;
+        arrayMulta = manejadorDao.listarMultasA();
+        if(arrayMulta != null)
+        {
+            String auxCedula;
+            String auxIsbn;
+            int auxNumeroEjemplar;
+            String auxFechaMulta;
+            int auxValor;
+            String auxDescripcion;
+
+            for (Multa multa : arrayMulta) {
+                auxCedula = multa.getIdUsuario();
+                auxIsbn = multa.getIsbn();
+                auxNumeroEjemplar = multa.getNumEjemplar();
+                auxFechaMulta = multa.getFechaMulta();
+                auxValor = multa.getValor();
+                auxDescripcion = multa.getDescripcion();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getMultaATableModel();
+                auxModeloTabla.addRow(new Object[]{auxNumeroEjemplar, auxIsbn, manejadorDao.buscarLibroIsbn(auxIsbn).getTitulo(), auxCedula, auxValor, auxDescripcion, auxFechaMulta});
+            }
+        }
+    }
+
+    public void eliminarMulta()
+    {
+        String auxCedula;
+        String auxIsbn;
+        int auxNumeroEjemplar;
+        String auxFechaMulta;
+
+        auxCedula = usuario.getId();
+        auxIsbn = ventanaBiblioteca.getIsbnMultaU();
+        auxNumeroEjemplar = Integer.parseInt(ventanaBiblioteca.getNumeEjemMultaU());
+        auxFechaMulta = ventanaBiblioteca.getFechaMultaU();
+
+        if(ventanaBiblioteca.getFilaSeleccionadaMultaU() >= 0)
+        {
+            if(comprobarCamposMulta())
+            {
+                if(manejadorDao.eliminarMulta(auxCedula, auxIsbn, auxNumeroEjemplar, auxFechaMulta))
+                {
+                    ventanaBiblioteca.mostrarMensaje("Multa pagada con exito");
+                    listarAreaTablaUMulta();
+                    ventanaBiblioteca.deseleccionarFilaMultaU();
+                    ventanaBiblioteca.limpiarMultaUsuario();
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("Multa pagada sin exito");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Llene todos los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Seleccione una multa");
+        }
+    }
+
+    public void listarMultasTablaU(String cedula)
+    {
+        ArrayList<Multa> arrayMulta;
+        arrayMulta = manejadorDao.listarMultasU(cedula);
+        if(arrayMulta != null)
+        {
+            String auxCedula;
+            String auxIsbn;
+            int auxNumeroEjemplar;
+            String auxFechaMulta;
+            int auxValor;
+            String auxDescripcion;
+
+            for (Multa multa : arrayMulta) {
+                auxCedula = multa.getIdUsuario();
+                auxIsbn = multa.getIsbn();
+                auxNumeroEjemplar = multa.getNumEjemplar();
+                auxFechaMulta = multa.getFechaMulta();
+                auxValor = multa.getValor();
+                auxDescripcion = multa.getDescripcion();
+
+                DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getMultaUTableModel();
+                auxModeloTabla.addRow(new Object[]{auxNumeroEjemplar, auxIsbn, manejadorDao.buscarLibroIsbn(auxIsbn).getTitulo(), auxValor, auxDescripcion, auxFechaMulta});
+            }
+        }
+    }
+
+    public void agregarMulta(String auxCedula, String auxIsbn, int auxNumEjemplar, Date fechaDevolucion)
+    {
+        Multa multa;
+        Date fechaActual = new Date();
+
+        if(fechaDevolucion.before(fechaActual))
+        {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            long dias = calcularDias(fechaDevolucion, fechaActual);
+            String descripcion = "Multa por "+dias+" dias";
+            multa = new Multa(auxCedula, auxIsbn, auxNumEjemplar, formatoFecha.format(fechaActual), (int)dias*2000, descripcion,  true);
+
+            if(manejadorDao.agregarMulta(multa) < 0)
+            {
+                System.out.println("Ha ocurrido un error creando las multas");
+            }
+            else
+            {
+                System.out.println("Se genero multa");
+            }
+        }
+        else
+        {
+            System.out.println("No se genero multa");
+        }
+    }
+
+    public boolean comprobarCamposMulta()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getIsbnMultaU().isEmpty() && !ventanaBiblioteca.getNumeEjemMultaU().isEmpty() && !ventanaBiblioteca.getFechaMultaU().isEmpty();
+        return valido;
+    }
+
+    public long calcularDias(Date auxFechaDevolucion, Date auxFechaActual)
+    {
+        long dias = Math.abs(ChronoUnit.DAYS.between(Instant.ofEpochMilli(auxFechaActual.getTime()).atZone(ZoneId.systemDefault()).toLocalDate(),
+                Instant.ofEpochMilli(auxFechaDevolucion.getTime()).atZone(ZoneId.systemDefault()).toLocalDate()));
+        return dias;
+    }
+
+    public void listarAreaTablaUMulta()
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getMultaUTableModel();
+        int auxFila = ventanaBiblioteca.getFilaSeleccionadaMultaU();
+        auxModeloTabla.removeRow(auxFila);
+    }
+
+    class MultaListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("pagar"))
+            {
+                eliminarMulta();
+            }
         }
     }
 }

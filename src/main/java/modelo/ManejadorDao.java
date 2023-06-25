@@ -65,6 +65,7 @@ public class ManejadorDao {
         this.daoSolicitud = new DaoSolicitud();
         this.daoDigital = new DaoDigital();
         this.daoAutor = new DaoAutor();
+        this.daoMulta = new DaoMulta();
     }
 
     public ManejadorDao(String nombre)
@@ -151,6 +152,7 @@ public class ManejadorDao {
     {
         return this.daoPrestamo.listarPrestamos();
     }
+    public Prestamo consultarPrestamo(String numero) { return this.daoPrestamo.consultarPrestamo(numero);}
 
     /*******
      * PrestamoLibro
@@ -378,4 +380,13 @@ public class ManejadorDao {
     public int agregarDescarga(Descarga de) {return this.daoDescarga.insertDescarga(de);}
 
     public ArrayList<Descarga> listarDescargas() {return this.daoDescarga.listarDescargas();}
+
+    /*******
+     * Multa
+     */
+    public int agregarMulta(Multa multa) {return this.daoMulta.insertMulta(multa);}
+    public ArrayList<Multa> listarMultasA() {return this.daoMulta.listarMultasA();}
+    public ArrayList<Multa> listarMultasU(String cedula) {return this.daoMulta.listarMultasU(cedula);}
+
+    public boolean eliminarMulta(String cedula, String isbn, int numEjemplar, String fecha) {return this.daoMulta.eliminarMulta(cedula, isbn, numEjemplar, fecha);}
 }
