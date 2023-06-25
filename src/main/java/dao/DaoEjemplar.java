@@ -134,11 +134,9 @@ public class DaoEjemplar
         return false;
     }
 
-
     public boolean eliminarEjemplar(String isbn, int numEjemplar)
     {
         String sql_ej;
-
         sql_ej = "DELETE FROM ejemplar WHERE isbn = '" + isbn + "' AND num_ejemplar = '" + numEjemplar + "'";
 
         try{
@@ -152,4 +150,32 @@ public class DaoEjemplar
         catch(Exception e){ System.out.println(e); }
         return false;
     }
+
+    public ArrayList<Integer> getEjemplaresDisponibles(String isbn)
+    {
+        ArrayList<Integer> ejemplares;
+        int numEjemplar;
+        String sql_select;
+        sql_select = "SELECT num_ejemplar FROM ejemplar WHERE isbn = '" + isbn + "' AND disponible = '" + true + "'";
+        try{
+
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+            ejemplares = new ArrayList<>();
+            while (tabla.next()){
+                numEjemplar = tabla.getInt(1);
+                ejemplares.add(numEjemplar);
+            }
+
+            conn.close();
+            return ejemplares;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+
 }

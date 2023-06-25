@@ -8,6 +8,7 @@ import vista.VentanaBiblioteca;
 import vista.VentanaLogin;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -17,6 +18,7 @@ import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -70,6 +72,7 @@ public class ControladorBiblioteca
             listarTablasEmpleado();
 
             ventanaBiblioteca.addBtnDevolucionListener(new DevolucionListener());
+            ventanaBiblioteca.addBotonesPrestamoEmpListener(new PrestamoEmpListener());
         }
         else if(usuario == null)
         {
@@ -232,6 +235,10 @@ public class ControladorBiblioteca
         if(!manejadorDao.listarPrestamos().isEmpty())
         {
             listarPrestamosTablaE();
+        }
+        if(!manejadorDao.listarLibros().isEmpty())
+        {
+            listarTablaPrestamosEmp();
         }
     }
 
@@ -677,10 +684,10 @@ public class ControladorBiblioteca
         {
             int num;
             String nomE;
-            Date fecha;
+            String fecha;
             String isbn;
             int numEje;
-            Date fechaD;
+            String fechaD;
             boolean estado;
 
             for (Prestamo prestamo : arrayPrestamo) {
@@ -716,10 +723,10 @@ public class ControladorBiblioteca
         {
             int num;
             String nomE;
-            Date fecha;
+            String fecha;
             String isbn;
             int numEje;
-            Date fechaD;
+            String fechaD;
             String tituloL;
             String idUsu;
             boolean estado;
@@ -748,6 +755,274 @@ public class ControladorBiblioteca
         }
     }
 
+    /**************************************************************************
+     * Prestamo - Empleado
+     *************************************************************************/
+    class PrestamoEmpListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getActionCommand().equalsIgnoreCase("agregar"))
+            {
+                agregarEjemPrestamo();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("prestar"))
+            {
+                PrestarPrestamo();
+            }
+            if (e.getActionCommand().equalsIgnoreCase("cancelar"))
+            {
+                cancelarPrestamos();
+            }
+        }
+    }
+
+    public void PrestarPrestamo()
+    {
+        int cantLibrosPres;
+        DefaultTableModel auxModeloTablaLibros = (DefaultTableModel) ventanaBiblioteca.getLibrosPresEmpTabMod();
+        cantLibrosPres = auxModeloTablaLibros.getRowCount();
+
+        if(cantLibrosPres >0)
+        {
+            if(validarCamposPrestamo())
+            {
+                Prestamo prestamo;
+                String cedulaU;
+                String fechaR;
+                String cedulaE;
+                int numPres;
+                cedulaU = ventanaBiblioteca.getCedulaPresEmp();
+                if(manejadorDao.usuariosNoEmpleados(cedulaU).getNombre() != null)
+                {
+                    try
+                    {
+                        cedulaE = usuario.getId();
+                        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                        fechaR = formatoFecha.format(ventanaBiblioteca.getFechaRPresEmp());
+                            prestamo = new Prestamo();
+                            prestamo.setIdUsuario(cedulaU);
+                            prestamo.setIdEmpleado(cedulaE);
+                            prestamo.setFechaR(fechaR);
+
+                            if (manejadorDao.agregarPrestamo(prestamo) > -1) {
+                                numPres = manejadorDao.listarUltimoPres();
+                                agregarPrestamoslibro(numPres);
+                                ventanaBiblioteca.limpiarPrestamoEmpleado();
+                            }
+                            else
+                            {
+                                ventanaBiblioteca.mostrarMensajeError("Ocurrio un error");
+                            }
+                        }
+                    catch(Exception ex)
+                        {
+                            System.out.println(ex);
+                            ventanaBiblioteca.mostrarMensajeError("Digite bien el campo cedula");
+                        }
+                }
+                else
+                {
+                    ventanaBiblioteca.mostrarMensajeError("No existe el usuario asocidado con esa cedula");
+                }
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("No deje los campos fecha realizacion ni cedula vacios");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("No puede hacer un prestamo vacio");
+        }
+    }
+
+    public void agregarPrestamoslibro(int numPres)
+    {
+        PrestamoLibro prestamoLibro;
+        String isbn;
+        int ejemplar;
+        String fechaD;
+        DefaultTableModel auxModeloTablaLibros = (DefaultTableModel) ventanaBiblioteca.getLibrosPresEmpTabMod();
+        for(int i = 0; i < auxModeloTablaLibros.getRowCount(); i++)
+        {
+            isbn = auxModeloTablaLibros.getValueAt(i,0).toString();
+            ejemplar = (int) auxModeloTablaLibros.getValueAt(i,1);
+            fechaD = auxModeloTablaLibros.getValueAt(i,2).toString();
+            prestamoLibro = new PrestamoLibro(numPres, isbn, ejemplar, fechaD);
+            manejadorDao.modificarEstadoEjem(isbn, ejemplar, false);
+            if(manejadorDao.agregarPrestamoLibro(prestamoLibro) > 0)
+            {
+                listarPrestamosDev(numPres, isbn, ejemplar, fechaD);
+            }
+            else
+            {
+                ventanaBiblioteca.mostrarMensajeError("Ocurrio un error al agregar un libro al prestamo");
+            }
+        }
+        ventanaBiblioteca.mostrarMensaje("Prestamo agregado con exito");
+        auxModeloTablaLibros.setRowCount(0);
+    }
+
+    public void listarPrestamosDev(int numPres, String isbn, int ejemplar, String fechaDev)
+    {
+        Prestamo prestamo;
+        String idUsu;
+        String idE;
+        String fecha;
+        String fechaD;
+
+        prestamo = manejadorDao.consultarPrestamo(numPres);
+        idUsu = prestamo.getIdUsuario();
+        idE = prestamo.getIdEmpleado();
+        fecha = prestamo.getFechaR();
+        fechaD = fechaDev;
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getDevEmpTabMod();
+        auxModeloTabla.addRow(new Object[]{numPres, isbn, ejemplar, idUsu, idE , fecha, fechaD});
+    }
+
+    public boolean validarCamposPrestamo()
+    {
+        boolean valido;
+        valido = !ventanaBiblioteca.getCedulaPresEmp().isEmpty() && ventanaBiblioteca.getFechaRPresEmp()!=null;
+        return valido;
+    }
+
+    public void agregarEjemPrestamo()
+    {
+        int fila = ventanaBiblioteca.getFilaPresEmp();
+        if(fila > -1)
+        {
+            String isbn;
+            int ejemplar;
+            String fechaDev;
+
+            try
+            {
+                isbn = ventanaBiblioteca.getIsbnPresEmp();
+                ejemplar = ventanaBiblioteca.getEjemplarPresEmp();
+                 if(validarFilaNoRepetida(isbn, ejemplar))
+                 {
+                     SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                     fechaDev = formatoFecha.format(ventanaBiblioteca.getFechaDPresEmp());
+                     if (!fechaDev.equals(""))
+                     {
+                         DefaultTableModel auxModeloTablaLib = (DefaultTableModel) ventanaBiblioteca.getLibrosPresEmpTabMod();
+                         auxModeloTablaLib.addRow(new Object[]{isbn, ejemplar, fechaDev});
+                         eliminarFilaPrestamo(fila);
+                         ventanaBiblioteca.limpiarPrestamoEmpleado();
+                     }
+                     else
+                     {
+                         ventanaBiblioteca.mostrarMensajeError("Digite bien el campo fecha devolucion");
+                     }
+                 }
+                 else
+                 {
+                     ventanaBiblioteca.mostrarMensajeError("Este ejemplar ya esta en el prestamo");
+                 }
+            }
+            catch (Exception ex)
+            {
+                ventanaBiblioteca.mostrarMensajeError("Digite bien los campos");
+            }
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("Seleccione una fila");
+        }
+    }
+
+    public void eliminarFilaPrestamo(int fila)
+    {
+        DefaultTableModel auxModeloTablaPres = (DefaultTableModel) ventanaBiblioteca.getPrestamoEmpTabMod();
+        auxModeloTablaPres.removeRow(fila);
+    }
+
+    public void cancelarPrestamos()
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibrosPresEmpTabMod();
+        int libros = auxModeloTabla.getRowCount();
+        if(libros > 0)
+        {
+            String isbn;
+            int ejemplar;
+            for(int i = 0; i< libros; i++)
+            {
+                isbn = auxModeloTabla.getValueAt(i,0).toString();
+                ejemplar = (int) auxModeloTabla.getValueAt(i,1);
+                listarLibroCancelar(isbn, ejemplar);
+            }
+            auxModeloTabla.setRowCount(0);
+            ventanaBiblioteca.mostrarMensaje("Prestamo cancelado");
+        }
+        else
+        {
+            ventanaBiblioteca.mostrarMensajeError("No hay ningun ejemplar en la lista");
+        }
+    }
+
+    public void listarLibroCancelar(String isbn, int ejemplar)
+    {
+        Libro libro;
+        libro = manejadorDao.buscarLibroIsbn(isbn);
+
+        String titulo = libro.getTitulo();
+        ArrayList<String> nombresAutores = manejadorDao.getNombresAutoresLibro(isbn);
+        String autores = String.join(", ", nombresAutores);
+        String nomEditorial = manejadorDao.getNombreEditorial(libro.getCodEditorial());
+        int anhoPublicacion = libro.getAnhoPublicacion();
+        String idioma = libro.getIdioma();
+        String numPaginas = libro.getNumPaginas();
+
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoEmpTabMod();
+        auxModeloTabla.addRow(new Object[]{isbn, ejemplar, titulo, autores, nomEditorial, anhoPublicacion, idioma, numPaginas});
+
+    }
+
+    public void listarTablaPrestamosEmp()
+    {
+        ArrayList<Libro> arrayLibro;
+        arrayLibro = manejadorDao.getLibrosEjemDisp();
+        if(arrayLibro != null)
+        {
+            String isbn;
+            String titulo;
+
+            ArrayList<String> nombresAutores;
+            String autores;
+
+            int codEditorial;
+            String nomEditorial;
+
+            ArrayList<Integer> ejemplares;
+            int anhoPublicacion;
+            String numPaginas;
+            String idioma;
+
+
+            for (Libro libro : arrayLibro) {
+                isbn = libro.getIsbn();
+                titulo = libro.getTitulo();
+                codEditorial = libro.getCodEditorial();
+                nomEditorial = manejadorDao.getNombreEditorial(codEditorial);
+                anhoPublicacion = libro.getAnhoPublicacion();
+                numPaginas = libro.getNumPaginas();
+                idioma = libro.getIdioma();
+                nombresAutores = manejadorDao.getNombresAutoresLibro(isbn);
+                autores = String.join(", ", nombresAutores);
+
+                ejemplares = manejadorDao.listarEjemplaresDisponibles(isbn);
+                for(Integer ejemplar: ejemplares)
+                {
+                    DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoEmpTabMod();
+                    auxModeloTabla.addRow(new Object[]{isbn, ejemplar, titulo, autores, nomEditorial, anhoPublicacion, idioma, numPaginas});
+                }
+            }
+        }
+    }
+
     public String stringEstPres(boolean b)
     {
         String cadena;
@@ -760,6 +1035,21 @@ public class ControladorBiblioteca
             cadena = "DEVUELTO";
         }
         return cadena;
+    }
+
+    public boolean validarFilaNoRepetida(String isbn, int ejemplar)
+    {
+        boolean valido = true;
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getLibrosPresEmpTabMod();
+        for(int i=0; i< auxModeloTabla.getRowCount(); i++)
+        {
+            if(isbn.equals(auxModeloTabla.getValueAt(i,0)) && ejemplar == (int) auxModeloTabla.getValueAt(i,1))
+            {
+                valido = false;
+                break;
+            }
+        }
+        return valido;
     }
     /**************************************************************************
      * Devolucion - Empleado
@@ -776,6 +1066,7 @@ public class ControladorBiblioteca
         }
     }
 
+
     public void listarPrestamosTablaE()
     {
         ArrayList<Prestamo> arrayPrestamo;
@@ -787,10 +1078,10 @@ public class ControladorBiblioteca
         {
             int num;
             String idE;
-            Date fecha;
+            String fecha;
             String isbn;
             int numEje;
-            Date fechaD;
+            String fechaD;
             String idUsu;
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getDevEmpTabMod();
@@ -817,14 +1108,16 @@ public class ControladorBiblioteca
         }
     }
 
+
+
     public void devolverLibro()
     {
-        if(validarCamposDevo())
+        int fila = ventanaBiblioteca.getFilaSeleccionadaDev();
+        if(fila > -1)
         {
             int numPres;
             int numEjem;
             String isbn;
-
             try
             {
                 numPres = ventanaBiblioteca.getNumPresDevEmp();
@@ -840,6 +1133,9 @@ public class ControladorBiblioteca
                         {
                             ventanaBiblioteca.mostrarMensaje("Libro devuelto con exito");
                             ventanaBiblioteca.limpiarDevolucionEmpleado();
+                            DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getDevEmpTabMod();
+                            auxModeloTabla.removeRow(fila);
+                            listarEjemplaresDevueltos(isbn, numEjem);
                             ventanaBiblioteca.deseleccionarFilaDev();
                         }
                         else
@@ -864,11 +1160,27 @@ public class ControladorBiblioteca
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Rellene todos los campos");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione una fila");
         }
 
     }
 
+    public void listarEjemplaresDevueltos(String isbn, int ejemplar)
+    {
+        Libro libro;
+        libro = manejadorDao.buscarLibroIsbn(isbn);
+
+        String titulo = libro.getTitulo();
+        ArrayList<String> nombresAutores = manejadorDao.getNombresAutoresLibro(isbn);
+        String autores = String.join(", ", nombresAutores);
+        String nomEditorial = manejadorDao.getNombreEditorial(libro.getCodEditorial());
+        int anhoPublicacion = libro.getAnhoPublicacion();
+        String idioma = libro.getIdioma();
+        String numPaginas = libro.getNumPaginas();
+
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getPrestamoEmpTabMod();
+        auxModeloTabla.addRow(new Object[]{isbn, ejemplar, titulo, autores, nomEditorial, anhoPublicacion, idioma, numPaginas});
+    }
     public boolean cambiarEstadosDev(int numPres, int numEjem, String isbn, boolean estado)
     {
         if(manejadorDao.modificarEstPresLib(numPres, numEjem, isbn, estado) && manejadorDao.modificarEstadoEjem(isbn, numEjem, estado))

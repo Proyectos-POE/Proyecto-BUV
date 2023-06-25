@@ -7,14 +7,14 @@ public class Prestamo
  private int numPrestamo;
  private String idUsuario;
  private String idEmpleado;
- private Date fechaR;
+ private String fechaR;
 
  public Prestamo()
  {
 
  }
 
- public Prestamo(int numPrestamo, String idUsuario, String idEmpleado, Date fechaR) {
+ public Prestamo(int numPrestamo, String idUsuario, String idEmpleado, String fechaR) {
   this.numPrestamo = numPrestamo;
   this.idUsuario = idUsuario;
   this.idEmpleado = idEmpleado;
@@ -45,11 +45,11 @@ public class Prestamo
   this.idEmpleado = idEmpleado;
  }
 
- public Date getFechaR() {
+ public String getFechaR() {
   return fechaR;
  }
 
- public void setFechaR(Date fechaR) {
+ public void setFechaR(String fechaR) {
   this.fechaR = fechaR;
  }
 }

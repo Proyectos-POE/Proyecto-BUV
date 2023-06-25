@@ -65,6 +65,9 @@ public class ManejadorDao {
         this.daoSolicitud = new DaoSolicitud();
         this.daoDigital = new DaoDigital();
         this.daoAutor = new DaoAutor();
+        this.daoEditorial = new DaoEditorial();
+        this.daoAutorLibro = new DaoAutorLibro();
+        this.daoUsuario = new DaoUsuario();
     }
 
     public ManejadorDao(String nombre)
@@ -93,6 +96,7 @@ public class ManejadorDao {
      * usuario
      */
     public ArrayList<Usuario> listarUsuarios(){return this.daoUsuario.listarUsuarios();}
+    public Usuario usuariosNoEmpleados(String id){return this.daoUsuario.usariosMenosEmpleados(id);}
 
     /*******
      * Estudiante
@@ -147,11 +151,10 @@ public class ManejadorDao {
     {
         return this.daoPrestamo.listarPrestamosU(id);
     }
-    public ArrayList<Prestamo> listarPrestamos()
-    {
-        return this.daoPrestamo.listarPrestamos();
-    }
-
+    public ArrayList<Prestamo> listarPrestamos() {return this.daoPrestamo.listarPrestamos();}
+    public int agregarPrestamo(Prestamo prestamo) {return this.daoPrestamo.insertPrestamo(prestamo);}
+    public int listarUltimoPres(){return this.daoPrestamo.consultarUltimoPrestamo();}
+    public Prestamo consultarPrestamo(int cod){return this.daoPrestamo.consultarPrestamo(cod);}
     /*******
      * PrestamoLibro
      */
@@ -159,6 +162,7 @@ public class ManejadorDao {
     public ArrayList<PrestamoLibro> listarPrestamosActivos(int numero){return this.daoPrestamoLibro.consultarPrestamosActivos(numero);}
     public boolean modificarEstPresLib(int numPres, int numEjem, String isbn, boolean estado){return this.daoPrestamoLibro.modificarEstado(numPres, isbn, numEjem, estado);}
     public PrestamoLibro getPrestamoLib(int numeroPres, String isbn, int numEjem){return this.daoPrestamoLibro.getPl(numeroPres, isbn, numEjem);}
+    public int agregarPrestamoLibro(PrestamoLibro prestamoLibro){return this.daoPrestamoLibro.insertPrestamoLibro(prestamoLibro);}
     /*******
      * Empleado
      */
@@ -305,6 +309,7 @@ public class ManejadorDao {
     {
         return this.daoLibro.listarLibro();
     }
+    public ArrayList<Libro> getLibrosEjemDisp(){return this.daoLibro.listarLibrosEjemplaresDisp();}
 
     /*******
      * Autor_Libro
@@ -353,6 +358,8 @@ public class ManejadorDao {
     {
         return this.daoEjemplar.listarEjemplar();
     }
+
+    public ArrayList<Integer> listarEjemplaresDisponibles(String isbn){return this.daoEjemplar.getEjemplaresDisponibles(isbn);}
 
     public boolean modificarEstadoEjem(String isbn, int numero, boolean estado){return this.daoEjemplar.modificarEstadoEjemplar(isbn, numero , estado);}
     /*******

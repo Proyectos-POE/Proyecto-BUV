@@ -3168,10 +3168,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaLibroPreE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jtTablaLibroPreE.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null}
                 },
                 new String [] {
                         "ISBN", "# EJEMPLAR", "FECHA DEVOLUCION"
@@ -7910,10 +7906,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public int getFilaSeleccionadaAutor(){return jtTablaAutorA.getSelectedRow();}
     public void deseleccionarFilaTablaAutor(){jtTablaAutorA.getSelectionModel().clearSelection();}
 
-    //tablas prestamos-admin
+    //tablas prestamos-Empleado
     public TableModel getPrestamoEmpTabMod(){return jtTablaPrestamoE.getModel();}
+    public int getFilaPresEmp(){return jtTablaPrestamoE.getSelectedRow();}
+    public void deseleccionarFilaPresEmp(){jtTablaPrestamoE.getSelectionModel().clearSelection();}
     public TableModel getLibrosPresEmpTabMod(){return jtTablaLibroPreE.getModel();}
-    public int getFilaLibrosPres(){return jtTablaLibroPreE.getSelectedRow();}
+    public int getFilaSeleccionadaLibrosPres(){return jtTablaLibroPreE.getSelectedRow();}
     public void deseleccionarFilaLibrosPres(){jtTablaLibroPreE.getSelectionModel().clearSelection();}
 
     //tablas devoluciones-admin
