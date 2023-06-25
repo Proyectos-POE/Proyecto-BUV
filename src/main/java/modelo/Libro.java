@@ -5,15 +5,19 @@ public class Libro
     protected String isbn;
     private String titulo;
     private int codEditorial;
+    private int codArea;
     private int anhoPublicacion;
     private String numPaginas;
     private String idioma;
+    private int cantEjemplares;
+    private boolean existeDigital;
 
-    public Libro(String auxIsbn, String auxTitulo, int auxCodEditorial, int auxAnhoPublicacion, String auxNumPaginas, String auxIdioma)
+    public Libro(String auxIsbn, String auxTitulo, int auxCodEditorial, int auxCodArea, int auxAnhoPublicacion, String auxNumPaginas, String auxIdioma)
     {
         this.isbn = auxIsbn;
         this.titulo = auxTitulo;
         this.codEditorial = auxCodEditorial;
+        this.codArea = auxCodArea;
         this.anhoPublicacion = auxAnhoPublicacion;
         this.numPaginas = auxNumPaginas;
         this.idioma = auxIdioma;
@@ -46,6 +50,14 @@ public class Libro
         this.codEditorial = codigoEditorial;
     }
 
+    public int getCodArea() {
+        return codArea;
+    }
+
+    public void setCodArea(int codArea) {
+        this.codArea = codArea;
+    }
+
     public int getAnhoPublicacion()
     {
         return anhoPublicacion;
@@ -69,5 +81,21 @@ public class Libro
 
     public void setIdioma(String idioma) {
         this.idioma = idioma;
+    }
+
+    public int getCantEjemplares() {
+        return cantEjemplares;
+    }
+
+    public void setCantEjemplares(int cantEjemplares) {
+        this.cantEjemplares = cantEjemplares;
+    }
+
+    public boolean getExisteDigital() {
+        return existeDigital;
+    }
+
+    public void setExisteDigital(boolean existeDigital) {
+        this.existeDigital = existeDigital;
     }
 }

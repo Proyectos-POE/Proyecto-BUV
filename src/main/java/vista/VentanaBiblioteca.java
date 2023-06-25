@@ -3989,6 +3989,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public void limpiarLibroAdmin()
     {
         txtIsbnLibroA.setText("");
+        txtTituloLibroA.setText("");
         txtEditorialLibroA.setText("");
         txtIdiomaLibroA.setText("");
         txtNumPaginasLibroA.setText("");
