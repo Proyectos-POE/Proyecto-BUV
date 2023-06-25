@@ -36,6 +36,7 @@ public class ManejadorDao {
         this.daoEmpleado = new DaoEmpleado();
         this.daoDescarga = new DaoDescarga();
         this.daoDigital = new DaoDigital();
+        this.daoAutorLibro = new DaoAutorLibro();
     }
 
     public ManejadorDao(String nombre, Profesor profesor)
@@ -50,6 +51,7 @@ public class ManejadorDao {
         this.daoEmpleado = new DaoEmpleado();
         this.daoDescarga = new DaoDescarga();
         this.daoDigital = new DaoDigital();
+        this.daoAutorLibro = new DaoAutorLibro();
     }
 
     public ManejadorDao(String nombre, Empleado empleado)
@@ -306,6 +308,16 @@ public class ManejadorDao {
     public ArrayList<Libro> listarLibros()
     {
         return this.daoLibro.listarLibro();
+    }
+
+    public int numeroEjemplares(String isbn)
+    {
+        return this.daoLibro.numeroEjemplaresLibro(isbn);
+    }
+
+    public boolean existeDigital(String isbn)
+    {
+        return this.daoLibro.existeDigitalLibro(isbn);
     }
 
     /*******
