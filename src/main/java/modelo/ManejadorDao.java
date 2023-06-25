@@ -277,7 +277,7 @@ public class ManejadorDao {
 
     public String getNombreEditorial(int codEditorial){return this.daoEditorial.consultarNombreEditorial(codEditorial);}
 
-    public Editorial consultarUltimoEditorial() {return this.consultarUltimoEditorial();}
+    public Editorial consultarUltimoEditorial() {return this.daoEditorial.consultarUltimoEditorial();}
 
     /*******
      * Libro

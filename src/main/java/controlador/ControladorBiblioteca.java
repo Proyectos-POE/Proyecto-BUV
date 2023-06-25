@@ -1557,17 +1557,17 @@ public class ControladorBiblioteca
                 }
                 else
                 {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo agregar el Autor");
+                    ventanaBiblioteca.mostrarMensajeError("Autor agregado sin exito");
                 }
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor");
+                ventanaBiblioteca.mostrarMensajeError("Llene el campo de primer nombre y primer apellido");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Deseleccione la fila antes de agregar");
+            ventanaBiblioteca.mostrarMensajeError("Deseleccione al autor");
         }
     }
 
@@ -1617,15 +1617,15 @@ public class ControladorBiblioteca
                     ventanaBiblioteca.limpiarAutorAdmin();
                     ventanaBiblioteca.deseleccionarFilaTablaAutor();
                 } else {
-                    ventanaBiblioteca.mostrarMensajeError("No se pudo editar el Autor");
+                    ventanaBiblioteca.mostrarMensajeError("Autor editado sin exito");
                 }
             } else {
-                ventanaBiblioteca.mostrarMensajeError("Ingrese el primer nombre y los dos apellidos del autor a editar");
+                ventanaBiblioteca.mostrarMensajeError("Llene el campo de primer nombre y primer apellido");
             }
         }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Seleccione la fila a editar");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un autor");
         }
     }
 
@@ -1668,12 +1668,12 @@ public class ControladorBiblioteca
             }
             else
             {
-                ventanaBiblioteca.mostrarMensajeError("Autor eliminado sin exito, puede que el autor este asignado a un Libro");
+                ventanaBiblioteca.mostrarMensajeError("Autor eliminado sin exito");
             }
-            }
+        }
         else
         {
-            ventanaBiblioteca.mostrarMensajeError("Seleccione una fila");
+            ventanaBiblioteca.mostrarMensajeError("Seleccione un autor");
         }
     }
 
@@ -1687,7 +1687,7 @@ public class ControladorBiblioteca
     public boolean comprobarCamposAutor()
     {
         boolean valido;
-        valido = !ventanaBiblioteca.getTxtPrimerNomAu().isEmpty() && !ventanaBiblioteca.getTxtPrimerApeAu().isEmpty() && !ventanaBiblioteca.getTxtSegundoApeAu().isEmpty();
+        valido = !ventanaBiblioteca.getTxtPrimerNomAu().isEmpty() && !ventanaBiblioteca.getTxtPrimerApeAu().isEmpty();
         return valido;
     }
 

@@ -499,7 +499,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 new Object [][] {
                 },
                 new String [] {
-                        "ISBN", "TITULO", "AUTOR", "EDITORIAL", "PUBLICACION", "IDIOMA", "# PAGINAS", "EJEMPLARES", "DIGITAL"
+                        "ISBN", "TITULO", "AUTOR", "# EDITORIAL", "# AREA", "PUBLICACION", "IDIOMA", "# PAGINAS", "EJEMPLARES", "DIGITAL"
                 }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1372,6 +1372,8 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtIdiomaLibroA = new javax.swing.JTextField();
         lblAnoPublicLibroA = new javax.swing.JLabel();
         jyAnoPublicLibroA = new com.toedter.calendar.JYearChooser();
+        lblAreaLibroA = new javax.swing.JLabel();
+        txtAreaLibroA = new javax.swing.JTextField();
         btnModificarLibroA = new javax.swing.JButton();
         btnEliminarLibroA = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
@@ -2491,6 +2493,24 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 0);
         jpFormularioLibroA.add(jyAnoPublicLibroA, gridBagConstraints);
 
+        lblAreaLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblAreaLibroA.setText("# AREA");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 90);
+        jpFormularioLibroA.add(lblAreaLibroA, gridBagConstraints);
+
+        txtAreaLibroA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 110;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 20);
+        jpFormularioLibroA.add(txtAreaLibroA, gridBagConstraints);
+
         btnModificarLibroA.setBackground(new java.awt.Color(255, 0, 51));
         btnModificarLibroA.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
         btnModificarLibroA.setForeground(new java.awt.Color(255, 255, 255));
@@ -2641,7 +2661,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 new Object [][] {
                 },
                 new String [] {
-                        "ISBN", "TITULO", "AUTOR", "EDITORIAL", "PUBLICACION", "IDIOMA", "# PAGINAS", "EJEMPLARES", "DIGITAL"
+                        "ISBN", "TITULO", "AUTOR", "# EDITORIAL", "# AREA", "PUBLICACION", "IDIOMA", "# PAGINAS", "EJEMPLARES", "DIGITAL"
                 }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -3972,6 +3992,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         txtIdiomaLibroA.setText("");
         txtNumPaginasLibroA.setText("");
         jyAnoPublicLibroA.setYear(2023);
+        txtAreaLibroA.setText("");
     }
 
     public void limpiarEjemplarAdmin()
@@ -4132,6 +4153,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 txtIdiomaLibroA.setText("");
                 txtNumPaginasLibroA.setText("");
                 jyAnoPublicLibroA.setYear(2023);
+                txtAreaLibroA.setText("");
             }
             else
             {
@@ -4139,9 +4161,10 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
                 txtIsbnLibroA.setText(String.valueOf(tabla.getValueAt(fila , 0)));
                 txtTituloLibroA.setText(String.valueOf(tabla.getValueAt(fila , 1)));
                 txtEditorialLibroA.setText(String.valueOf(tabla.getValueAt(fila , 3)));
-                jyAnoPublicLibroA.setYear((Integer.parseInt(String.valueOf(tabla.getValueAt(fila , 4)))));
-                txtIdiomaLibroA.setText(String.valueOf(tabla.getValueAt(fila , 5)));
-                txtNumPaginasLibroA.setText(String.valueOf(tabla.getValueAt(fila , 6)));
+                txtAreaLibroA.setText(String.valueOf(tabla.getValueAt(fila , 4)));
+                jyAnoPublicLibroA.setYear((Integer.parseInt(String.valueOf(tabla.getValueAt(fila , 5)))));
+                txtIdiomaLibroA.setText(String.valueOf(tabla.getValueAt(fila , 6)));
+                txtNumPaginasLibroA.setText(String.valueOf(tabla.getValueAt(fila , 7)));
 
                 txtIsbnLibroA.setEditable(false);
                 btnAgregarLibroA.setEnabled(false);
@@ -4455,11 +4478,11 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     {
         txtTituloProfesorP.setText(txt);
     }
-
     public void setDependenciaProfesorP(String txt)
     {
         txtDependenciaProfesorP.setText(txt);
     }
+    public void setAreaLibroA(String txt){ txtAreaLibroA.setText(txt); }
     /**************************************************************************
      * Getters
      *************************************************************************/
@@ -4586,6 +4609,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     public String getNumeEjemMultaU(){return txtNumEjemMultaU.getText();}
     public String getIsbnMultaU(){return txtIsbnMultaU.getText();}
     public String getFechaMultaU(){return txtFechaMultaU.getText();}
+    public String getAreaLibroA(){return txtAreaLibroA.getText();}
     /**************************************************************************
      * TableModel's
      *************************************************************************/
@@ -5094,6 +5118,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JLabel lblTituloUsuarioPP;
     private javax.swing.JLabel lblUniversidadEstudianteP;
     private javax.swing.JLabel lblUrlDigitalA;
+    private javax.swing.JLabel lblAreaLibroA;
     private javax.swing.JTabbedPane tabLibroAdmin;
     private javax.swing.JTextArea txaDescripcionAreaA;
     private javax.swing.JTextArea txaDescripcionSolicitudU;
@@ -5164,4 +5189,5 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     private javax.swing.JTextField txtTituloSolicitudU;
     private javax.swing.JTextField txtUniversidadEstudianteP;
     private javax.swing.JTextField txtUrlDigitalA;
+    private javax.swing.JTextField txtAreaLibroA;
 }
