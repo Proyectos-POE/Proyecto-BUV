@@ -3885,6 +3885,12 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         btnEliminarLibroA.addActionListener(listenControles);
     }
 
+    public void addBotonesAutorLibroAdListener(ActionListener listenControles)
+    {
+        btnAgregarAutorLibroA.addActionListener(listenControles);
+        btnEliminarAutorLibroA.addActionListener(listenControles);
+    }
+
     public void addBotonesLibroUListener(ActionListener listenControles)
     {
         btnDescargaLibroU.addActionListener(listenControles);
@@ -4149,11 +4155,13 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
             {
                 DefaultTableModel auxModeloTabla = (DefaultTableModel) getAutorLibroTableModelA();
                 auxModeloTabla.setNumRows(0);
+                limpiarAutorLibroAdmin();
 
                 txtIsbnLibroA.setEditable(true);
                 btnAgregarLibroA.setEnabled(true);
 
                 txtIsbnLibroA.setText("");
+                txtTituloLibroA.setText("");
                 txtEditorialLibroA.setText("");
                 txtIdiomaLibroA.setText("");
                 txtNumPaginasLibroA.setText("");
@@ -4649,6 +4657,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
     }
     public int getFilaSeleccionadaAutor(){return jtTablaAutorA.getSelectedRow();}
     public int getFilaSeleccionadaMultaU() {return jtTablaMultaU.getSelectedRow();}
+    public int getFilaSeleccionadaAutorLibro() {return jtTablaAutorLibroA.getSelectedRow();}
     public void deseleccionarFilaMultaU() {jtTablaMultaU.getSelectionModel().clearSelection();}
     public void deseleccionarFilaTablaAutor(){jtTablaAutorA.getSelectionModel().clearSelection();}
 

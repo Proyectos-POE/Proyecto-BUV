@@ -285,40 +285,23 @@ public class ManejadorDao {
      * Libro
      */
 
-    public int agregarLibro(Libro libro)
-    {
-        return this.daoLibro.insertLibro(libro);
-    }
+    public int agregarLibro(Libro libro) {return this.daoLibro.insertLibro(libro);}
 
-    public boolean editarLibro(Libro libro)
-    {
-        return this.daoLibro.modificarLibro(libro);
-    }
+    public boolean editarLibro(Libro libro) {return this.daoLibro.modificarLibro(libro);}
 
-    public boolean eliminarLibro(String isbn)
-    {
-        return this.daoLibro.eliminarLibro(isbn) && this.daoAutorLibro.eliminarAutorLibro(isbn);
-    }
+    public boolean eliminarLibro(String isbn) {return this.daoLibro.eliminarLibro(isbn);}
 
-    public Libro buscarLibroIsbn(String isbn)
-    {
-        return this.daoLibro.consultarLibro(isbn);
-    }
+    public boolean eliminarAutorLibroA(String isbn, int codAutor) {return this.daoAutorLibro.eliminarAutorLibroA(isbn, codAutor);}
 
-    public ArrayList<Libro> listarLibros()
-    {
-        return this.daoLibro.listarLibro();
-    }
+    public boolean eliminarAutorLibro(String isbn) {return  this.daoAutorLibro.eliminarAutorLibro(isbn);}
 
-    public int numeroEjemplares(String isbn)
-    {
-        return this.daoLibro.numeroEjemplaresLibro(isbn);
-    }
+    public Libro buscarLibroIsbn(String isbn) {return this.daoLibro.consultarLibro(isbn);}
 
-    public boolean existeDigital(String isbn)
-    {
-        return this.daoLibro.existeDigitalLibro(isbn);
-    }
+    public ArrayList<Libro> listarLibros() {return this.daoLibro.listarLibro();}
+
+    public int numeroEjemplares(String isbn) {return this.daoLibro.numeroEjemplaresLibro(isbn);}
+
+    public boolean existeDigital(String isbn) {return this.daoLibro.existeDigitalLibro(isbn);}
 
     /*******
      * Autor_Libro
@@ -383,6 +366,8 @@ public class ManejadorDao {
     public boolean eliminarDigital(String isbn) {return this.daoDigital.eliminarDigital(isbn);}
 
     public Digital buscarDigital(String isbn) {return this.daoDigital.consultarLibroDigital(isbn);}
+
+    public Digital consultarUltimoDigital() {return  this.daoDigital.consultarUltimoDigital();}
 
     public ArrayList<Digital> listarDigitales() {return this.daoDigital.listarDigital();}
 

@@ -2,6 +2,7 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 
+import modelo.AreaConocimiento;
 import modelo.Digital;
 
 
@@ -67,7 +68,7 @@ public class DaoDigital
     public ArrayList<Digital> listarDigital(){
         ArrayList<Digital> arrayDgt = new ArrayList<>();
         String sql_select;
-        sql_select="SELECT num_digital, isbn, url, formato, bytes FROM  digital";
+        sql_select="SELECT num_digital, isbn, url, formato, bytes FROM digital ORDER BY num_digital";
         try{
 
             Connection conn = fachada.openConnection();
@@ -148,6 +149,33 @@ public class DaoDigital
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return false;
+    }
+
+    public Digital consultarUltimoDigital()
+    {
+        Digital dig = new Digital();
+        String sql_select;
+        sql_select = "SELECT num_digital, isbn, url, formato, bytes FROM digital WHERE num_digital = (SELECT MAX(num_digital) FROM digital)";
+
+        try{
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next())
+            {
+                dig.setNumDigital(tabla.getInt(1));
+                dig.setIsbn(tabla.getString(2));
+                dig.setUrl(tabla.getString(3));
+                dig.setFormato(tabla.getString(4));
+                dig.setBytes(tabla.getString(5));
+            }
+            return dig;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
     }
 
 }

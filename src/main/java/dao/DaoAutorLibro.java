@@ -111,12 +111,32 @@ public class DaoAutorLibro {
             return false;
         }
 
-    public boolean eliminarAutorLibro(String isbn){
+    public boolean eliminarAutorLibro(String isbn)
+    {
         String sql_lb;
 
         sql_lb = "DELETE FROM autor_libro WHERE isbn = '" + isbn + "'";
 
         try{
+            Connection conn= fachada.openConnection();
+            Statement sentenciaLb = conn.createStatement();
+            sentenciaLb.executeUpdate(sql_lb);
+            conn.close();
+            return true;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return false;
+    }
+
+    public boolean eliminarAutorLibroA(String isbn, int codAutor)
+    {
+        String sql_lb;
+
+        sql_lb = "DELETE FROM autor_libro WHERE isbn = '" + isbn + "' AND cod_autor = '" + codAutor + "'";
+
+        try
+        {
             Connection conn= fachada.openConnection();
             Statement sentenciaLb = conn.createStatement();
             sentenciaLb.executeUpdate(sql_lb);
