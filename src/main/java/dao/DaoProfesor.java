@@ -1,5 +1,12 @@
 package dao;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.Estudiante;
 import modelo.Prestamo;
 import modelo.Profesor;
@@ -12,7 +19,6 @@ import java.util.ArrayList;
 
 public class DaoProfesor {
     FachadaBd fachada;
-    Connection conn;
 
     public DaoProfesor(){
         fachada = new FachadaBd();

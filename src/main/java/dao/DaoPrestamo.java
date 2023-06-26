@@ -1,5 +1,12 @@
 package dao;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.Prestamo;
 
 import java.sql.Connection;
@@ -11,7 +18,6 @@ import java.util.ArrayList;
 public class DaoPrestamo
 {
     FachadaBd fachada;
-    Connection conn;
 
     public DaoPrestamo(){
         fachada = new FachadaBd();
