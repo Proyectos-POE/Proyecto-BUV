@@ -99,7 +99,7 @@ public class ManejadorDao {
      * usuario
      */
     public ArrayList<Usuario> listarUsuarios(){return this.daoUsuario.listarUsuarios();}
-
+    public Usuario usuariosNoEmpleados(String cedulaU) {return this.daoUsuario.usariosMenosEmpleados(cedulaU);}
     /*******
      * Estudiante
      */

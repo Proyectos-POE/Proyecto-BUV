@@ -2154,8 +2154,8 @@ public class ControladorBiblioteca
             int auxFila = ventanaBiblioteca.getFilaSeleccionadaEditorial();
 
             auxModeloTabla.setValueAt(nomEditorial, auxFila, 1);
-            auxModeloTabla.setValueAt(paginaWeb, auxFila, 2);
-            auxModeloTabla.setValueAt(paisOrigen, auxFila, 3);
+            auxModeloTabla.setValueAt(paginaWeb, auxFila, 3);
+            auxModeloTabla.setValueAt(paisOrigen, auxFila, 2);
         }
     }
 
