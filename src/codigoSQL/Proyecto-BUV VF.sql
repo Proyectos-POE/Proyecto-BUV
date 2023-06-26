@@ -675,28 +675,28 @@ INSERT INTO digital(isbn, url, formato, bytes)
 VALUES('9852343204324', 'programaeditorial.univalle.edu.co/libro5', 'PDF', '1200');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9483294832044', 'editorialteseo.com/libro1', 'MOBI', '2452');
+VALUES('9483294832044', 'https://drive.google.com/u/0/uc?id=15YrA_5atoZkFJXTGoum54_j5KgECIVFc&export=download', 'MOBI', '2452');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9876543210123', 'programaeditorial.univalle.edu.co/libro2', 'MOBI', '2341');
+VALUES('9876543210123', 'https://drive.google.com/u/0/uc?id=15YrA_5atoZkFJXTGoum54_j5KgECIVFc&export=download', 'MOBI', '2341');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9789288464497', 'casatragaluz.com/libro12', 'MOBI', '4321');
+VALUES('9789288464497', 'https://drive.google.com/u/0/uc?id=15YrA_5atoZkFJXTGoum54_j5KgECIVFc&export=download', 'MOBI', '4321');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9783287523890', 'editorialteseo.com/libro11', 'MOBI', '5365');
+VALUES('9783287523890', 'https://drive.google.com/u/0/uc?id=15YrA_5atoZkFJXTGoum54_j5KgECIVFc&export=download', 'MOBI', '5365');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9563453249324', 'programaeditorial.univalle.edu.co/libro1', 'EPUB', '8621');
+VALUES('9563453249324', 'https://drive.google.com/u/0/uc?id=15YrA_5atoZkFJXTGoum54_j5KgECIVFc&export=download', 'EPUB', '8621');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9859392348232', 'babellibros.com.co/libro10', 'EPUB', '6842');
+VALUES('9859392348232', 'https://drive.google.com/u/0/uc?id=1yk97VodxoJoVz0DYuBedGwlZQBwWA6fS&export=download', 'EPUB', '6842');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9558439144210', 'programaeditorial.univalle.edu.co/libro7', 'PDF', '139');
+VALUES('9558439144210', 'https://drive.google.com/u/0/uc?id=1yk97VodxoJoVz0DYuBedGwlZQBwWA6fS&export=download', 'PDF', '139');
 
 INSERT INTO digital(isbn, url, formato, bytes)
-VALUES('9532942095923', 'babellibros.com.co/libro44', 'MOBI', '1244');
+VALUES('9532942095923', 'https://drive.google.com/u/0/uc?id=1yk97VodxoJoVz0DYuBedGwlZQBwWA6fS&export=download', 'MOBI', '1244');
 
 INSERT INTO digital(isbn, url, formato, bytes)
 VALUES('98542297382232', 'https://drive.google.com/u/0/uc?id=1yk97VodxoJoVz0DYuBedGwlZQBwWA6fS&export=download', 'PDF', '1244');
