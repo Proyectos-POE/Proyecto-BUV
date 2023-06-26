@@ -1,9 +1,16 @@
 package org.example;
+
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import controlador.ControladorLogin;
 import dao.DaoEmpleado;
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
-import vista.VentanaBiblioteca;
 import vista.VentanaLogin;
 
 public class Main {
@@ -13,7 +20,6 @@ public class Main {
         DaoEstudiante b = new DaoEstudiante();
         DaoProfesor d = new DaoProfesor();
         DaoEmpleado e = new DaoEmpleado();
-        //VentanaBiblioteca b = new VentanaBiblioteca();
         ControladorLogin c = new ControladorLogin(a, b, d, e);
     }
 }

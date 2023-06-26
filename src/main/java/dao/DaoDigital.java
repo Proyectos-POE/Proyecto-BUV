@@ -1,4 +1,12 @@
 package dao;
+
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -9,7 +17,6 @@ public class DaoDigital
 {
     FachadaBd fachada;
 
-    Connection conn;
 
     public DaoDigital()
     {
@@ -128,26 +135,4 @@ public class DaoDigital
         catch(Exception e){ System.out.println(e); }
         return false;
     }
-
-    public boolean consultarLibroDigitalU(String isbn)
-    {
-        Digital dgt = new Digital();
-        String sql_select;
-        sql_select = "SELECT num_digital, isbn, url, formato, bytes FROM digital WHERE isbn='" + isbn + "'";
-        System.out.println(sql_select);
-
-        try{
-
-            Connection conn = fachada.openConnection();
-            System.out.println("consultando en la bd");
-            Statement sentencia = conn.createStatement();
-            ResultSet tabla = sentencia.executeQuery(sql_select);
-
-            return !tabla.isBeforeFirst() && tabla.getRow() == 0;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return false;
-    }
-
 }

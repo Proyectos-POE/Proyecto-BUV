@@ -1,14 +1,19 @@
 package dao;
+
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import java.sql.*;
 import java.util.ArrayList;
 import modelo.Autor;
-import modelo.Editorial;
 
 public class DaoAutor
 {
     FachadaBd fachada;
-
-    Connection conn;
 
     public DaoAutor()
     {
@@ -33,57 +38,6 @@ public class DaoAutor
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return -1;
-    }
-
-    public Autor consultarAutor(int codAutor)
-    {
-        Autor at = new Autor();
-        String sql_select;
-        sql_select = "SELECT codigo_autor, primer_nom, segundo_nom, primer_apellido, segundo_apellido FROM autor WHERE codigo_autor='" + codAutor + "'";
-
-        try{
-            Connection conn= fachada.openConnection();
-            System.out.println("consultando en la bd");
-            Statement sentencia = conn.createStatement();
-            ResultSet tabla = sentencia.executeQuery(sql_select);
-
-            while(tabla.next()){
-
-                at.setCodAutor(tabla.getInt(1));
-                at.setPrimerNombre(tabla.getString(2));
-                at.setSegundoNombre(tabla.getString(3));
-                at.setPrimerApellido(tabla.getString(4));
-                at.setSegundoApellido(tabla.getString(5));
-            }
-            conn.close();
-            return at;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return null;
-    }
-
-    public String consultarNomAutor(int codAutor)
-    {
-        String nombreAutor = null;
-        String sql_select;
-        sql_select = "SELECT Concat(primer_nom, ' ', primer_apellido) FROM autor WHERE codigo_autor='" + codAutor + "'";
-
-        try{
-            Connection conn= fachada.openConnection();
-            System.out.println("consultando en la bd");
-            Statement sentencia = conn.createStatement();
-            ResultSet tabla = sentencia.executeQuery(sql_select);
-
-            while(tabla.next()){
-                nombreAutor = tabla.getString(1);
-            }
-            conn.close();
-            return nombreAutor;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return null;
     }
 
     public ArrayList<Autor> listarAutores(){

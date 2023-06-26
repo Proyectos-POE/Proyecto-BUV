@@ -1,5 +1,12 @@
 package modelo;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 public class AreaConforma
 {
     private int codigoArea1;
@@ -16,18 +23,8 @@ public class AreaConforma
         return codigoArea1;
     }
 
-    public void setCodigoArea1(int codigoArea1)
-    {
-        this.codigoArea1 = codigoArea1;
-    }
-
     public int getCodigoArea2()
     {
         return codigoArea2;
-    }
-
-    public void setCodigoArea2(int codigoArea2)
-    {
-        this.codigoArea2 = codigoArea2;
     }
 }

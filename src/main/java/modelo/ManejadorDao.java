@@ -1,5 +1,12 @@
 package modelo;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import dao.*;
 
 import java.util.ArrayList;
@@ -104,29 +111,20 @@ public class ManejadorDao {
     /*******
      * Estudiante
      */
-    public Estudiante consultarEstId(String id)
-    {
-        return this.daoEstudiante.consultarEstudianteId(id);
-    }
 
     public Boolean modificarEst(Estudiante estudiante)
     {
         return this.daoEstudiante.modificarEstudiante(estudiante);
     }
-    public ArrayList<Estudiante> listarEstudiantes(){return this.daoEstudiante.listarEstudiantes();}
+
     /*******
      * Profesor
      */
-    public Profesor consultarProId(String id)
-    {
-        return this.daoProfesor.consultarProfesorId(id);
-    }
 
     public Boolean modificarPro(Profesor profesor)
     {
         return this.daoProfesor.modificarProfesor(profesor);
     }
-    public ArrayList<Profesor> listarProfesores(){return this.daoProfesor.listarProfesores();}
 
     /*******
      * Solicitud
@@ -206,8 +204,6 @@ public class ManejadorDao {
     public int agregarAutor(Autor autor){return this.daoAutor.insertAutor(autor);}
     public boolean modificarAutor(Autor autor){return this.daoAutor.modificarAutor(autor);}
     public ArrayList<Autor> listarAutores(){return this.daoAutor.listarAutores();}
-    public Autor consultarAutor(int cod){return this.daoAutor.consultarAutor(cod);}
-    public String getNombreAutor(int cod){return this.daoAutor.consultarNomAutor(cod);}
     public int ultimoCodigoAutor(){return this.daoAutor.consultarCodUltimoAutor();}
     public boolean eliminarAutor(int cod){return this.daoAutor.eliminarAutor(cod);}
 
@@ -240,8 +236,6 @@ public class ManejadorDao {
      * AreaConforma
      */
     public boolean agregarAreaConforma(AreaConforma areaConf) {return this.daoAreaConforma.insertAreaConforma(areaConf);}
-
-    public ArrayList<Integer> listarCodAreasConforma(int codArea) {return this.daoAreaConforma.consultarCodAreasConforma(codArea);}
 
     public ArrayList<Integer> listarCodAreasConforman(int codArea) {return this.daoAreaConforma.consultarCodAreasConforman(codArea);}
 
@@ -322,25 +316,6 @@ public class ManejadorDao {
     public boolean existeDigital(String isbn)
     {
         return this.daoLibro.existeDigitalLibro(isbn);
-    }
-
-    /*******
-     * Autor_Libro
-     */
-
-    public int agregarAutorlibro(AutorLibro autorLibro)
-    {
-        return this.daoAutorLibro.insertAutor(autorLibro);
-    }
-
-    public boolean editarAutorLibro(AutorLibro autorLibro)
-    {
-        return this.daoAutorLibro.modificarAutorLibro(autorLibro);
-    }
-
-    public ArrayList<Integer> getCodigosAutoresLibro(String isbn)
-    {
-        return this.daoAutorLibro.consultarCodsAutores(isbn);
     }
 
     /*******

@@ -1,5 +1,12 @@
 package dao;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.AreaConforma;
 
 import java.sql.Connection;
@@ -11,7 +18,6 @@ import java.util.ArrayList;
 public class DaoAreaConforma
 {
     FachadaBd fachada;
-    Connection conn;
 
     public DaoAreaConforma()
     {
@@ -42,38 +48,6 @@ public class DaoAreaConforma
             System.out.println(e);
         }
         return false;
-    }
-
-    public ArrayList<Integer> consultarCodAreasConforma(int codArea)
-    {
-        AreaConforma areaConforma;
-        ArrayList<Integer> codAreas = new ArrayList<Integer>();
-        String sql_select;
-        sql_select = "SELECT cod_area2 FROM area_conforma WHERE cod_area =" + codArea + "";
-
-        try
-        {
-            Connection conn= fachada.openConnection();
-            System.out.println("consultando en la bd");
-            Statement sentencia = conn.createStatement();
-            ResultSet tabla = sentencia.executeQuery(sql_select);
-
-            while(tabla.next())
-            {
-                codAreas.add(tabla.getInt(1));
-            }
-            conn.close();
-            return codAreas;
-        }
-        catch(SQLException e)
-        {
-            System.out.println(e);
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-        return null;
     }
 
     public ArrayList<Integer> consultarCodAreasConforman(int codArea)

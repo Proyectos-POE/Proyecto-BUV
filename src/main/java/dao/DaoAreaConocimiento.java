@@ -1,4 +1,12 @@
 package dao;
+
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import java.sql.*;
 import java.util.ArrayList;
 import modelo.AreaConocimiento;
@@ -6,8 +14,6 @@ import modelo.AreaConocimiento;
 public class DaoAreaConocimiento
 {
     FachadaBd fachada;
-
-    Connection conn;
 
     public DaoAreaConocimiento()
     {

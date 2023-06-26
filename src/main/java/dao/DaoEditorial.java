@@ -1,4 +1,12 @@
 package dao;
+
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -8,7 +16,6 @@ public class DaoEditorial
 {
     FachadaBd fachada;
 
-    Connection conn;
 
     public DaoEditorial()
     {

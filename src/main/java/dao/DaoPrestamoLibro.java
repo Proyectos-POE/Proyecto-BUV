@@ -1,5 +1,12 @@
 package dao;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.PrestamoLibro;
 
 import java.sql.Connection;
@@ -11,7 +18,6 @@ import java.util.ArrayList;
 public class DaoPrestamoLibro
 {
     FachadaBd fachada;
-    Connection conn;
 
     public DaoPrestamoLibro()
     {
@@ -20,7 +26,7 @@ public class DaoPrestamoLibro
 
     public int insertPrestamoLibro(PrestamoLibro presLib){
         String sql_pres;
-        String sql_PresLib;
+
         sql_pres = "INSERT INTO prestamo_libro(num_prestamo, isbn, num_ejemplar, fecha_devolucion, entregado) VALUES ('" +
                 presLib.getNumero() + "', '" + presLib.getIsbn() +"', '" + presLib.getNumEjemplar() +"', '" + presLib.getFechaDev() + "', '" + false + "')";
         try{

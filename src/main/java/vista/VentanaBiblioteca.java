@@ -4,7 +4,12 @@
  */
 package vista;
 
-import com.toedter.calendar.JYearChooser;
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

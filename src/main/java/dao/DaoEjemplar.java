@@ -1,4 +1,12 @@
 package dao;
+
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import java.sql.*;
 import java.util.ArrayList;
 import modelo.Ejemplar;
@@ -6,8 +14,6 @@ import modelo.Ejemplar;
 public class DaoEjemplar
 {
     FachadaBd fachada;
-
-    Connection conn;
 
     public DaoEjemplar()
     {
@@ -176,6 +182,4 @@ public class DaoEjemplar
         catch(Exception e){ System.out.println(e); }
         return null;
     }
-
-
 }

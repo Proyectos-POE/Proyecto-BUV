@@ -1,7 +1,11 @@
 package modelo;
 
-import java.sql.Time;
-import java.util.Date;
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
 
 public class Descarga
 {
@@ -33,39 +37,19 @@ public class Descarga
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getIdUsuario() {
         return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public String getFechaDescarga() {
         return fechaDescarga;
     }
 
-    public void setFechaDescarga(String fechaDescarga) {
-        this.fechaDescarga = fechaDescarga;
-    }
-
     public String getHoraDescarga() {
         return horaDescarga;
     }
 
-    public void setHoraDescarga(String horaDescarga) {
-        this.horaDescarga = horaDescarga;
-    }
-
     public String getIp() {
         return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
     }
 }

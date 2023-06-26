@@ -1,11 +1,17 @@
 package modelo;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 public class AreaConocimiento
 {
     private int codigoArea;
     private String nomArea;
     private String descripcion;
-    private String areaHija;
 
     public AreaConocimiento(String auxNomArea, String auxDescripcion)
     {
@@ -41,13 +47,5 @@ public class AreaConocimiento
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-    public String getAreaHija()
-    {
-        return areaHija;
-    }
-    public void setAreaHija(String areaHija)
-    {
-        this.areaHija = areaHija;
     }
 }

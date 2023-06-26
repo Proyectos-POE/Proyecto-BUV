@@ -1,5 +1,12 @@
 package controlador;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import dao.DaoEmpleado;
 import dao.DaoEstudiante;
 import dao.DaoProfesor;
@@ -1548,15 +1555,13 @@ public class ControladorBiblioteca
             int codArea;
             String nomArea;
             String descripcion;
-            String areaHija;
 
             codArea = area.getCodigoArea();
             nomArea = area.getNomArea();
             descripcion = area.getDescripcion();
-            areaHija = area.getAreaHija();
 
             DefaultTableModel auxModeloTabla = (DefaultTableModel) ventanaBiblioteca.getAreaAdminTableModel();
-            auxModeloTabla.addRow(new Object[]{codArea, nomArea, descripcion, areaHija});
+            auxModeloTabla.addRow(new Object[]{codArea, nomArea, descripcion});
         }
     }
 

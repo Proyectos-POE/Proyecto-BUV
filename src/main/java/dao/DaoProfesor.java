@@ -1,7 +1,12 @@
 package dao;
 
-import modelo.Estudiante;
-import modelo.Prestamo;
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.Profesor;
 
 import java.sql.Connection;
@@ -12,7 +17,6 @@ import java.util.ArrayList;
 
 public class DaoProfesor {
     FachadaBd fachada;
-    Connection conn;
 
     public DaoProfesor(){
         fachada = new FachadaBd();
@@ -39,35 +43,6 @@ public class DaoProfesor {
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return -1;
-    }
-
-    public Profesor consultarProfesorId(String identificacion){
-        Profesor pro = new Profesor();
-        String sql_select;
-        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM Usuario NATURAL JOIN Profesor WHERE id_usuario='" + identificacion +  "'";
-        try{
-            Connection conn= fachada.openConnection();
-            System.out.println("consultando en la bd");
-            Statement sentencia = conn.createStatement();
-            ResultSet tabla = sentencia.executeQuery(sql_select);
-
-            while(tabla.next()){
-
-                pro.setId(tabla.getString(1));
-                pro.setContrasena(tabla.getString(2));
-                pro.setNombre(tabla.getString(3));
-                pro.setDireccion(tabla.getString(4));
-                pro.setTelefono(tabla.getString(5));
-                pro.setEmail(tabla.getString(6));
-                pro.setDependencia(tabla.getString(7));
-                pro.setTitulo(tabla.getString(8));
-            }
-            conn.close();
-            return pro;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return null;
     }
 
     public Profesor consultarProfesorEmail(String email, String contrasena)
@@ -115,35 +90,7 @@ public class DaoProfesor {
         return null;
     }
 
-    public ArrayList<Profesor> listarProfesores(){
-        ArrayList<Profesor> arrayPro = new ArrayList<>();
-        String sql_select;
-        sql_select="SELECT id_usuario, contrasena, nombre, direccion, telefono, email, dependencia, titulo FROM  profesor NATURAL JOIN usuario";
-        try{
-            Connection conn= fachada.openConnection();
-            System.out.println("consultando en la bd");
-            Statement sentencia = conn.createStatement();
-            ResultSet tabla = sentencia.executeQuery(sql_select);
 
-            while (tabla.next()){
-                Profesor pro = new Profesor();
-                pro.setId(tabla.getString(1));
-                pro.setContrasena(tabla.getString(2));
-                pro.setNombre(tabla.getString(3));
-                pro.setDireccion(tabla.getString(4));
-                pro.setTelefono(tabla.getString(5));
-                pro.setEmail(tabla.getString(6));
-                pro.setDependencia(tabla.getString(7));
-                pro.setTitulo(tabla.getString(8));
-                arrayPro.add(pro);
-            }
-            conn.close();
-            return arrayPro;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return null;
-    }
     public boolean modificarProfesor(Profesor pro){
         String sql_usu;
         String sql_pro;

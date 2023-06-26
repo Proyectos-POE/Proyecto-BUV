@@ -1,5 +1,12 @@
 package dao;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.Prestamo;
 
 import java.sql.Connection;
@@ -11,7 +18,6 @@ import java.util.ArrayList;
 public class DaoPrestamo
 {
     FachadaBd fachada;
-    Connection conn;
 
     public DaoPrestamo(){
         fachada = new FachadaBd();
@@ -19,7 +25,6 @@ public class DaoPrestamo
 
     public int  insertPrestamo(Prestamo pres){
         String sql_pres;
-        String sql_PresLib;
 
         sql_pres = "INSERT INTO prestamo(id_usuario, id_empleado, fecha) VALUES ('" + pres.getIdUsuario() +"', '" + pres.getIdEmpleado() +"', '" + pres.getFechaR() +"')";
 
@@ -108,23 +113,6 @@ public class DaoPrestamo
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return null;
-    }
-
-    public boolean modificarPrestamo(Prestamo pres){
-        String sql_pres;
-
-        sql_pres = "UPDATE Prestamo" + " SET id_usuario = '" + pres.getIdUsuario() + "', id_empleado = '" + pres.getIdEmpleado() + "', fecha = '"  + pres.getFechaR() +"'";
-
-        try{
-            Connection conn= fachada.openConnection();
-            Statement sentenciaPres = conn.createStatement();
-            sentenciaPres.executeUpdate(sql_pres);
-            conn.close();
-            return true;
-        }
-        catch(SQLException e){ System.out.println(e); }
-        catch(Exception e){ System.out.println(e); }
-        return false;
     }
 
     public int consultarUltimoPrestamo(){
