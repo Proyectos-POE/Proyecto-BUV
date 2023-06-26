@@ -257,23 +257,23 @@ public class ControladorLogin
 
         if(auxProfesor != null)
         {
-            ventanaLogin.dispose();
             ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxProfesor, new ManejadorDao("profesor", auxProfesor));
+            ventanaLogin.dispose();
         }
         else if(auxEstudiante != null)
         {
-            ventanaLogin.dispose();
             ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEstudiante, new ManejadorDao("estudiante", auxEstudiante));
+            ventanaLogin.dispose();
         }
         else if(auxEmpleado != null)
         {
-            ventanaLogin.dispose();
             ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), auxEmpleado, new ManejadorDao("empleado", auxEmpleado));
+            ventanaLogin.dispose();
         }
         else if(auxCorreo.equals(admin) && auxContrasena.equals(admin))
         {
-            ventanaLogin.dispose();
             ControladorBiblioteca controladorBiblioteca = new ControladorBiblioteca(new VentanaBiblioteca(), null, new ManejadorDao("admin"));
+            ventanaLogin.dispose();
         }
         else
         {

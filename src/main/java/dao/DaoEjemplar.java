@@ -1,6 +1,8 @@
 package dao;
 import java.sql.*;
 import java.util.ArrayList;
+
+import modelo.Digital;
 import modelo.Ejemplar;
 
 public class DaoEjemplar
@@ -171,6 +173,35 @@ public class DaoEjemplar
 
             conn.close();
             return ejemplares;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return null;
+    }
+
+    public Ejemplar consultarUltimoEjemplar(String isbn)
+    {
+        Ejemplar ejem = new Ejemplar();
+        String sql_select;
+        sql_select = "SELECT isbn, num_ejemplar, estante, num_cajon, nom_sala, num_pasillo, disponible FROM ejemplar WHERE num_ejemplar = (SELECT MAX(num_ejemplar) FROM ejemplar WHERE isbn = '" + isbn +"')";
+
+        try{
+            Connection conn = fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next())
+            {
+                ejem.setIsbn(tabla.getString(1));
+                ejem.setNumEjemplar(tabla.getInt(2));
+                ejem.setEstante(tabla.getInt(3));
+                ejem.setNumCajon(tabla.getInt(4));
+                ejem.setNomSala(tabla.getString(5));
+                ejem.setNumPasillo(tabla.getInt(6));
+                ejem.setEstado(tabla.getBoolean(7));
+            }
+            return ejem;
         }
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }

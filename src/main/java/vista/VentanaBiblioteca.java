@@ -23,6 +23,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
 
     public VentanaBiblioteca()
     {
+        setResizable(false);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         UIManager.put("OptionPane.messageFont", new java.awt.Font("Montserrat", 0, 12));
@@ -470,6 +471,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioLibroU.add(lblIsbnLibroU, gridBagConstraints);
 
         txtIsbnLibroU.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtIsbnLibroU.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -1447,6 +1449,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioAreaA.add(lblNombreAreaA, gridBagConstraints);
 
         txtNombreAreaA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNombreAreaA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -1509,6 +1512,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioAreaA.add(lblCodigoArea1A, gridBagConstraints);
 
         txtCodigoArea1A.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtCodigoArea1A.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
@@ -1526,6 +1530,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioAreaA.add(lblCodigoArea2A, gridBagConstraints);
 
         txtCodigoArea2A.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtCodigoArea2A.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
@@ -1652,6 +1657,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEditorialA.add(lblNombreEditorialA, gridBagConstraints);
 
         txtNombreEditorialA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNombreEditorialA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -1668,6 +1674,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEditorialA.add(lblPaisEditorialA, gridBagConstraints);
 
         txtPaisEditorialA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtPaisEditorialA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -1684,6 +1691,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEditorialA.add(lblPaginaWebEditorialA, gridBagConstraints);
 
         txtPaginaWebEditorialA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtPaginaWebEditorialA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -1795,6 +1803,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioAutorA.add(lblNombre1AutorA, gridBagConstraints);
 
         txtNombre1AutorA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNombre1AutorA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -1813,6 +1822,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioAutorA.add(lblNombre2Autor2, gridBagConstraints);
 
         txtNombre2AutorA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNombre2AutorA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -1831,6 +1841,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioAutorA.add(lblApellido1AutorA, gridBagConstraints);
 
         txtApellido1AutorA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtApellido1AutorA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -1849,6 +1860,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioAutorA.add(lblApellido2AutorA, gridBagConstraints);
 
         txtApellido2AutorA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtApellido2AutorA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -2138,6 +2150,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEmpleadoA.add(lblCedulaEmpleadoA, gridBagConstraints);
 
         txtCedulaEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtCedulaEmpleadoA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -2156,6 +2169,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEmpleadoA.add(lblTelefonoEmpleadoA, gridBagConstraints);
 
         txtTelefonoEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtTelefonoEmpleadoA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -2174,6 +2188,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEmpleadoA.add(lblNombreEmpleadoA, gridBagConstraints);
 
         txtNombreEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNombreEmpleadoA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -2186,12 +2201,11 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 140, 0, 0);
+        gridBagConstraints.gridwidth = 3;
         jpFormularioEmpleadoA.add(lblCargoEmpleadoA, gridBagConstraints);
 
         txtCargoEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtCargoEmpleadoA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -2250,6 +2264,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEmpleadoA.add(lblDireccionEmpleadoA, gridBagConstraints);
 
         txtDireccionEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtDireccionEmpleadoA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -2269,6 +2284,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEmpleadoA.add(lblClaveEmpleadoA, gridBagConstraints);
 
         txtClaveEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtClaveEmpleadoA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -2288,6 +2304,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEmpleadoA.add(lblCorreoEmpleadoA, gridBagConstraints);
 
         txtCorreoEmpleadoA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtCorreoEmpleadoA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -2555,10 +2572,6 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jtTablaAutorA.setFont(new java.awt.Font("Montserrat", 0, 12));
         jtTablaAutorLibroA.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null},
-                        {null, null},
-                        {null, null},
-                        {null, null}
                 },
                 new String [] {
                         "# AUTOR", "NOMBRE"
@@ -2716,6 +2729,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEjemplarA.add(lblIsbnEjemplarA, gridBagConstraints);
 
         txtIsbnEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtIsbnEjemplarA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -2744,6 +2758,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEjemplarA.add(lblEstanteEjemplarA, gridBagConstraints);
 
         txtEstanteEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtEstanteEjemplarA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -2762,6 +2777,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEjemplarA.add(lblNomSalaEjemplarA, gridBagConstraints);
 
         txtNomSalaEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNomSalaEjemplarA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -2779,6 +2795,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEjemplarA.add(lblNumCajonEjemplarA, gridBagConstraints);
 
         txtNumCajonEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNumCajonEjemplarA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -2819,6 +2836,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioEjemplarA.add(btnEliminarEjemplarA, gridBagConstraints);
 
         txtNumPasilloEjemplarA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNumPasilloEjemplarA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -2901,6 +2919,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioDigitalA.add(lblIsbnDigitalA, gridBagConstraints);
 
         txtIsbnDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtIsbnDigitalA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -2929,6 +2948,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioDigitalA.add(lblUrlDigitalA, gridBagConstraints);
 
         txtUrlDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtUrlDigitalA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -2947,6 +2967,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioDigitalA.add(lblBytesDigitalA, gridBagConstraints);
 
         txtBytesDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtBytesDigitalA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -2964,6 +2985,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioDigitalA.add(lblFormatoDigitalA, gridBagConstraints);
 
         txtFormatoDigitalA.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtFormatoDigitalA.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -3129,6 +3151,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioPrestamoE.add(lblIsbnPrestamoE, gridBagConstraints);
 
         txtIsbnPrestamoE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtIsbnPrestamoE.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -3158,6 +3181,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioPrestamoE.add(lblNumeroEjemplarPreE, gridBagConstraints);
 
         txtNumeroEjemplarPreE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtNumeroEjemplarPreE.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -3176,6 +3200,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         jpFormularioPrestamoE.add(lblCedulaPrestamoE, gridBagConstraints);
 
         txtCedulaPrestamoE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtCedulaPrestamoE.setColumns(5);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -3340,7 +3365,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 220);
         jpFormularioDevolucionE.add(lblIsbnDevolucionE, gridBagConstraints);
 
-        txtIsbnDevolucionE.setColumns(4);
+        txtIsbnDevolucionE.setColumns(5);
         txtIsbnDevolucionE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -3371,7 +3396,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 20);
         jpFormularioDevolucionE.add(lblNumeroEjemplarDevE, gridBagConstraints);
 
-        txtNumeroEjemplarDevE.setColumns(4);
+        txtNumeroEjemplarDevE.setColumns(5);
         txtNumeroEjemplarDevE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -3389,7 +3414,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 20);
         jpFormularioDevolucionE.add(lblCedulaUDevolucionE, gridBagConstraints);
 
-        txtCedulaUDevolucionE.setColumns(4);
+        txtCedulaUDevolucionE.setColumns(5);
         txtCedulaUDevolucionE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -3417,7 +3442,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 20, 5, 0);
         jpFormularioDevolucionE.add(lblNumeroPrestamoDevE, gridBagConstraints);
 
-        txtCedulaEDevolucionE.setColumns(4);
+        txtCedulaEDevolucionE.setColumns(5);
         txtCedulaEDevolucionE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -3426,7 +3451,7 @@ public class VentanaBiblioteca extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 0);
         jpFormularioDevolucionE.add(txtCedulaEDevolucionE, gridBagConstraints);
 
-        txtNumeroPrestamoDevE.setColumns(4);
+        txtNumeroPrestamoDevE.setColumns(5);
         txtNumeroPrestamoDevE.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;

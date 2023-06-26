@@ -2683,6 +2683,8 @@ public class ControladorBiblioteca
     {
         if(ejemplar != null)
         {
+            ejemplar = manejadorDao.consultarUltimoEjemplar(ejemplar.getIsbn());
+
             String isbn;
             int numEjemplar;
             int estante;
@@ -2718,30 +2720,37 @@ public class ControladorBiblioteca
         {
             if (comprobarCamposEjemplarAd())
             {
-                isbn = ventanaBiblioteca.getTxtIsbnEjemplarA();
-                estante = Integer.parseInt(ventanaBiblioteca.getTxtEstanteEjemplarA());
-                numCajon = Integer.parseInt(ventanaBiblioteca.getTxtNumCajonEjemplarA());
-                nomSala = ventanaBiblioteca.getTxtNomSalaEjemplarA();
-                numPasillo = Integer.parseInt(ventanaBiblioteca.getTxtNumPasilloEjemplarA());
-
-                if (manejadorDao.buscarLibroIsbn(isbn) != null)
+                try
                 {
-                    ejemplar = new Ejemplar(isbn, estante, numCajon, nomSala, numPasillo);
+                    isbn = ventanaBiblioteca.getTxtIsbnEjemplarA();
+                    estante = Integer.parseInt(ventanaBiblioteca.getTxtEstanteEjemplarA());
+                    numCajon = Integer.parseInt(ventanaBiblioteca.getTxtNumCajonEjemplarA());
+                    nomSala = ventanaBiblioteca.getTxtNomSalaEjemplarA();
+                    numPasillo = Integer.parseInt(ventanaBiblioteca.getTxtNumPasilloEjemplarA());
 
-                    if (manejadorDao.agregarEjemplar(ejemplar) > 0)
+                    if (manejadorDao.buscarLibroIsbn(isbn) != null)
                     {
-                        listarEjemplarTablaAdAgregar(ejemplar);
-                        ventanaBiblioteca.mostrarMensaje("Ejemplar agregado con exito");
-                        ventanaBiblioteca.limpiarEjemplarAdmin();
+                        ejemplar = new Ejemplar(isbn, estante, numCajon, nomSala, numPasillo);
+
+                        if (manejadorDao.agregarEjemplar(ejemplar) > 0)
+                        {
+                            listarEjemplarTablaAdAgregar(ejemplar);
+                            ventanaBiblioteca.mostrarMensaje("Ejemplar agregado con exito");
+                            ventanaBiblioteca.limpiarEjemplarAdmin();
+                        }
+                        else
+                        {
+                            ventanaBiblioteca.mostrarMensajeError("No se pudo crear el ejemplar");
+                        }
                     }
                     else
                     {
-                        ventanaBiblioteca.mostrarMensajeError("No se pudo crear el ejemplar");
+                        ventanaBiblioteca.mostrarMensajeError("No existe un libro con ese ISBN");
                     }
                 }
-                else
+                catch(NumberFormatException e)
                 {
-                    ventanaBiblioteca.mostrarMensajeError("No existe un libro con ese ISBN");
+                    ventanaBiblioteca.mostrarMensajeError("Ingrese datos validos");
                 }
             }
             else

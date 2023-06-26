@@ -17,6 +17,7 @@ public class VentanaLogin extends javax.swing.JFrame {
 
     public VentanaLogin()
     {
+        setResizable(false);
         initComponents();
         this.pagLogin();
         this.addBotonesPrincipalListener(new CambiarPaginaListener());

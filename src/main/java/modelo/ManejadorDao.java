@@ -358,6 +358,8 @@ public class ManejadorDao {
     public ArrayList<Integer> listarEjemplaresDisponibles(String isbn){return this.daoEjemplar.getEjemplaresDisponibles(isbn);}
 
     public boolean modificarEstadoEjem(String isbn, int numero, boolean estado){return this.daoEjemplar.modificarEstadoEjemplar(isbn, numero , estado);}
+
+    public Ejemplar consultarUltimoEjemplar(String isbn) {return  this.daoEjemplar.consultarUltimoEjemplar(isbn);}
     /*******
      * Digital
      */
