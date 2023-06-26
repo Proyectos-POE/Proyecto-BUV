@@ -1,5 +1,12 @@
 package dao;
 
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.AutorLibro;
 
 import java.sql.Connection;
@@ -63,35 +70,6 @@ public class DaoAutorLibro {
             catch(Exception e){ System.out.println(e); }
             return null;
         }
-        /*
-        public ArrayList<Autor> listarAutores(){
-            ArrayList<Autor> arrayAt = new ArrayList<>();
-            String sql_select;
-            sql_select="SELECT codigo_autor, primer_nom, segundo_nom, primer_apellido, segundo_apellido FROM  autor ORDER BY codigo_autor";
-            try{
-                Connection conn= fachada.openConnection();
-                System.out.println("consultando en la bd");
-                Statement sentencia = conn.createStatement();
-                ResultSet tabla = sentencia.executeQuery(sql_select);
-
-                while (tabla.next()){
-                    Autor at = new Autor();
-                    at.setCodAutor(tabla.getInt(1));
-                    at.setPrimerNombre(tabla.getString(2));
-                    at.setSegundoNombre(tabla.getString(3));
-                    at.setPrimerApellido(tabla.getString(4));
-                    at.setSegundoApellido(tabla.getString(5));
-                    arrayAt.add(at);
-                }
-                conn.close();
-                return arrayAt;
-            }
-            catch(SQLException e){ System.out.println(e); }
-            catch(Exception e){ System.out.println(e); }
-            return null;
-        }
-
-         */
 
         public boolean modificarAutorLibro(AutorLibro at)
         {
