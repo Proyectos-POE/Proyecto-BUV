@@ -146,7 +146,7 @@ public class DaoAutor
             while(tabla.next()) {
                 cod = tabla.getInt(1);
             }
-
+            conn.close();
             return cod;
         }
         catch(SQLException e){ System.out.println(e); }

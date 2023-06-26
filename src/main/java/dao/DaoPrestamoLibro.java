@@ -21,7 +21,7 @@ public class DaoPrestamoLibro
     public int insertPrestamoLibro(PrestamoLibro presLib){
         String sql_pres;
         String sql_PresLib;
-        sql_pres = "INSERT INTO prestamo_libro(num_prestamo, isbn, num_ejemplar, fecha_devolucion, estado) VALUES ('" +
+        sql_pres = "INSERT INTO prestamo_libro(num_prestamo, isbn, num_ejemplar, fecha_devolucion, entregado) VALUES ('" +
                 presLib.getNumero() + "', '" + presLib.getIsbn() +"', '" + presLib.getNumEjemplar() +"', '" + presLib.getFechaDev() + "', '" + false + "')";
         try{
             Connection conn= fachada.openConnection();
@@ -51,7 +51,7 @@ public class DaoPrestamoLibro
                     prestamoLibro.setNumero(tabla.getInt(1));
                     prestamoLibro.setIsbn(tabla.getString(2));
                     prestamoLibro.setNumEjemplar(tabla.getInt(3));
-                    prestamoLibro.setFechaDev(tabla.getDate(4));
+                    prestamoLibro.setFechaDev(tabla.getDate(4).toString());
                     prestamoLibro.setEstado(tabla.getBoolean(5));
                     prestamos.add(prestamoLibro);
                 }
@@ -79,7 +79,7 @@ public class DaoPrestamoLibro
                 prestamoLibro.setNumero(tabla.getInt(1));
                 prestamoLibro.setIsbn(tabla.getString(2));
                 prestamoLibro.setNumEjemplar(tabla.getInt(3));
-                prestamoLibro.setFechaDev(tabla.getDate(4));
+                prestamoLibro.setFechaDev(tabla.getDate(4).toString());
                 prestamoLibro.setEstado(tabla.getBoolean(5));
                 prestamos.add(prestamoLibro);
             }
@@ -123,7 +123,7 @@ public class DaoPrestamoLibro
                 pres.setNumero(tabla.getInt(1));
                 pres.setIsbn(tabla.getString(2));
                 pres.setNumEjemplar(tabla.getInt(3));
-                pres.setFechaDev(tabla.getDate(4));
+                pres.setFechaDev(tabla.getDate(4).toString());
                 pres.setEstado(tabla.getBoolean(5));
             }
             conn.close();

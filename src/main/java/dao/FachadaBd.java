@@ -5,9 +5,9 @@ public class FachadaBd {
     Connection conexion =null;
 
     FachadaBd(){
-        url="jdbc:postgresql://localhost:5432/Biblioteca-BUV";
-        usuario="postgres";
-        password="12345";
+        url="jdbc:postgresql://localhost:5432/BUV4";
+        usuario="Samuel";
+        password="Kamina1304#";
     }
     public Connection openConnection(){
         try {

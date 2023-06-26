@@ -17,12 +17,11 @@ public class DaoPrestamo
         fachada = new FachadaBd();
     }
 
-    public int insertPrestamo(Prestamo pres){
+    public int  insertPrestamo(Prestamo pres){
         String sql_pres;
         String sql_PresLib;
 
-        sql_pres = "INSERT INTO prestamo(num_prestamo, id_usuario, id_empleado, fecha) VALUES ('" +
-                pres.getNumPrestamo() + "', '" + pres.getIdUsuario() +"', '" + pres.getIdEmpleado() +"', '" + pres.getFechaR() +"')";
+        sql_pres = "INSERT INTO prestamo(id_usuario, id_empleado, fecha) VALUES ('" + pres.getIdUsuario() +"', '" + pres.getIdEmpleado() +"', '" + pres.getFechaR() +"')";
 
         try{
             Connection conn= fachada.openConnection();
@@ -36,10 +35,10 @@ public class DaoPrestamo
         return -1;
     }
 
-    public Prestamo consultarPrestamo(String numero){
+    public Prestamo consultarPrestamo(int numero){
         Prestamo pres = new Prestamo();
         String sql_select;
-        sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha FROM  prestamo WHERE num_prestamo='" + numero +  "'";
+        sql_select="SELECT num_prestamo, id_usuario, id_empleado, fecha FROM  prestamo WHERE num_prestamo=" + numero +  "";
         try{
             Connection conn= fachada.openConnection();
             System.out.println("consultando en la bd");
@@ -50,7 +49,7 @@ public class DaoPrestamo
                 pres.setNumPrestamo(tabla.getInt(1));
                 pres.setIdUsuario(tabla.getString(2));
                 pres.setIdEmpleado(tabla.getString(3));
-                pres.setFechaR(tabla.getDate(4));
+                pres.setFechaR(tabla.getDate(4).toString());
             }
             conn.close();
             return pres;
@@ -74,7 +73,7 @@ public class DaoPrestamo
                 pres.setNumPrestamo(tabla.getInt(1));
                 pres.setIdUsuario(tabla.getString(2));
                 pres.setIdEmpleado(tabla.getString(3));
-                pres.setFechaR(tabla.getDate(4));
+                pres.setFechaR(tabla.getDate(4).toString());
                 arrayPres.add(pres);
             }
             conn.close();
@@ -100,7 +99,7 @@ public class DaoPrestamo
                 pres.setNumPrestamo(tabla.getInt(1));
                 pres.setIdUsuario(tabla.getString(2));
                 pres.setIdEmpleado(tabla.getString(3));
-                pres.setFechaR(tabla.getDate(4));
+                pres.setFechaR(tabla.getDate(4).toString());
                 arrayPres.add(pres);
             }
             conn.close();
@@ -126,5 +125,27 @@ public class DaoPrestamo
         catch(SQLException e){ System.out.println(e); }
         catch(Exception e){ System.out.println(e); }
         return false;
+    }
+
+    public int consultarUltimoPrestamo(){
+        int pres = -1;
+        String sql_select;
+        sql_select="SELECT num_prestamo FROM prestamo WHERE num_prestamo = (SELECT max(num_prestamo) FROM prestamo)";
+        try{
+            Connection conn= fachada.openConnection();
+            System.out.println("consultando en la bd");
+            Statement sentencia = conn.createStatement();
+            ResultSet tabla = sentencia.executeQuery(sql_select);
+
+            while(tabla.next()){
+                pres = tabla.getInt(1);
+
+            }
+            conn.close();
+            return pres;
+        }
+        catch(SQLException e){ System.out.println(e); }
+        catch(Exception e){ System.out.println(e); }
+        return pres;
     }
 }
