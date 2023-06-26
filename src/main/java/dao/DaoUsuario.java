@@ -1,6 +1,12 @@
 package dao;
 
-import modelo.Estudiante;
+/** ****************************************************************************
+ * Autores:
+ * Nicolas Herrera Marulanda - 202182551
+ * Samuel Galindo Cuevas - 202177491
+ * Julian David Rendon Cardona - 202177387
+ * *****************************************************************************/
+
 import modelo.Usuario;
 
 import java.sql.Connection;
@@ -12,7 +18,6 @@ import java.util.ArrayList;
 public class DaoUsuario
 {
     FachadaBd fachada;
-    Connection conn;
 
     public DaoUsuario()
     {
