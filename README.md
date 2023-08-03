@@ -1,4 +1,5 @@
-Base de datos de una Biblioteca
+# Proyecto-BUV
+**Tema: GUI y gestion de base de datos**
 
 Una universidad necesita una base de datos para administrar los libros de la
 biblioteca. Cada libro tiene un ISBN, título, año de publicación, idioma, área de
@@ -16,6 +17,7 @@ bytes. Un libro es escrito por uno o varios autores. Un autor tiene código, pri
 apellido, segundo apellido, primer nombre y segundo nombre. Los libros son
 publicados por una editorial. La editorial tiene un código, nombre, página web y
 país de origen.
+
 La biblioteca tiene diferentes usuarios del cual se conoce la identificación, nombre,
 dirección, teléfono, email. Los usuarios pueden ser profesores o estudiantes. Si es
 estudiante, además se necesita guardar la carrera que estudia y la universidad de
@@ -35,22 +37,20 @@ digital, el usuario lo puede descargar si se encuentra dentro del campus de la
 Universidad. Cada vez que se descarga un libro digital se debe almacenar
 información como el usuario que los descarga, la fecha, hora y el número ip de la
 máquina donde se hace la descarga.
+
 Cuando los usuarios buscan un libro y no se encuentra en la biblioteca, pueden
 hacer una solicitud para que este libro se adquiera en futuras compras. Una
 solicitud tiene un número consecutivo, fecha, descripción, el usuario que la hace,
 el ISBN y el título del nuevo libro que se requiere. Mensualmente, el encargado de
 compras de la biblioteca revisa las solicitudes y decide si es necesario comprar los
 libros que los usuarios pidieron.
-Usted debe implementar un sistema que le permita acceder a los diferentes
+
+Se debe implementar un sistema que le permita acceder a los diferentes
 usuarios manipular el sistema de biblioteca dependiendo de su perfil. Por lo
 tanto, para ingresar se debe hacer mediante login y contraseña.
 
-Entregables
-1) Diagrama E-R y modelo Relacional *
-2) [20%] Archivo SQL que permita crear las tablas de la base de datos e insertar
-los primeros datos (Inserte por lo menos 10 registros en cada tabla. (Mayo 16 de
-2023)
-3) [20%] Diseño e implementación del patrón DAO (Database Access Object)
-(Junio 5 de 2023)
-4) [60%] Interfaz gráfica de usuario que permita acceder y manipular el sistema de
-bibliotecas. (Junio 21 de 2023)
+## Autores
+
+- [@Herreran903](https://github.com/Herreran903)
+- [@SakyJoestar](https://www.github.com/SakyJoestar)
+- [@JulianRC1](https://github.com/JulianRC1)
